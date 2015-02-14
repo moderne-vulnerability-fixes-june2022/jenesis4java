@@ -1,0 +1,77 @@
+<document xmlns="http://maven.apache.org/changes/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
+	<properties>
+		<title>Changes Jenesis 4 Java Project</title>
+		<author email="ritchie_gmx_at">Richard van Nieuwenhoven</author>
+	</properties>
+	<body>
+		<release version="2.3.1" date="2012-02-08" description="Small improvements">
+			<action dev="ritchie_gmx_at" type="add">
+				some API extentions.
+			</action>
+			<action dev="ritchie_gmx_at" type="fix">
+				Inner Interface in API.
+			</action>
+		</release>
+		<release version="2.3" date="2012-02-07" description="Small improvements">
+			<action dev="ritchie_gmx_at" type="add">
+				Inner Interfaces implemented.
+			</action>
+			<action dev="ritchie_gmx_at" type="fix">
+				Access to remove statements from Blocks.
+			</action>
+		</release>
+		<release version="2.2.1" date="2011-06-22" description="Small improvements">
+			<action dev="ritchie_gmx_at" type="fix">
+				NullPointer fix in imported type resolving.
+			</action>
+		</release>
+		<release version="2.2" date="2011-06-17" description="Small improvements">
+			<action dev="ritchie_gmx_at" type="update">
+				A set of small interface improvements and convenience methods.
+			</action>
+		</release>
+		<release version="2.1" date="2011-03-03" description="Small improvements">
+			<action dev="ritchie_gmx_at" type="update">
+				Char- and String-literal encoding handling fixed for some special cases.
+			</action>
+			<action dev="ritchie_gmx_at" type="add">
+				new invoke, access, arrayAccess with Expression parameter and with only one parameter (no ugly null parameter any more).
+			</action>
+			<action dev="ritchie_gmx_at" type="add">
+				Full qualified types from the imported packages and java.lang package like 'java.lang.Boolean' are now automaticaly reduced to
+				'Boolean'.
+			</action>
+			<action dev="ritchie_gmx_at" type="update">
+				Case statements will have no open and close bracket anymore.
+			</action>
+		</release>
+		<release version="2.0" date="2011-01-14" description="Upgrade of the API to Java 1.5, with many usability improvements">
+			<action dev="ritchie_gmx_at" type="add">
+				Optional Jalopy encoder for Java code formatting included.
+			</action>
+			<action dev="ritchie_gmx_at" type="update">
+				API improvements like addSerializable.
+			</action>
+			<action dev="ritchie_gmx_at" type="update">
+				All setters in the API now return the base Object for better use of the builder pattern.
+			</action>
+			<action dev="ritchie_gmx_at" type="update">
+				All Iterators (and Vectors) are replaced by immutable typed Lists.
+			</action>
+			<action dev="ritchie_gmx_at" type="update">
+				The API was updated to Java-5.
+			</action>
+			<action dev="ritchie_gmx_at" type="remove">
+				Removed the compiler part, of jenesis.
+			</action>
+			<action dev="ritchie_gmx_at" type="update">
+				License change to LGPL.
+			</action>
+		</release>
+		<release version="1.4" date="2008-09-11 " description="First release">
+			<action dev="ritchie_gmx_at" type="initial release">
+				Uploaded jenesis 4 java.
+			</action>
+		</release>
+	</body>
+</document>

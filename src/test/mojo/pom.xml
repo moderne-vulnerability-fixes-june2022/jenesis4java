@@ -1,0 +1,36 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>net.sourceforge.jenesis4java</groupId>
+	<artifactId>Jenesis-mojo</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+
+	<packaging>maven-plugin</packaging>
+
+	<dependencies>
+		<!-- The dependency to the maven API -->
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-plugin-api</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-project</artifactId>
+			<version>2.2.0</version>
+		</dependency>
+		<!-- The dependency to the Jenesis4Java -->
+		<dependency>
+			<groupId>net.sourceforge.jenesis4java</groupId>
+			<artifactId>jenesis4java</artifactId>
+			<version>2.0-SNAPSHOT</version>
+		</dependency>
+		<!-- We will use Jalopy to format the Generated source code -->
+		<dependency>
+			<groupId>jalopy</groupId>
+			<artifactId>jalopy</artifactId>
+			<version>1.5rc3</version>
+		</dependency>
+	</dependencies>
+
+</project>

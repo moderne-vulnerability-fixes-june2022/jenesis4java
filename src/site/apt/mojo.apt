@@ -1,0 +1,222 @@
+How to write a Simple Maven Mojo with Jenesis4Java
+
+  During many projects you feel the need to generate some code, to make the Runtime code simpler and clean of meta-informations. 
+  
+  Most of the time programmers rather live with the "dirty" and or complex runtime code instead of writing a small code generator, mostly with 
+the argumentation the code generators are so difficult to write. But this is not true, as the following example will show you.
+
+*Project structure  
+
+  Writing a Maven-plugin (Mojo) that generates Java source code is a easy thing with jenesis4Java. First of all, do we need a Project structure:
+
+-----------------------------------------
++ExampleMojo
++--src
+|  +--main
+|     +--java
+|        +--JenesisMojo.java
++--pom.xml
+-----------------------------------------
+
+*The Generator/Mojo pom.xml
+
+  The pom file can be very compact and should look like this:
+  
+-----------------------------------------
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>net.sourceforge.jenesis4java</groupId>
+	<artifactId>Jenesis-mojo</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+
+	<packaging>maven-plugin</packaging>
+
+	<dependencies>
+		<!-- The dependency to the maven API -->
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-plugin-api</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-project</artifactId>
+			<version>2.2.0</version>
+		</dependency>
+		<!-- The dependency to the Jenesis4Java -->
+		<dependency>
+			<groupId>net.sourceforge.jenesis4java</groupId>
+			<artifactId>jenesis4java</artifactId>
+			<version>2.0</version>
+		</dependency>
+		<!-- We will use Jalopy to format the Generated source code -->
+		<dependency>
+			<groupId>jalopy</groupId>
+			<artifactId>jalopy</artifactId>
+			<version>1.5rc3</version>
+		</dependency>
+	</dependencies>
+
+</project>
+-----------------------------------------
+
+*The Generator/Mojo body
+
+  As usual in Maven the Mojo Java class speaks for it self.
+  
+-----------------------------------------
+import java.io.File;
+import java.io.IOException;
+
+import net.sourceforge.jenesis4java.Access;
+import net.sourceforge.jenesis4java.ClassMethod;
+import net.sourceforge.jenesis4java.Comment;
+import net.sourceforge.jenesis4java.CompilationUnit;
+import net.sourceforge.jenesis4java.Invoke;
+import net.sourceforge.jenesis4java.PackageClass;
+import net.sourceforge.jenesis4java.Type;
+import net.sourceforge.jenesis4java.VirtualMachine;
+import net.sourceforge.jenesis4java.jaloppy.JenesisJalopyEncoder;
+
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.project.MavenProject;
+
+/**
+ * @goal jenesis4java
+ * @phase generate-sources
+ * @description generate the java source code
+ */
+public class JenesisMojo extends AbstractMojo {
+
+    /**
+     * @parameter expression="${project}"
+     * @required
+     */
+    protected MavenProject project;
+
+    /**
+     * @parameter expression=
+     *            "${project.build.directory}/generated-sources/jenesis4java"
+     * @required
+     */
+    protected File outputJavaDirectory;
+
+    /**
+     * @parameter
+     */
+    protected String title;
+
+    @Override
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        if (this.project != null) {
+            this.project.addCompileSourceRoot(this.outputJavaDirectory.getAbsolutePath());
+        }
+        if (!this.outputJavaDirectory.mkdirs()) {
+            getLog().error("Could not create source directory!");
+        } else {
+            try {
+                generateJavaCode();
+            } catch (IOException e) {
+                throw new MojoExecutionException("Could not generate Java source code!", e);
+            }
+        }
+    }
+
+    private void generateJavaCode() throws IOException {
+        System.setProperty("jenesis.encoder", JenesisJalopyEncoder.class.getName());
+
+        // Get the VirtualMachine implementation.
+        VirtualMachine vm = VirtualMachine.getVirtualMachine();
+
+        // Instantiate a new CompilationUnit. The argument to the
+        // compilation unit is the "codebase" or directory where the
+        // compilation unit should be written.
+        //
+        // Make a new compilation unit rooted to the given sourcepath.
+        CompilationUnit unit = vm.newCompilationUnit(this.outputJavaDirectory.getAbsolutePath());
+
+        // Set the package namespace.
+        unit.setNamespace("net.sourceforge.jenesis4java.example");
+
+        // Add an import statement for fun.
+        unit.addImport("java.io.Serializable");
+
+        // Comment the package with a javadoc (DocumentationComment).
+        unit.setComment(Comment.D, "Auto-Generated using the Jenesis Syntax API");
+
+        // Make a new class.
+        PackageClass cls = unit.newClass("HelloWorld");
+        // Make it a public class.
+        cls.setAccess(Access.PUBLIC);
+        // Extend Object just for fun.
+        cls.setExtends("Object");
+        // Implement serializable just for fun.
+        cls.addImplements("Serializable");
+        // Comment the class with a javadoc (DocumentationComment).
+        unit.setComment(Comment.D, "The HelloWorld example class.");
+
+        // Make a new Method in the Class having type VOID and name "main".
+        ClassMethod method = cls.newMethod(vm.newType(Type.VOID), "main");
+        // Make it a public method.
+        method.setAccess(Access.PUBLIC);
+        // Make it a static method
+        method.isStatic(true);
+        // Add the "String[] argv" formal parameter.
+        method.addParameter(vm.newArray("String", 1), "argv");
+
+        // Create a new Method Invocation expression.
+        Invoke println = vm.newInvoke("System.out", "println");
+
+        if (this.title != null) {
+            // Add the Moja parameter string literal as the sole argument.
+            println.addArg(vm.newString(this.title));
+        } else {
+            // Add the Hello World string literal as the sole argument.
+            println.addArg(vm.newString("Hello World!"));
+        }
+        // Add this expression to the method in a statement.
+        method.newStmt(println);
+
+        // Write the java file.
+        unit.encode();
+    }
+}
+-----------------------------------------
+
+*How to use it in your other modules
+
+  That's all now we can use it in our other projects. You can build the plugin / Mojo with your other modules maven will sort out the order for you. An example:
+  
+-----------------------------------------
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>net.sourceforge.jenesis4java</groupId>
+	<artifactId>Jenesis-mojo-use</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>net.sourceforge.jenesis4java</groupId>
+				<artifactId>Jenesis-mojo</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jenesis4java</goal>
+						</goals>
+						<configuration>
+							<title>Jenesis 4 Java</title>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
+-----------------------------------------

@@ -1,0 +1,363 @@
+package net.sourceforge.jenesis4java.impl;
+
+/**
+ * Copyright (C) 2008, 2010 Richard van Nieuwenhoven - ritchie [at] gmx [dot] at
+ * Copyright (C) 2000, 2001 Paul Cody Johnston - pcj@inxar.org <br>
+ * This file is part of Jenesis4java. Jenesis4java is free software: you can
+ * redistribute it and/or modify it under the terms of the GNU Lesser General
+ * Public License as published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.<br>
+ * Jenesis4java is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.<br>
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Jenesis4java. If not, see <http://www.gnu.org/licenses/>.
+ */
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.jenesis4java.CodeWriter;
+import net.sourceforge.jenesis4java.Codeable;
+import net.sourceforge.jenesis4java.Comment;
+import net.sourceforge.jenesis4java.CompilationUnit;
+
+/**
+ * Standard <code>CodeWriter</code> implementation.
+ */
+public class MCodeWriter implements CodeWriter {
+
+    // the actual writer
+    private final PrintWriter out;
+
+    private int colNo;
+
+    private int lineNo;
+
+    private int indentNo;
+
+    private boolean isLineNew;
+
+    private boolean hasQueue;
+
+    private final List<Comment> queue;
+
+    private CompilationUnit compilationUnit;
+
+    public MCodeWriter(PrintWriter out) {
+        this.out = out;
+        this.colNo = 0;
+        this.lineNo = 1; // start at line 1
+        this.indentNo = 0;
+        this.isLineNew = true;
+        this.queue = new ArrayList<Comment>();
+    }
+
+    /**
+     * Decrements the tab and calls newLine()
+     */
+    @Override
+    public CodeWriter dedentLine() {
+        if (this.hasQueue) {
+            flushQueue();
+            this.hasQueue = false;
+        }
+        this.indentNo--;
+        newLine();
+        return this;
+    }
+
+    /**
+     * Returns the current number of characters in the current line. It does not
+     * take the indent into account. Therefore, only the write methods and the
+     * space method increment the column counter.
+     */
+    @Override
+    public int getColumnNumber() {
+        return this.colNo;
+    }
+
+    @Override
+    public CompilationUnit getCompilationUnit() {
+        return this.compilationUnit;
+    }
+
+    /**
+     * Returns the current number of indentation levels.
+     */
+    @Override
+    public int getIndentNumber() {
+        return this.indentNo;
+    }
+
+    /**
+     * Returns the number of lines of the current document.
+     */
+    @Override
+    public int getLineNumber() {
+        return this.lineNo;
+    }
+
+    /**
+     * Increments the tab and calls newLine()
+     */
+    @Override
+    public CodeWriter indentLine() {
+        if (this.hasQueue) {
+            flushQueue();
+            this.hasQueue = false;
+        }
+        this.indentNo++;
+        newLine();
+        return this;
+    }
+
+    /**
+     * Returns true if no characters have been written since the last call of
+     * newLine().
+     */
+    @Override
+    public boolean isLineNew() {
+        return this.isLineNew;
+    }
+
+    /**
+     * Adds a the newLine string according to
+     * <CODE>System.getProperty("line.separator")</CODE> and the line is padded
+     * with the n tab characters where n is the number returned by
+     * <code>getIndentNumber()</code>.
+     */
+    @Override
+    public CodeWriter newLine() {
+        if (this.hasQueue) {
+            flushQueue();
+            this.hasQueue = false;
+        }
+        this.out.println();
+        writeIndent();
+        this.colNo = 0;
+        this.lineNo++;
+        this.isLineNew = true;
+        return this;
+    }
+
+    /**
+     * This method allows those codeable objects to inject a comment without
+     * interrupting the line-by-line code itself. For example, if an expression
+     * wants to express a comment, it cannot do it until the end of the line.
+     * This method accepts a string argument. Before the newline is called, all
+     * comments given to the code writer will be written after newLine has been
+     * called.
+     * 
+     * @return
+     */
+    @Override
+    public MCodeWriter queue(Comment comment) {
+        if (comment != null) {
+            comment.setText(comment.getText());
+            this.queue.add(comment);
+            this.hasQueue = true;
+        }
+        return this;
+    }
+
+    /**
+     * Resets the tab counter to zero and calls the newLine() method.
+     */
+    @Override
+    public CodeWriter resetLine() {
+        this.indentNo = 0;
+        newLine();
+        return this;
+    }
+
+    @Override
+    public void setCompilationUnit(CompilationUnit compilationUnit) {
+        this.compilationUnit = compilationUnit;
+    }
+
+    /**
+     * Writes a single space.
+     */
+    @Override
+    public CodeWriter space() {
+        this.out.print(' ');
+        this.colNo++;
+        this.isLineNew = false;
+        return this;
+    }
+
+    /**
+     * Writes a boolean.
+     */
+    @Override
+    public CodeWriter write(boolean b) {
+        // print it
+        this.out.print(b);
+        // add if 4:'true' or 5:'false'
+        this.colNo += b ? 4 : 5;
+        this.isLineNew = false;
+        return this;
+    }
+
+    /**
+     * Writes a single character.
+     */
+    @Override
+    public CodeWriter write(char c) {
+        // print the char
+        this.out.print(c);
+        // add one
+        this.colNo++;
+        this.isLineNew = false;
+        return this;
+    }
+
+    /**
+     * Writes an array of characters.
+     */
+    @Override
+    public CodeWriter write(char[] chars) {
+
+        if (chars != null) {
+            // print the chars;
+            this.out.print(chars);
+            // add
+            this.colNo += chars.length;
+            this.isLineNew = false;
+        }
+        return this;
+    }
+
+    /**
+     * Writes an array of characters.
+     */
+    @Override
+    public CodeWriter write(char[] chars, int off, int len) {
+        if (chars != null) {
+            // print the chars;
+            this.out.write(chars, off, len);
+            // add
+            this.colNo += chars.length;
+            this.isLineNew = false;
+        }
+        return this;
+    }
+
+    /**
+     * Instead of calling the <code>Object.toString()</code> method, the
+     * <code>Object.toCode(public CodeWriter)</code> method is invoked with
+     * <code>this</code> as the argument.
+     */
+    @Override
+    public CodeWriter write(Codeable ico) {
+        if (ico != null) {
+            ico.toCode(this);
+        }
+        return this;
+    }
+
+    /**
+     * Iterates the array and sends each element to <code>write(Codeable)</code>
+     * .
+     */
+    @Override
+    public CodeWriter write(Codeable[] aico) {
+        if (aico != null) {
+            for (Codeable element : aico) {
+                write(element);
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Writes a double.
+     */
+    @Override
+    public CodeWriter write(double d) {
+        this.out.print(d);
+        this.colNo += Double.toString(d).length();
+        this.isLineNew = false;
+        return this;
+    }
+
+    /**
+     * Writes a float.
+     */
+    @Override
+    public CodeWriter write(float f) {
+        this.out.print(f);
+        this.colNo += Float.toString(f).length();
+        this.isLineNew = false;
+        return this;
+    }
+
+    /**
+     * Writes an integer.
+     */
+    @Override
+    public CodeWriter write(int i) {
+        this.out.print(i);
+        this.colNo += Integer.toString(i).length();
+        this.isLineNew = false;
+        return this;
+    }
+
+    @Override
+    public CodeWriter write(List<? extends Codeable> codeables) {
+        if (codeables != null) {
+            for (Codeable element : codeables) {
+                write(element);
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Writes an object.
+     */
+    @Override
+    public CodeWriter write(Object o) {
+        if (o != null) {
+            if (o instanceof Codeable) {
+                ((Codeable) o).toCode(this);
+            } else {
+                this.out.print(o);
+                this.colNo += o.toString().length();
+                this.isLineNew = false;
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Writes a string.
+     */
+    @Override
+    public CodeWriter write(String s) {
+        if (s != null) {
+            this.out.print(s);
+            this.colNo += s.length();
+            this.isLineNew = false;
+        }
+
+        return this;
+    }
+
+    private void flushQueue() {
+        while (!this.queue.isEmpty()) {
+            Codeable c = this.queue.remove(0);
+            write(c);
+        }
+    }
+
+    private void writeIndent() {
+        int n = this.indentNo;
+        while (n-- > 0) {
+            this.out.print("    ");
+        }
+    }
+
+}

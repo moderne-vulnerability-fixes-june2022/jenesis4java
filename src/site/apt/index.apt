@@ -1,0 +1,64 @@
+Jenesis 4 Java Code Generator
+
+  Generating Java sources from strings or patterns can become very inconvenient, in those cases Jenesis 4 Java can be a solution for you.
+Jenesis 4 Java is a DOM (domain object model) of the Java programming language.  
+The complete java class including annotations and comments is constructed with as a DOM 
+(that can be manipulated in as many passes you need) until you let it encode to a java file.  
+
+  A simple hello world example:
+
+-----------------------------------------
+	// Get the VirtualMachine implementation.  
+	VirtualMachine vm = VirtualMachine.getVirtualMachine();
+	
+	// Instantiate a new CompilationUnit.  The argument to the
+	// compilation unit is the "codebase" or directory where the
+	// compilation unit should be written.
+	//
+	// Make a new compilation unit rooted to the given sourcepath.
+	CompilationUnit unit = vm.newCompilationUnit("/tmp");
+	
+	// Set the package namespace.
+	unit.setNamespace("net.sourceforge.jenesis4java.example");
+	
+	// Add an import statement for fun.
+	unit.addImport("java.io.Serializable");
+	
+	// Comment the package with a javadoc (DocumentationComment).
+	unit.setComment(Comment.D, "Auto-Generated using the Jenesis Syntax API");
+	
+	// Make a new class.
+	PackageClass cls = unit.newClass("HelloWorld");
+	// Make it a public class.
+	cls.setAccess(Access.PUBLIC);
+	// Extend Object just for fun.
+	cls.setExtends("Object");
+	// Implement serializable just for fun.
+	cls.addImplements("Serializable");
+	// Comment the class with a javadoc (DocumentationComment).
+	unit.setComment(Comment.D, "The HelloWorld example class.");
+	
+	// Make a new Method in the Class having type VOID and name "main".
+	ClassMethod method = cls.newMethod(vm.newType(Type.VOID), "main");
+	// Make it a public method.
+	method.setAccess(Access.PUBLIC);
+	// Make it a static method
+	method.isStatic(true);
+	// Add the "String[] argv" formal parameter.
+	method.addParameter(vm.newArray("String", 1), "argv");
+
+	// Create a new Method Invocation expression.
+	Invoke println = vm.newInvoke("System.out", "println");
+	// Add the Hello World string literal as the sole argument.
+	println.addArg(vm.newString("Hello World!"));
+	// Add this expression to the method in a statement.
+	method.newStmt(println);
+
+	// Write the java file.
+	unit.encode();
+-----------------------------------------
+
+  This a republished and refactored version of the Jenesis code generator published by inxar, because the original
+library is not available in the Internet anymore.
+ 
+ Jenesis is included in ibiblio, the standard maven repository. 
