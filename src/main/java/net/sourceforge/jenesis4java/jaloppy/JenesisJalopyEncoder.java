@@ -14,6 +14,28 @@
  */
 package net.sourceforge.jenesis4java.jaloppy;
 
+/*
+ * #%L
+ * Jenesis 4 Java Code Generator
+ * %%
+ * Copyright (C) 2000 - 2015 jenesis4java
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/lgpl-3.0.html>.
+ * #L%
+ */
+
 import java.io.BufferedWriter;
 import java.io.EOFException;
 import java.io.File;
@@ -128,18 +150,18 @@ public class JenesisJalopyEncoder implements CompilationUnitEncoder {
     private Jalopy createJalopy(Jalopy jalopy) {
         InputStream in;
         try {
-            in = this.getClass().getClassLoader().getResourceAsStream(this.jalopyConfigAsResourceOrFile);
+            in = this.getClass().getClassLoader().getResourceAsStream(jalopyConfigAsResourceOrFile);
             Convention.importSettings(in, Convention.EXTENSION_XML);
         } catch (IOException ex) {
             in = null;
         }
         if (in == null) {
             try {
-                File configFile = new File(this.jalopyConfigAsResourceOrFile);
+                File configFile = new File(jalopyConfigAsResourceOrFile);
                 in = new FileInputStream(configFile);
                 Convention.importSettings(in, Convention.EXTENSION_XML);
             } catch (IOException ex) {
-                throw new RuntimeException("could NOT find a Jalopy config (as resource and file) " + this.jalopyConfigAsResourceOrFile, ex);
+                throw new RuntimeException("could NOT find a Jalopy config (as resource and file) " + jalopyConfigAsResourceOrFile, ex);
             }
         }
 
@@ -175,12 +197,12 @@ public class JenesisJalopyEncoder implements CompilationUnitEncoder {
                 getJalopy().setInput(inputReader, file.getCanonicalPath());
                 getJalopy().setOutput(formattedWriter);
                 getJalopy().format();
-                logMessage(this.jalopy, file.getCanonicalPath());
-                if (this.jalopy.getState() == Jalopy.State.OK || this.jalopy.getState() == Jalopy.State.PARSED) {
+                logMessage(jalopy, file.getCanonicalPath());
+                if (jalopy.getState() == Jalopy.State.OK || jalopy.getState() == Jalopy.State.PARSED) {
                     return formattedWriter.toString();
                 } else {
                     resetJalopy();
-                    throw new RuntimeException("Could not format java file due to Jalopy State " + this.jalopy.getState());
+                    throw new RuntimeException("Could not format java file due to Jalopy State " + jalopy.getState());
 
                 }
             } catch (Exception e) {
@@ -272,10 +294,10 @@ public class JenesisJalopyEncoder implements CompilationUnitEncoder {
     }
 
     private Jalopy getJalopy() {
-        if (this.jalopy == null && this.jalopyConfigAsResourceOrFile != null) {
-            this.jalopy = createJalopy(new Jalopy());
+        if (jalopy == null && jalopyConfigAsResourceOrFile != null) {
+            jalopy = createJalopy(new Jalopy());
         }
-        return this.jalopy;
+        return jalopy;
     }
 
     /**
@@ -283,7 +305,7 @@ public class JenesisJalopyEncoder implements CompilationUnitEncoder {
      * it the lazy getter will create a new one.
      */
     private void resetJalopy() {
-        this.jalopy = null;
+        jalopy = null;
     }
 
     private void writeIfChanged(String newFileContents, File file) throws FileNotFoundException, IOException {

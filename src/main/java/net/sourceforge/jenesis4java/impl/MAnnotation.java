@@ -1,5 +1,27 @@
 package net.sourceforge.jenesis4java.impl;
 
+/*
+ * #%L
+ * Jenesis 4 Java Code Generator
+ * %%
+ * Copyright (C) 2000 - 2015 jenesis4java
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/lgpl-3.0.html>.
+ * #L%
+ */
+
 /**
  * Copyright (C) 2008, 2010 Richard van Nieuwenhoven - ritchie [at] gmx [dot] at
  * Copyright (C) 2000, 2001 Paul Cody Johnston - pcj@inxar.org <br>
@@ -44,37 +66,37 @@ public class MAnnotation extends MCodeable implements Annotation {
 
         @Override
         public MAnnotationAttribute addValue(Expression value) {
-            Expression[] oldValue = this.values;
+            Expression[] oldValue = values;
             if (oldValue == null) {
                 oldValue = new Expression[0];
             }
-            this.values = new Expression[oldValue.length + 1];
-            System.arraycopy(oldValue, 0, this.values, 0, oldValue.length);
-            this.values[oldValue.length] = value;
+            values = new Expression[oldValue.length + 1];
+            System.arraycopy(oldValue, 0, values, 0, oldValue.length);
+            values[oldValue.length] = value;
             return this;
         }
 
         @Override
         public MAnnotationAttribute addValueAnnotation(Annotation valueAnnotation) {
-            Annotation[] oldValue = this.valueAnnotations;
+            Annotation[] oldValue = valueAnnotations;
             if (oldValue == null) {
                 oldValue = new Annotation[0];
             }
-            this.valueAnnotations = new Annotation[oldValue.length + 1];
-            System.arraycopy(oldValue, 0, this.valueAnnotations, 0, oldValue.length);
-            this.valueAnnotations[oldValue.length] = valueAnnotation;
+            valueAnnotations = new Annotation[oldValue.length + 1];
+            System.arraycopy(oldValue, 0, valueAnnotations, 0, oldValue.length);
+            valueAnnotations[oldValue.length] = valueAnnotation;
             return this;
         }
 
         @Override
         public String getName() {
-            return this.name;
+            return name;
         }
 
         @Override
         public Expression getValue() {
-            if (this.values != null && this.values.length > 0) {
-                return this.values[0];
+            if (values != null && values.length > 0) {
+                return values[0];
             } else {
                 return null;
             }
@@ -82,8 +104,8 @@ public class MAnnotation extends MCodeable implements Annotation {
 
         @Override
         public Annotation getValueAnnotation() {
-            if (this.valueAnnotations != null && this.valueAnnotations.length > 0) {
-                return this.valueAnnotations[0];
+            if (valueAnnotations != null && valueAnnotations.length > 0) {
+                return valueAnnotations[0];
             } else {
                 return null;
             }
@@ -91,17 +113,17 @@ public class MAnnotation extends MCodeable implements Annotation {
 
         @Override
         public Annotation[] getValueAnnotations() {
-            return this.valueAnnotations;
+            return valueAnnotations;
         }
 
         @Override
         public Expression[] getValues() {
-            return this.values;
+            return values;
         }
 
         @Override
         public boolean isArray() {
-            return this.isArray || this.values != null && this.values.length > 1 || this.valueAnnotations != null && this.valueAnnotations.length > 1;
+            return isArray || values != null && values.length > 1 || valueAnnotations != null && valueAnnotations.length > 1;
         }
 
         @Override
@@ -118,7 +140,7 @@ public class MAnnotation extends MCodeable implements Annotation {
 
         @Override
         public MAnnotationAttribute setValue(Expression value) {
-            this.values = new Expression[]{
+            values = new Expression[]{
                 value
             };
             return this;
@@ -126,7 +148,7 @@ public class MAnnotation extends MCodeable implements Annotation {
 
         @Override
         public MAnnotationAttribute setValueAnnotation(Annotation valueAnnotation) {
-            this.valueAnnotations = new Annotation[]{
+            valueAnnotations = new Annotation[]{
                 valueAnnotation
             };
             return this;
@@ -146,37 +168,37 @@ public class MAnnotation extends MCodeable implements Annotation {
 
         @Override
         public CodeWriter toCode(CodeWriter out) {
-            if (!isArray() && this.valueAnnotations != null && this.valueAnnotations.length == 1) {
+            if (!isArray() && valueAnnotations != null && valueAnnotations.length == 1) {
                 out.indentLine();
             }
-            if (this.name != null && this.name.trim().length() > 0) {
-                out.write(this.name);
+            if (name != null && name.trim().length() > 0) {
+                out.write(name);
                 out.write(" = ");
             }
             if (isArray()) {
                 out.write('{');
                 out.indentLine();
             }
-            if (this.values != null) {
-                for (int index = 0; index < this.values.length; index++) {
+            if (values != null) {
+                for (int index = 0; index < values.length; index++) {
                     if (index > 0) {
                         out.write(", ");
                     }
-                    out.write(this.values[index]);
+                    out.write(values[index]);
                 }
-            } else if (this.valueAnnotations != null) {
-                for (int index = 0; index < this.valueAnnotations.length; index++) {
+            } else if (valueAnnotations != null) {
+                for (int index = 0; index < valueAnnotations.length; index++) {
                     if (index > 0) {
                         out.write(", ");
                         out.newLine();
                     }
-                    out.write(this.valueAnnotations[index]);
+                    out.write(valueAnnotations[index]);
                 }
             }
             if (isArray()) {
                 out.dedentLine();
                 out.write('}');
-            } else if (this.valueAnnotations != null && this.valueAnnotations.length == 1) {
+            } else if (valueAnnotations != null && valueAnnotations.length == 1) {
                 out.dedentLine();
             }
             return out;
@@ -185,8 +207,8 @@ public class MAnnotation extends MCodeable implements Annotation {
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            VisitorUtils.visit(this.values, this, visitor);
-            VisitorUtils.visit(this.valueAnnotations, this, visitor);
+            VisitorUtils.visit(values, this, visitor);
+            VisitorUtils.visit(valueAnnotations, this, visitor);
         }
     }
 
@@ -209,13 +231,13 @@ public class MAnnotation extends MCodeable implements Annotation {
 
     @Override
     public MAnnotation addAnntationAttribute(AnnotationAttribute annotation) {
-        this.annotationAttributes.add(annotation);
+        annotationAttributes.add(annotation);
         return this;
     }
 
     @Override
     public AnnotationAttribute addAnntationAttribute(String name) {
-        MAnnotationAttribute attribute = new MAnnotationAttribute(this.vm);
+        MAnnotationAttribute attribute = new MAnnotationAttribute(vm);
         attribute.setName(name);
         addAnntationAttribute(attribute);
         return attribute;
@@ -230,7 +252,7 @@ public class MAnnotation extends MCodeable implements Annotation {
 
     @Override
     public AnnotationAttribute getAnnotationAttribute(String name) {
-        for (Object element : this.annotationAttributes) {
+        for (Object element : annotationAttributes) {
             AnnotationAttribute annotationAttribute = (AnnotationAttribute) element;
             if (annotationAttribute.getName().equals(name)) {
                 return annotationAttribute;
@@ -241,17 +263,17 @@ public class MAnnotation extends MCodeable implements Annotation {
 
     @Override
     public List<AnnotationAttribute> getAnnotationAttributes() {
-        return this.annotationAttributes;
+        return annotationAttributes;
     }
 
     @Override
     public String getName() {
-        return this.name;
+        return name;
     }
 
     @Override
     public String getText() {
-        return this.text;
+        return text;
     }
 
     @Override
@@ -269,19 +291,19 @@ public class MAnnotation extends MCodeable implements Annotation {
     @Override
     public CodeWriter toCode(CodeWriter out) {
         super.toCode(out);
-        if (this.annotationAttributes.size() == 0 && (this.name == null || "".equals(this.name))) {
-            out.write("@" + this.text);
-        } else if (this.annotationAttributes.size() == 0) {
-            out.write("@" + this.name + "(" + this.text + ")");
+        if (annotationAttributes.size() == 0 && (name == null || "".equals(name))) {
+            out.write("@" + text);
+        } else if (annotationAttributes.size() == 0) {
+            out.write("@" + name + "(" + text + ")");
         } else {
             out.write("@");
-            if (this.name != null && this.name.trim().length() > 0) {
-                out.write(this.name);
-            } else if (this.text != null && this.text.trim().length() > 0) {
-                out.write(this.text);
+            if (name != null && name.trim().length() > 0) {
+                out.write(name);
+            } else if (text != null && text.trim().length() > 0) {
+                out.write(text);
             }
             out.write("(");
-            for (Iterator<AnnotationAttribute> iterator = this.annotationAttributes.iterator(); iterator.hasNext();) {
+            for (Iterator<AnnotationAttribute> iterator = annotationAttributes.iterator(); iterator.hasNext();) {
                 out.write(iterator.next());
                 if (iterator.hasNext()) {
                     out.write(", ");
@@ -295,6 +317,6 @@ public class MAnnotation extends MCodeable implements Annotation {
     @Override
     public void visit(IVisitor visitor) {
         super.visit(visitor);
-        VisitorUtils.visit(this.annotationAttributes,this, visitor);
+        VisitorUtils.visit(annotationAttributes, this, visitor);
     }
 }

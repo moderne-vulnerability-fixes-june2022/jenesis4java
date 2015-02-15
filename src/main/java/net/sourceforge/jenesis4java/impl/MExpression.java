@@ -1,5 +1,27 @@
 package net.sourceforge.jenesis4java.impl;
 
+/*
+ * #%L
+ * Jenesis 4 Java Code Generator
+ * %%
+ * Copyright (C) 2000 - 2015 jenesis4java
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/lgpl-3.0.html>.
+ * #L%
+ */
+
 /**
  * Copyright (C) 2008, 2010 Richard van Nieuwenhoven - ritchie [at] gmx [dot] at
  * Copyright (C) 2000, 2001 Paul Cody Johnston - pcj@inxar.org <br>
@@ -61,9 +83,9 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
         public MAccessor(MVM vm, String qual, String name) {
             super(vm);
             this.qual = qual;
-            this.qualExpression = null;
+            qualExpression = null;
             this.name = name;
-            this.nameExpression = null;
+            nameExpression = null;
         }
 
         MAccessor(MVM vm) {
@@ -73,30 +95,30 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
         MAccessor(MVM vm, Expression qual, String name) {
             super(vm);
             this.qual = null;
-            this.qualExpression = qual;
+            qualExpression = qual;
             this.name = name;
         }
 
         MAccessor(MVM vm, Expression qual, Expression name) {
             super(vm);
             this.qual = null;
-            this.qualExpression = qual;
-            this.nameExpression = name;
+            qualExpression = qual;
+            nameExpression = name;
         }
 
         @Override
         public String getName() {
-            return this.name;
+            return name;
         }
 
         @Override
         public Expression getQualExpression() {
-            return this.qualExpression;
+            return qualExpression;
         }
 
         @Override
         public String getQualifier() {
-            return this.qual;
+            return qual;
         }
 
         @Override
@@ -119,15 +141,15 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
         @Override
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
-            if (this.qual != null) {
-                out.write(this.qual).write('.');
-            } else if (this.qualExpression != null) {
-                out.write(this.qualExpression).write('.');
+            if (qual != null) {
+                out.write(qual).write('.');
+            } else if (qualExpression != null) {
+                out.write(qualExpression).write('.');
             }
             if (name != null) {
-                out.write(this.name);
+                out.write(name);
             } else if (nameExpression != null) {
-                out.write(this.nameExpression).write('.');
+                out.write(nameExpression).write('.');
             }
             return out;
         }
@@ -135,8 +157,8 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            this.qualExpression = VisitorUtils.visit(this.qualExpression, this, visitor);
-            this.nameExpression = VisitorUtils.visit(this.nameExpression, this, visitor);
+            qualExpression = VisitorUtils.visit(qualExpression, this, visitor);
+            nameExpression = VisitorUtils.visit(nameExpression, this, visitor);
         }
     }
 
@@ -149,36 +171,36 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
 
         MArrayAccess(MVM vm) {
             super(vm);
-            this.dimensions = new ArrayList<Expression>();
+            dimensions = new ArrayList<Expression>();
         }
 
         MArrayAccess(MVM vm, Expression qual, String name) {
             super(vm, qual, name);
-            this.dimensions = new ArrayList<Expression>();
+            dimensions = new ArrayList<Expression>();
         }
 
         MArrayAccess(MVM vm, String qual, String name) {
             super(vm, qual, name);
-            this.dimensions = new ArrayList<Expression>();
+            dimensions = new ArrayList<Expression>();
         }
 
         @Override
         public ArrayAccess addDim(Expression expr) {
-            this.dimensions.add(expr);
+            dimensions.add(expr);
             return this;
         }
 
         @Override
         public List<Expression> getDims() {
-            return ListTypeSelector.select(this.dimensions);
+            return ListTypeSelector.select(dimensions);
         }
 
         @Override
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
 
-            for (int i = 0; i < this.dimensions.size(); i++) {
-                out.write('[').write(this.dimensions.get(i)).write(']');
+            for (int i = 0; i < dimensions.size(); i++) {
+                out.write('[').write(dimensions.get(i)).write(']');
             }
 
             return out;
@@ -187,7 +209,7 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            VisitorUtils.visit(this.dimensions, this, visitor);
+            VisitorUtils.visit(dimensions, this, visitor);
         }
     }
 
@@ -205,7 +227,7 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
 
         @Override
         public Object getArgs() {
-            return this.o;
+            return o;
         }
 
         @Override
@@ -224,10 +246,10 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
             super.toCode(out);
 
             // normal case
-            if (this.o == null) {
+            if (o == null) {
                 out.write("{}");
-            } else if (this.o instanceof Object[]) {
-                Object[] ao = (Object[]) this.o;
+            } else if (o instanceof Object[]) {
+                Object[] ao = (Object[]) o;
                 if (ao.length == 0) {
                     out.write("{}");
                 } else {
@@ -237,8 +259,8 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
                 // the exceptional case where the primary object
                 // is NOT an array, and we simply write the sole
                 // element
-            } else if (this.o instanceof Expression) {
-                out.write("{ ").write(this.o).write(" }");
+            } else if (o instanceof Expression) {
+                out.write("{ ").write(o).write(" }");
             }
 
             return out;
@@ -247,7 +269,7 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            this.o = VisitorUtils.visit(this.o, this, visitor);
+            o = VisitorUtils.visit(o, this, visitor);
         }
 
         void writeElement(Object o, CodeWriter out, boolean isNotFirst) {
@@ -303,45 +325,45 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
 
         @Override
         public CodeWriter toCode(CodeWriter out) {
-            out.queue(this.comment);
+            out.queue(comment);
 
-            switch (this.type) {
+            switch (type) {
                 case Assign.S:
-                    out.write(this.l).write(" = ").write(this.r);
+                    out.write(l).write(" = ").write(r);
                     break;
                 case Binary.BAND:
-                    out.write(this.l).write(" &= ").write(this.r);
+                    out.write(l).write(" &= ").write(r);
                     break;
                 case Binary.BOR:
-                    out.write(this.l).write(" |= ").write(this.r);
+                    out.write(l).write(" |= ").write(r);
                     break;
                 case Binary.XOR:
-                    out.write(this.l).write(" ^= ").write(this.r);
+                    out.write(l).write(" ^= ").write(r);
                     break;
                 case Binary.LEFT:
-                    out.write(this.l).write(" <<= ").write(this.r);
+                    out.write(l).write(" <<= ").write(r);
                     break;
                 case Binary.RIGHT:
-                    out.write(this.l).write(" >>= ").write(this.r);
+                    out.write(l).write(" >>= ").write(r);
                     break;
                 case Binary.UNSIGNED:
-                    out.write(this.l).write(" >>>= ").write(this.r);
+                    out.write(l).write(" >>>= ").write(r);
                     break;
                 case Binary.SUB:
-                    out.write(this.l).write(" -= ").write(this.r);
+                    out.write(l).write(" -= ").write(r);
                     break;
                 case Binary.MUL:
-                    out.write(this.l).write(" *= ").write(this.r);
+                    out.write(l).write(" *= ").write(r);
                     break;
                 case Binary.DIV:
-                    out.write(this.l).write(" /= ").write(this.r);
+                    out.write(l).write(" /= ").write(r);
                     break;
                 case Binary.MOD:
-                    out.write(this.l).write(" %= ").write(this.r);
+                    out.write(l).write(" %= ").write(r);
                     break;
                 case Binary.ADD:
                 case Binary.CAT:
-                    out.write(this.l).write(" += ").write(this.r);
+                    out.write(l).write(" += ").write(r);
                     break;
                 default:
                     throw new RuntimeException("Please use a constant from the Assign interface when making new Assignment expressions.");
@@ -351,7 +373,7 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
 
         @Override
         public int type() {
-            return this.type;
+            return type;
         }
 
         @Override
@@ -385,17 +407,17 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
 
         @Override
         public Expression getLValue() {
-            return this.l;
+            return l;
         }
 
         @Override
         public Expression getRValue() {
-            return this.r;
+            return r;
         }
 
         @Override
         public Type getType() {
-            return this.l.getType();
+            return l.getType();
         }
 
         @Override
@@ -414,70 +436,70 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
 
-            switch (this.type) {
+            switch (type) {
                 case Binary.LAND:
-                    out.write(this.l).write(" && ").write(this.r);
+                    out.write(l).write(" && ").write(r);
                     break;
                 case Binary.LOR:
-                    out.write(this.l).write(" || ").write(this.r);
+                    out.write(l).write(" || ").write(r);
                     break;
                 case Binary.BAND:
-                    out.write(this.l).write(" & ").write(this.r);
+                    out.write(l).write(" & ").write(r);
                     break;
                 case Binary.BOR:
-                    out.write(this.l).write(" | ").write(this.r);
+                    out.write(l).write(" | ").write(r);
                     break;
                 case Binary.XOR:
-                    out.write(this.l).write(" ^ ").write(this.r);
+                    out.write(l).write(" ^ ").write(r);
                     break;
                 case Binary.LEFT:
-                    out.write(this.l).write(" << ").write(this.r);
+                    out.write(l).write(" << ").write(r);
                     break;
                 case Binary.RIGHT:
-                    out.write(this.l).write(" >> ").write(this.r);
+                    out.write(l).write(" >> ").write(r);
                     break;
                 case Binary.UNSIGNED:
-                    out.write(this.l).write(" >>> ").write(this.r);
+                    out.write(l).write(" >>> ").write(r);
                     break;
                 case Binary.SUB:
-                    out.write(this.l).write(" - ").write(this.r);
+                    out.write(l).write(" - ").write(r);
                     break;
                 case Binary.MUL:
-                    out.write(this.l).write(" * ").write(this.r);
+                    out.write(l).write(" * ").write(r);
                     break;
                 case Binary.DIV:
-                    out.write(this.l).write(" / ").write(this.r);
+                    out.write(l).write(" / ").write(r);
                     break;
                 case Binary.MOD:
-                    out.write(this.l).write(" % ").write(this.r);
+                    out.write(l).write(" % ").write(r);
                     break;
                 case Binary.EQ:
-                    out.write(this.l).write(" == ").write(this.r);
+                    out.write(l).write(" == ").write(r);
                     break;
                 case Binary.NE:
-                    out.write(this.l).write(" != ").write(this.r);
+                    out.write(l).write(" != ").write(r);
                     break;
                 case Binary.GT:
-                    out.write(this.l).write(" > ").write(this.r);
+                    out.write(l).write(" > ").write(r);
                     break;
                 case Binary.GTE:
-                    out.write(this.l).write(" >= ").write(this.r);
+                    out.write(l).write(" >= ").write(r);
                     break;
                 case Binary.LT:
-                    out.write(this.l).write(" < ").write(this.r);
+                    out.write(l).write(" < ").write(r);
                     break;
                 case Binary.LTE:
-                    out.write(this.l).write(" <= ").write(this.r);
+                    out.write(l).write(" <= ").write(r);
                     break;
                 case Binary.IOF:
-                    out.write(this.l).write(" instanceof ").write(this.r);
+                    out.write(l).write(" instanceof ").write(r);
                     break;
                 case Binary.ASSIGN:
-                    out.write(this.l).write(" = ").write(this.r);
+                    out.write(l).write(" = ").write(r);
                     break;
                 case Binary.ADD:
                 case Binary.CAT:
-                    out.write(this.l).write(" + ").write(this.r);
+                    out.write(l).write(" + ").write(r);
                     break;
                 default:
                     throw new RuntimeException("Please use a constant from the Binary interface when making new binary expressions.");
@@ -487,14 +509,14 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
 
         @Override
         public int type() {
-            return this.type;
+            return type;
         }
 
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            this.l = VisitorUtils.visit(this.l, this, visitor);
-            this.r = VisitorUtils.visit(this.r, this, visitor);
+            l = VisitorUtils.visit(l, this, visitor);
+            r = VisitorUtils.visit(r, this, visitor);
         }
     }
 
@@ -540,12 +562,12 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
 
         @Override
         public Expression getExpression() {
-            return this.val;
+            return val;
         }
 
         @Override
         public Type getType() {
-            return this.type;
+            return type;
         }
 
         @Override
@@ -557,10 +579,10 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
         @Override
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
-            if (this.type == null) {
-                out.write('(').write(this.val).write(')');
+            if (type == null) {
+                out.write('(').write(val).write(')');
             } else {
-                out.write('(').write('(').write(this.type).write(')').write(this.val).write(')');
+                out.write('(').write('(').write(type).write(')').write(val).write(')');
             }
             return out;
         }
@@ -568,8 +590,8 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            this.type = VisitorUtils.visit(this.type, this, visitor);
-            this.val = VisitorUtils.visit(this.val, this, visitor);
+            type = VisitorUtils.visit(type, this, visitor);
+            val = VisitorUtils.visit(val, this, visitor);
         }
     }
 
@@ -626,27 +648,27 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
 
         @Override
         public Freeform dedentLine() {
-            this.indentNo--;
+            indentNo--;
             newLine();
             return this;
         }
 
         @Override
         public String getCode() {
-            return this.buf.toString();
+            return buf.toString();
         }
 
         public int getColumnNumber() {
-            return this.colNo;
+            return colNo;
         }
 
         @Override
         public int getIndentNumber() {
-            return this.indentNo;
+            return indentNo;
         }
 
         public int getLineNumber() {
-            return this.lineNo;
+            return lineNo;
         }
 
         @Override
@@ -656,29 +678,29 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
 
         @Override
         public Freeform indentLine() {
-            this.indentNo++;
+            indentNo++;
             newLine();
             return this;
         }
 
         @Override
         public boolean isLineNew() {
-            return this.isLineNew;
+            return isLineNew;
         }
 
         @Override
         public Freeform newLine() {
-            this.out.println();
+            out.println();
             writeIndent();
-            this.colNo = 0;
-            this.lineNo++;
-            this.isLineNew = true;
+            colNo = 0;
+            lineNo++;
+            isLineNew = true;
             return this;
         }
 
         @Override
         public Freeform resetLine() {
-            this.indentNo = 0;
+            indentNo = 0;
             newLine();
             return this;
         }
@@ -686,22 +708,22 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
         @Override
         public MFreeform setCode(String code) {
             init();
-            this.buf.write(code);
+            buf.write(code);
             return this;
         }
 
         @Override
         public Freeform space() {
-            this.out.print(' ');
-            this.colNo++;
-            this.isLineNew = false;
+            out.print(' ');
+            colNo++;
+            isLineNew = false;
             return this;
         }
 
         @Override
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
-            out.write(this.buf.toString());
+            out.write(buf.toString());
             return out;
         }
 
@@ -713,20 +735,20 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
         @Override
         public Freeform write(boolean b) {
             // print it
-            this.out.print(b);
+            out.print(b);
             // add if 4:'true' or 5:'false'
-            this.colNo += b ? 4 : 5;
-            this.isLineNew = false;
+            colNo += b ? 4 : 5;
+            isLineNew = false;
             return this;
         }
 
         @Override
         public Freeform write(char c) {
             // print the char
-            this.out.print(c);
+            out.print(c);
             // add one
-            this.colNo++;
-            this.isLineNew = false;
+            colNo++;
+            isLineNew = false;
             return this;
         }
 
@@ -735,44 +757,44 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
 
             if (chars != null) {
                 // print the chars;
-                this.out.print(chars);
+                out.print(chars);
                 // add
-                this.colNo += chars.length;
-                this.isLineNew = false;
+                colNo += chars.length;
+                isLineNew = false;
             }
             return this;
         }
 
         @Override
         public Freeform write(double d) {
-            this.out.print(d);
-            this.colNo += Double.toString(d).length();
-            this.isLineNew = false;
+            out.print(d);
+            colNo += Double.toString(d).length();
+            isLineNew = false;
             return this;
         }
 
         @Override
         public Freeform write(float f) {
-            this.out.print(f);
-            this.colNo += Float.toString(f).length();
-            this.isLineNew = false;
+            out.print(f);
+            colNo += Float.toString(f).length();
+            isLineNew = false;
             return this;
         }
 
         @Override
         public Freeform write(int i) {
-            this.out.print(i);
-            this.colNo += Integer.toString(i).length();
-            this.isLineNew = false;
+            out.print(i);
+            colNo += Integer.toString(i).length();
+            isLineNew = false;
             return this;
         }
 
         @Override
         public Freeform write(Object o) {
             if (o != null) {
-                this.out.print(o);
-                this.colNo += o.toString().length();
-                this.isLineNew = false;
+                out.print(o);
+                colNo += o.toString().length();
+                isLineNew = false;
             }
             return this;
         }
@@ -790,24 +812,24 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
         @Override
         public Freeform write(String s) {
             if (s != null) {
-                this.out.print(s);
-                this.colNo += s.length();
-                this.isLineNew = false;
+                out.print(s);
+                colNo += s.length();
+                isLineNew = false;
             }
 
             return this;
         }
 
         private void writeIndent() {
-            int n = this.indentNo;
+            int n = indentNo;
             while (n-- > 0) {
-                this.out.print('\t');
+                out.print('\t');
             }
         }
 
         void init() {
-            this.buf = new java.io.StringWriter();
-            this.out = new java.io.PrintWriter(this.buf);
+            buf = new java.io.StringWriter();
+            out = new java.io.PrintWriter(buf);
         }
     }
 
@@ -819,67 +841,67 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
         MInvoke(MVM vm, Expression qual, String name) {
             super(vm);
             this.qual = null;
-            this.qualExpression = qual;
+            qualExpression = qual;
             this.name = name;
         }
 
         MInvoke(MVM vm, String qual, String name) {
             super(vm);
             this.qual = qual;
-            this.qualExpression = null;
+            qualExpression = null;
             this.name = name;
         }
 
         @Override
         public Invoke addArg(boolean value) {
-            return addArg(value ? this.vm.newTrue() : this.vm.newFalse());
+            return addArg(value ? vm.newTrue() : vm.newFalse());
         }
 
         @Override
         public Invoke addArg(double value) {
-            return addArg(this.vm.newDouble(value));
+            return addArg(vm.newDouble(value));
         }
 
         @Override
         public Invoke addArg(Expression arg) {
-            this.ve.add(arg);
+            ve.add(arg);
             return this;
         }
 
         @Override
         public Invoke addArg(float value) {
-            return addArg(this.vm.newFloat(value));
+            return addArg(vm.newFloat(value));
         }
 
         @Override
         public Invoke addArg(int value) {
-            return addArg(this.vm.newInt(value));
+            return addArg(vm.newInt(value));
         }
 
         @Override
         public Invoke addArg(long value) {
-            return addArg(this.vm.newLong(value));
+            return addArg(vm.newLong(value));
         }
 
         @Override
         public Invoke addArg(String value) {
-            return addArg(this.vm.newString(value));
+            return addArg(vm.newString(value));
         }
 
         @Override
         public Invoke addVarriableArg(String variableName) {
-            return addArg(this.vm.newVar(variableName));
+            return addArg(vm.newVar(variableName));
         }
 
         @Override
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
             out.write('(');
-            for (int i = 0; i < this.ve.size(); i++) {
+            for (int i = 0; i < ve.size(); i++) {
                 if (i > 0) {
                     out.write(", ");
                 }
-                out.write(this.ve.get(i));
+                out.write(ve.get(i));
             }
             out.write(')');
 
@@ -901,17 +923,17 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
 
         MNary(MVM vm) {
             super(vm);
-            this.ve = new ArrayList<Expression>();
+            ve = new ArrayList<Expression>();
         }
 
         public List<Expression> getArgs() {
-            return ListTypeSelector.select(this.ve, Expression.class);
+            return ListTypeSelector.select(ve, Expression.class);
         }
 
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            VisitorUtils.visit(this.ve, this, visitor);
+            VisitorUtils.visit(ve, this, visitor);
         }
     }
 
@@ -928,29 +950,29 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
 
         MNewAnonymousClass(MVM vm, Type type) {
             super(vm, null);
-            this.ve = new ArrayList<Expression>();
+            ve = new ArrayList<Expression>();
             this.type = type;
         }
 
         @Override
         public NewClass addArg(Expression arg) {
-            this.ve.add(arg);
+            ve.add(arg);
             return this;
         }
 
         @Override
         public List<Expression> getArgs() {
-            return ListTypeSelector.select(this.ve, Expression.class);
+            return ListTypeSelector.select(ve, Expression.class);
         }
 
         @Override
         public String getQualifier() {
-            return this.qual;
+            return qual;
         }
 
         @Override
         public Type getType() {
-            return this.type;
+            return type;
         }
 
         @Override
@@ -967,21 +989,21 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
 
         @Override
         public CodeWriter toCode(CodeWriter out) {
-            if (this.comment != null) {
-                out.queue(this.comment);
+            if (comment != null) {
+                out.queue(comment);
             }
 
-            out.write("new ").write(this.type).write('(');
+            out.write("new ").write(type).write('(');
 
-            for (int i = 0; i < this.ve.size(); i++) {
+            for (int i = 0; i < ve.size(); i++) {
                 if (i > 0) {
                     out.write(", ");
                 }
-                out.write(this.ve.get(i));
+                out.write(ve.get(i));
             }
             out.write(')');
 
-            writeBlock(out, this.vm.getStyle("anonymous-class"));
+            writeBlock(out, vm.getStyle("anonymous-class"));
 
             return out;
         }
@@ -989,8 +1011,8 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            this.type = VisitorUtils.visit(this.type, this, visitor);
-            VisitorUtils.visit(this.ve, this, visitor);
+            type = VisitorUtils.visit(type, this, visitor);
+            VisitorUtils.visit(ve, this, visitor);
         }
     }
 
@@ -1008,34 +1030,34 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
         MNewArray(MVM vm, Type type) {
             super(vm);
             this.type = type;
-            this.dimensions = new ArrayList<Expression>(); // dimensions
+            dimensions = new ArrayList<Expression>(); // dimensions
         }
 
         @Override
         public NewArray addDim() {
-            this.dimensions.add(new MBlank(this.vm));
+            dimensions.add(new MBlank(vm));
             return this;
         }
 
         @Override
         public NewArray addDim(Expression e) {
-            this.dimensions.add(e);
+            dimensions.add(e);
             return this;
         }
 
         @Override
         public List<Expression> getDims() {
-            return ListTypeSelector.select(this.dimensions, Expression.class);
+            return ListTypeSelector.select(dimensions, Expression.class);
         }
 
         @Override
         public ArrayInitializer getInitializer() {
-            return this.ai;
+            return ai;
         }
 
         @Override
         public Type getType() {
-            return this.type;
+            return type;
         }
 
         @Override
@@ -1052,20 +1074,20 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
 
         @Override
         public CodeWriter toCode(CodeWriter out) {
-            out.write("new ").write(this.type);
-            for (Expression dim : this.dimensions) {
+            out.write("new ").write(type);
+            for (Expression dim : dimensions) {
                 out.write('[').write(dim).write(']');
             }
-            out.write(this.ai);
+            out.write(ai);
             return out;
         }
 
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            this.type = VisitorUtils.visit(this.type, this, visitor);
-            VisitorUtils.visit(this.dimensions, this, visitor);
-            this.ai = VisitorUtils.visit(this.ai, this, visitor);
+            type = VisitorUtils.visit(type, this, visitor);
+            VisitorUtils.visit(dimensions, this, visitor);
+            ai = VisitorUtils.visit(ai, this, visitor);
         }
     }
 
@@ -1083,13 +1105,13 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
 
         @Override
         public NewClass addArg(Expression arg) {
-            this.ve.add(arg);
+            ve.add(arg);
             return this;
         }
 
         @Override
         public Type getType() {
-            return this.type;
+            return type;
         }
 
         @Override
@@ -1108,12 +1130,12 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
 
-            out.write("new ").write(this.type).write('(');
-            for (int i = 0; i < this.ve.size(); i++) {
+            out.write("new ").write(type).write('(');
+            for (int i = 0; i < ve.size(); i++) {
                 if (i > 0) {
                     out.write(", ");
                 }
-                out.write(this.ve.get(i));
+                out.write(ve.get(i));
             }
             out.write(')');
 
@@ -1123,7 +1145,7 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            this.type = VisitorUtils.visit(this.type, this, visitor);
+            type = VisitorUtils.visit(type, this, visitor);
         }
     }
 
@@ -1155,22 +1177,22 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
 
         @Override
         public Type getType() {
-            return this.two.getType();
+            return two.getType();
         }
 
         @Override
         public Expression getValue1() {
-            return this.one;
+            return one;
         }
 
         @Override
         public Expression getValue2() {
-            return this.two;
+            return two;
         }
 
         @Override
         public Expression getValue3() {
-            return this.three;
+            return three;
         }
 
         @Override
@@ -1194,21 +1216,21 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
         @Override
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
-            out.write(this.one).write(" ? ").write(this.two).write(" : ").write(this.three);
+            out.write(one).write(" ? ").write(two).write(" : ").write(three);
             return out;
         }
 
         @Override
         public int type() {
-            return this.type;
+            return type;
         }
 
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            this.one = VisitorUtils.visit(this.one, this, visitor);
-            this.two = VisitorUtils.visit(this.two, this, visitor);
-            this.three = VisitorUtils.visit(this.three, this, visitor);
+            one = VisitorUtils.visit(one, this, visitor);
+            two = VisitorUtils.visit(two, this, visitor);
+            three = VisitorUtils.visit(three, this, visitor);
         }
     }
 
@@ -1230,17 +1252,17 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
 
         @Override
         public String getName() {
-            return this.type.toString();
+            return type.toString();
         }
 
         @Override
         public Type getType() {
-            return this.type;
+            return type;
         }
 
         @Override
         public Variable setName(String typeName) {
-            this.type = this.vm.newType(typeName);
+            type = vm.newType(typeName);
             return this;
         }
 
@@ -1252,14 +1274,14 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
         @Override
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
-            out.write(this.type);
+            out.write(type);
             return out;
         }
 
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            this.type = VisitorUtils.visit(this.type, this, visitor);
+            type = VisitorUtils.visit(type, this, visitor);
         }
     }
 
@@ -1285,12 +1307,12 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
 
         @Override
         public Type getType() {
-            return this.val.getType();
+            return val.getType();
         }
 
         @Override
         public Expression getValue() {
-            return this.val;
+            return val;
         }
 
         @Override
@@ -1303,33 +1325,33 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
 
-            switch (this.type) {
+            switch (type) {
                 case Unary.GROUP:
-                    out.write('(').write(this.val).write(')');
+                    out.write('(').write(val).write(')');
                     break;
                 case Unary.NOT:
-                    out.write('!').write(this.val);
+                    out.write('!').write(val);
                     break;
                 case Unary.BITWISE_NOT:
-                    out.write('~').write(this.val);
+                    out.write('~').write(val);
                     break;
                 case Unary.POS:
-                    out.write('+').write(this.val);
+                    out.write('+').write(val);
                     break;
                 case Unary.NEG:
-                    out.write('-').write(this.val);
+                    out.write('-').write(val);
                     break;
                 case Unary.AI:
-                    out.write("++").write(this.val);
+                    out.write("++").write(val);
                     break;
                 case Unary.PI:
-                    out.write(this.val).write("++");
+                    out.write(val).write("++");
                     break;
                 case Unary.AD:
-                    out.write("--").write(this.val);
+                    out.write("--").write(val);
                     break;
                 case Unary.PD:
-                    out.write(this.val).write("--");
+                    out.write(val).write("--");
                     break;
                 default:
                     throw new RuntimeException("Please use a constant from the Unary interface when making new unary expressions.");
@@ -1340,13 +1362,13 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
 
         @Override
         public int type() {
-            return this.type;
+            return type;
         }
 
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            this.val = VisitorUtils.visit(this.val, this, visitor);
+            val = VisitorUtils.visit(val, this, visitor);
         }
     }
 
@@ -1368,7 +1390,7 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
 
         @Override
         public String getName() {
-            return this.name;
+            return name;
         }
 
         @Override
@@ -1385,7 +1407,7 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
         @Override
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
-            out.write(this.name);
+            out.write(name);
             return out;
         }
 
@@ -1401,7 +1423,7 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
 
     @Override
     public CodeWriter toCode(CodeWriter out) {
-        out.queue(this.comment);
+        out.queue(comment);
         return out;
     }
 

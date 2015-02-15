@@ -1,5 +1,27 @@
 package net.sourceforge.jenesis4java.impl;
 
+/*
+ * #%L
+ * Jenesis 4 Java Code Generator
+ * %%
+ * Copyright (C) 2000 - 2015 jenesis4java
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/lgpl-3.0.html>.
+ * #L%
+ */
+
 /**
  * Copyright (C) 2008, 2010 Richard van Nieuwenhoven - ritchie [at] gmx [dot] at
  * Copyright (C) 2000, 2001 Paul Cody Johnston - pcj@inxar.org <br>
@@ -21,7 +43,6 @@ import net.sourceforge.jenesis4java.Assign;
 import net.sourceforge.jenesis4java.Block;
 import net.sourceforge.jenesis4java.Break;
 import net.sourceforge.jenesis4java.Case;
-import net.sourceforge.jenesis4java.Catch;
 import net.sourceforge.jenesis4java.CodeWriter;
 import net.sourceforge.jenesis4java.Codeable;
 import net.sourceforge.jenesis4java.Comment;
@@ -36,7 +57,6 @@ import net.sourceforge.jenesis4java.Expression;
 import net.sourceforge.jenesis4java.ExpressionStatement;
 import net.sourceforge.jenesis4java.Finally;
 import net.sourceforge.jenesis4java.For;
-import net.sourceforge.jenesis4java.FormalParameter;
 import net.sourceforge.jenesis4java.IVisitor;
 import net.sourceforge.jenesis4java.If;
 import net.sourceforge.jenesis4java.Let;
@@ -69,23 +89,23 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
 
         BlockStatement(MVM vm) {
             super(vm);
-            this.vs = new ArrayList<Statement>();
+            vs = new ArrayList<Statement>();
         }
 
         @Override
         public List<Statement> getStatements() {
-            return ListTypeSelector.select(this.vs);
+            return ListTypeSelector.select(vs);
         }
 
         @Override
         public void insertStatement(int index, Expression expression) {
             ExpressionStatement expressionStatement = new MStatement.MExpressionStatement((MVM) vm(), expression);
-            this.vs.add(index, expressionStatement);
+            vs.add(index, expressionStatement);
         }
 
         @Override
         public void insertStatement(int index, Statement statement) {
-            this.vs.add(index, statement);
+            vs.add(index, statement);
 
         }
 
@@ -96,138 +116,138 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
 
         @Override
         public Break newBreak() {
-            Break x = new MBreak(this.vm);
-            this.vs.add(x);
+            Break x = new MBreak(vm);
+            vs.add(x);
             return x;
         }
 
         @Override
         public Continue newContinue() {
-            Continue x = new MContinue(this.vm);
-            this.vs.add(x);
+            Continue x = new MContinue(vm);
+            vs.add(x);
             return x;
         }
 
         @Override
         public Let newDeclarationLet(Type type) {
-            Let x = new MStatement.MLet(this.vm, type);
+            Let x = new MStatement.MLet(vm, type);
             int index = 0;
-            for (; index < this.vs.size() && this.vs.get(index) instanceof Let; index++) {
+            for (; index < vs.size() && vs.get(index) instanceof Let; index++) {
                 ;
             }
-            this.vs.add(index, x);
+            vs.add(index, x);
             return x;
         }
 
         @Override
         public DoWhile newDoWhile(Expression predicate) {
-            DoWhile x = new MDoWhile(this.vm, predicate);
-            this.vs.add(x);
+            DoWhile x = new MDoWhile(vm, predicate);
+            vs.add(x);
             return x;
         }
 
         @Override
         public Empty newEmpty() {
-            Empty x = new MEmpty(this.vm);
-            this.vs.add(x);
+            Empty x = new MEmpty(vm);
+            vs.add(x);
             return x;
         }
 
         @Override
         public For newFor() {
-            For x = new MFor(this.vm);
-            this.vs.add(x);
+            For x = new MFor(vm);
+            vs.add(x);
             return x;
         }
 
         @Override
         public If newIf(Expression predicate) {
-            If x = new MIf(this.vm, predicate);
-            this.vs.add(x);
+            If x = new MIf(vm, predicate);
+            vs.add(x);
             return x;
         }
 
         @Override
         public Let newLet(Type type) {
-            Let x = new MLet(this.vm, type);
-            this.vs.add(x);
+            Let x = new MLet(vm, type);
+            vs.add(x);
             return x;
         }
 
         @Override
         public LocalBlock newLocalBlock() {
-            LocalBlock x = new MLocalBlock(this.vm);
-            this.vs.add(x);
+            LocalBlock x = new MLocalBlock(vm);
+            vs.add(x);
             return x;
         }
 
         @Override
         public LocalClass newLocalClass(String name) {
-            LocalClass x = new MDeclaration.MLocalClass(this.vm, name);
-            this.vs.add(x);
+            LocalClass x = new MDeclaration.MLocalClass(vm, name);
+            vs.add(x);
             return x;
         }
 
         @Override
         public Return newReturn() {
-            Return x = new MReturn(this.vm);
-            this.vs.add(x);
+            Return x = new MReturn(vm);
+            vs.add(x);
             return x;
         }
 
         @Override
         public ExpressionStatement newStmt(Expression expr) {
-            ExpressionStatement x = new MExpressionStatement(this.vm, expr);
-            this.vs.add(x);
+            ExpressionStatement x = new MExpressionStatement(vm, expr);
+            vs.add(x);
             return x;
         }
 
         @Override
         public Switch newSwitch(Expression integer) {
-            Switch x = new MSwitch(this.vm, integer);
-            this.vs.add(x);
+            Switch x = new MSwitch(vm, integer);
+            vs.add(x);
             return x;
         }
 
         @Override
         public Synchronized newSynchronized(Expression mutex) {
-            Synchronized x = new MSynchronized(this.vm, mutex);
-            this.vs.add(x);
+            Synchronized x = new MSynchronized(vm, mutex);
+            vs.add(x);
             return x;
         }
 
         @Override
         public Throw newThrow(Expression throwable) {
-            Throw x = new MThrow(this.vm, throwable);
-            this.vs.add(x);
+            Throw x = new MThrow(vm, throwable);
+            vs.add(x);
             return x;
         }
 
         @Override
         public Try newTry() {
-            Try x = new MTry(this.vm);
-            this.vs.add(x);
+            Try x = new MTry(vm);
+            vs.add(x);
             return x;
         }
 
         @Override
         public While newWhile(Expression predicate) {
-            While x = new MWhile(this.vm, predicate);
-            this.vs.add(x);
+            While x = new MWhile(vm, predicate);
+            vs.add(x);
             return x;
         }
 
         @Override
         public void removeStmt(Statement statement) {
-            if (this.vs != null) {
-                this.vs.remove(statement);
+            if (vs != null) {
+                vs.remove(statement);
             }
         }
 
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            VisitorUtils.visit(this.vs, this, visitor);
+            VisitorUtils.visit(vs, this, visitor);
         }
 
         protected void writeBlock(CodeWriter out, BlockStyle style) {
@@ -251,7 +271,7 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         }
 
         public String getGoto() {
-            return this.target;
+            return target;
         }
 
         public GotoStatement setGoto(String target) {
@@ -263,10 +283,10 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
 
-            out.write(this.kwd);
+            out.write(kwd);
 
-            if (this.target != null) {
-                out.space().write(this.target);
+            if (target != null) {
+                out.space().write(target);
             }
 
             return out.write(';');
@@ -323,7 +343,7 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         @Override
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
-            out.write("case ").write(this.e).write(':');
+            out.write("case ").write(e).write(':');
 
             out.indentLine();
             out.write(getStatements());
@@ -356,7 +376,7 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
 
         @Override
         public Expression getPredicate() {
-            return this.e;
+            return e;
         }
 
         @Override
@@ -368,7 +388,7 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            this.e = VisitorUtils.visit(this.e, this, visitor);
+            e = VisitorUtils.visit(e, this, visitor);
         }
     }
 
@@ -406,7 +426,7 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
             out.write("default:");
-            writeBlock(out, this.vm.getStyle("default"));
+            writeBlock(out, vm.getStyle("default"));
             return out;
         }
 
@@ -429,8 +449,8 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
             out.write("do");
-            writeBlock(out, this.vm.getStyle("do"));
-            out.write("while (").write(this.e).write(");");
+            writeBlock(out, vm.getStyle("do"));
+            out.write("while (").write(e).write(");");
             return out;
         }
 
@@ -453,7 +473,7 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
             out.write("else");
-            writeBlock(out, this.vm.getStyle("else"));
+            writeBlock(out, vm.getStyle("else"));
             return out;
         }
 
@@ -475,8 +495,8 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         @Override
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
-            out.write("else if (").write(this.e).write(')');
-            writeBlock(out, this.vm.getStyle("else-if"));
+            out.write("else if (").write(e).write(')');
+            writeBlock(out, vm.getStyle("else-if"));
             return out;
         }
 
@@ -520,7 +540,7 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         }
 
         public Expression getExpression() {
-            return this.e;
+            return e;
         }
 
         public MExpressionableStatement setExpression(Expression e) {
@@ -531,7 +551,7 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            this.e = VisitorUtils.visit(this.e, this, visitor);
+            e = VisitorUtils.visit(e, this, visitor);
         }
     }
 
@@ -553,7 +573,7 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
 
         @Override
         public Expression getExpression() {
-            return this.e;
+            return e;
         }
 
         @Override
@@ -566,7 +586,7 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
 
-            out.write(this.e).write(';');
+            out.write(e).write(';');
 
             return out;
         }
@@ -574,7 +594,7 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            this.e = VisitorUtils.visit(this.e, this, visitor);
+            e = VisitorUtils.visit(e, this, visitor);
         }
     }
 
@@ -591,7 +611,7 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
             out.write("finally");
-            writeBlock(out, this.vm.getStyle("finally"));
+            writeBlock(out, vm.getStyle("finally"));
             return out;
         }
 
@@ -612,36 +632,36 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
 
         public MFor(MVM vm) {
             super(vm);
-            this.vi = new ArrayList<Codeable>();
-            this.vu = new ArrayList<Codeable>();
+            vi = new ArrayList<Codeable>();
+            vu = new ArrayList<Codeable>();
         }
 
         @Override
         public MFor addInit(Expression e) {
-            this.vi.add(e);
+            vi.add(e);
             return this;
         }
 
         @Override
         public MFor addUpdate(Expression e) {
-            this.vu.add(e);
+            vu.add(e);
             return this;
         }
 
         @Override
         public List<Codeable> getInits() {
-            return ListTypeSelector.select(this.vi);
+            return ListTypeSelector.select(vi);
         }
 
         @Override
         public List<Codeable> getUpdates() {
-            return ListTypeSelector.select(this.vu);
+            return ListTypeSelector.select(vu);
         }
 
         @Override
         public Let setInit(Type type) {
-            Let let = new MForInitLet(this.vm, type);
-            this.vi.add(let);
+            Let let = new MForInitLet(vm, type);
+            vi.add(let);
             return let;
         }
 
@@ -649,26 +669,26 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
             out.write("for (");
-            write(this.vi, out);
+            write(vi, out);
             out.write(';');
-            if (this.e != null) {
-                out.space().write(this.e);
+            if (e != null) {
+                out.space().write(e);
             }
             out.write(';');
-            if (this.vu.size() > 0) {
+            if (vu.size() > 0) {
                 out.space();
-                write(this.vu, out);
+                write(vu, out);
             }
             out.write(')');
-            writeBlock(out, this.vm.getStyle("for"));
+            writeBlock(out, vm.getStyle("for"));
             return out;
         }
 
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            VisitorUtils.visit(this.vi, this, visitor);
-            VisitorUtils.visit(this.vu, this, visitor);
+            VisitorUtils.visit(vi, this, visitor);
+            VisitorUtils.visit(vu, this, visitor);
         }
 
         private void write(List<Codeable> v, CodeWriter out) {
@@ -693,19 +713,19 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         @Override
         public CodeWriter toCode(CodeWriter out) {
             // queue up the comment
-            out.queue(this.comment);
+            out.queue(comment);
 
-            if (this.isFinal) {
+            if (isFinal) {
                 out.write("final").space();
             }
 
-            out.write(this.type).space();
+            out.write(type).space();
 
-            for (int i = 0; i < this.v.size(); i++) {
+            for (int i = 0; i < v.size(); i++) {
                 if (i > 0) {
                     out.write(',').space();
                 }
-                out.write(this.v.get(i));
+                out.write(v.get(i));
             }
 
             return out;
@@ -728,37 +748,37 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
 
         MIf(MVM vm, Expression e) {
             super(vm, e);
-            this.vcei = new ArrayList<ElseIf>();
+            vcei = new ArrayList<ElseIf>();
         }
 
         @Override
         public Else getElse() {
-            if (this._else == null) {
-                this._else = new MElse(this.vm);
+            if (_else == null) {
+                _else = new MElse(vm);
             }
-            return this._else;
+            return _else;
         }
 
         @Override
         public List<ElseIf> getElseIfs() {
-            return ListTypeSelector.select(this.vcei);
+            return ListTypeSelector.select(vcei);
         }
 
         @Override
         public ElseIf newElseIf(Expression e) {
-            ElseIf ei = new MElseIf(this.vm, e);
-            this.vcei.add(ei);
+            ElseIf ei = new MElseIf(vm, e);
+            vcei.add(ei);
             return ei;
         }
 
         @Override
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
-            out.write("if (").write(this.e).write(')');
-            writeBlock(out, this.vm.getStyle("if"));
-            codeElseIfs(this.vcei, out);
-            if (this._else != null && this._else.getStatements().size() > 0) {
-                out.write(this._else);
+            out.write("if (").write(e).write(')');
+            writeBlock(out, vm.getStyle("if"));
+            codeElseIfs(vcei, out);
+            if (_else != null && _else.getStatements().size() > 0) {
+                out.write(_else);
             }
             return out;
         }
@@ -766,8 +786,8 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            VisitorUtils.visit(this.vcei, this, visitor);
-            this._else = VisitorUtils.visit(this._else, this, visitor);
+            VisitorUtils.visit(vcei, this, visitor);
+            _else = VisitorUtils.visit(_else, this, visitor);
         }
 
         private CodeWriter codeElseIfs(List<ElseIf> v, CodeWriter out) {
@@ -792,39 +812,39 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         MLet(MVM vm, Type type) {
             super(vm);
             this.type = type;
-            this.v = new ArrayList<Assign>();
+            v = new ArrayList<Assign>();
         }
 
         @Override
         public MLet addAssign(Assign assign) {
-            this.v.add(assign);
+            v.add(assign);
             return this;
         }
 
         @Override
         public MLet addAssign(String name, Expression expr) {
-            this.v.add(new MExpression.MAssign(this.vm, Assign.S, new MExpression.MVariable(this.vm, name), expr));
+            v.add(new MExpression.MAssign(vm, Assign.S, new MExpression.MVariable(vm, name), expr));
             return this;
         }
 
         @Override
         public List<Assign> getAssigns() {
-            return ListTypeSelector.select(this.v);
+            return ListTypeSelector.select(v);
         }
 
         @Override
         public Type getType() {
-            return this.type;
+            return type;
         }
 
         @Override
         public boolean isFinal() {
-            return this.isFinal;
+            return isFinal;
         }
 
         @Override
         public MLet isFinal(boolean value) {
-            this.isFinal = value;
+            isFinal = value;
             return this;
         }
 
@@ -838,17 +858,17 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
 
-            if (this.isFinal) {
+            if (isFinal) {
                 out.write("final").space();
             }
 
-            out.write(this.type).space();
+            out.write(type).space();
 
-            for (int i = 0; i < this.v.size(); i++) {
+            for (int i = 0; i < v.size(); i++) {
                 if (i > 0) {
                     out.write(',').space();
                 }
-                out.write(this.v.get(i));
+                out.write(v.get(i));
             }
 
             out.write(';');
@@ -859,8 +879,8 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            this.type = VisitorUtils.visit(this.type, this, visitor);
-            VisitorUtils.visit(this.v, this, visitor);
+            type = VisitorUtils.visit(type, this, visitor);
+            VisitorUtils.visit(v, this, visitor);
         }
     }
 
@@ -876,7 +896,7 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         @Override
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
-            writeBlock(out, this.vm.getStyle("local-class"));
+            writeBlock(out, vm.getStyle("local-class"));
             return out;
         }
 
@@ -907,8 +927,8 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
 
             out.write("return");
 
-            if (this.e != null) {
-                out.space().write(this.e);
+            if (e != null) {
+                out.space().write(e);
             }
 
             out.write(';');
@@ -937,44 +957,44 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
 
         @Override
         public List<Case> getCases() {
-            return ListTypeSelector.select(this.vs, Case.class);
+            return ListTypeSelector.select(vs, Case.class);
         }
 
         @Override
         public Default getDefault() {
-            if (this.d == null) {
-                this.d = new MDefault(this.vm);
+            if (d == null) {
+                d = new MDefault(vm);
             }
-            return this.d;
+            return d;
         }
 
         @Override
         public Case newCase(Expression constant) {
-            Case c = new MCase(this.vm, constant);
-            this.vs.add(c);
+            Case c = new MCase(vm, constant);
+            vs.add(c);
             return c;
         }
 
         @Override
         public CodeWriter toCode(CodeWriter out) {
-            if (!this.triggered) {
+            if (!triggered) {
                 // add in the default if its not null
-                if (this.d != null) {
-                    this.vs.add(this.d);
+                if (d != null) {
+                    vs.add(d);
                 }
-                this.triggered = true;
+                triggered = true;
             }
 
             super.toCode(out);
-            out.write("switch (").write(this.e).write(')');
-            writeBlock(out, this.vm.getStyle("switch"));
+            out.write("switch (").write(e).write(')');
+            writeBlock(out, vm.getStyle("switch"));
             return out;
         }
 
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            this.d = VisitorUtils.visit(this.d, this, visitor);
+            d = VisitorUtils.visit(d, this, visitor);
         }
     }
 
@@ -992,7 +1012,7 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
 
         @Override
         public Expression getMutex() {
-            return this.mutex;
+            return mutex;
         }
 
         @Override
@@ -1004,15 +1024,15 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         @Override
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
-            out.write("synchronized ").write('(').write(this.mutex).write(')');
-            writeBlock(out, this.vm.getStyle("synchronized"));
+            out.write("synchronized ").write('(').write(mutex).write(')');
+            writeBlock(out, vm.getStyle("synchronized"));
             return out;
         }
 
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            this.mutex = VisitorUtils.visit(this.mutex, this, visitor);
+            mutex = VisitorUtils.visit(mutex, this, visitor);
         }
     }
 
@@ -1030,7 +1050,7 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
 
         @Override
         public Expression getThrowable() {
-            return this.e;
+            return e;
         }
 
         @Override
@@ -1043,7 +1063,7 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
 
-            out.write("throw ").write(this.e).write(';');
+            out.write("throw ").write(e).write(';');
 
             return out;
         }
@@ -1051,7 +1071,7 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            this.e = VisitorUtils.visit(this.e, this, visitor);
+            e = VisitorUtils.visit(e, this, visitor);
         }
     }
 
@@ -1067,8 +1087,8 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         @Override
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
-            out.write("while (").write(this.e).write(')');
-            writeBlock(out, this.vm.getStyle("while"));
+            out.write("while (").write(e).write(')');
+            writeBlock(out, vm.getStyle("while"));
             return out;
         }
 
@@ -1086,14 +1106,14 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
 
     @Override
     public Comment comment(String text) {
-        Comment sl = new MComment.MSingleLineComment(this.vm, text);
-        this.comment = sl;
+        Comment sl = new MComment.MSingleLineComment(vm, text);
+        comment = sl;
         return sl;
     }
 
     @Override
     public String getLabel() {
-        return this.label;
+        return label;
     }
 
     @Override
@@ -1113,7 +1133,7 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
     @Override
     public CodeWriter toCode(CodeWriter out) {
         // write the comment
-        out.write(this.comment);
+        out.write(comment);
 
         // make a new line if this one is not new
         if (!out.isLineNew()) {
@@ -1121,8 +1141,8 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         }
 
         // and the label, if there is one.
-        if (this.label != null) {
-            out.write(this.label).write(':').space();
+        if (label != null) {
+            out.write(label).write(':').space();
         }
 
         return out;

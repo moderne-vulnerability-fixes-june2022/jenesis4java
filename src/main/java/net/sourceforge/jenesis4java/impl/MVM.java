@@ -1,5 +1,27 @@
 package net.sourceforge.jenesis4java.impl;
 
+/*
+ * #%L
+ * Jenesis 4 Java Code Generator
+ * %%
+ * Copyright (C) 2000 - 2015 jenesis4java
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/lgpl-3.0.html>.
+ * #L%
+ */
+
 /**
  * Copyright (C) 2008, 2010 Richard van Nieuwenhoven - ritchie [at] gmx [dot] at
  * Copyright (C) 2000, 2001 Paul Cody Johnston - pcj@inxar.org <br>
@@ -14,7 +36,11 @@ package net.sourceforge.jenesis4java.impl;
  * You should have received a copy of the GNU Lesser General Public License
  * along with Jenesis4java. If not, see <http://www.gnu.org/licenses/>.
  */
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -92,7 +118,7 @@ public class MVM extends net.sourceforge.jenesis4java.VirtualMachine {
 
         @Override
         public Comment getComment() {
-            return this.comment;
+            return comment;
         }
 
         @Override
@@ -104,16 +130,16 @@ public class MVM extends net.sourceforge.jenesis4java.VirtualMachine {
         public MCodeable setComment(int type, String text) {
             switch (type) {
                 case Comment.S:
-                    this.comment = new MComment.MSingleLineComment(this.vm, text);
+                    comment = new MComment.MSingleLineComment(vm, text);
                     break;
                 case Comment.M:
-                    this.comment = new MComment.MMultipleLineComment(this.vm, text);
+                    comment = new MComment.MMultipleLineComment(vm, text);
                     break;
                 case Comment.Mbe:
-                    this.comment = new MComment.MMultipleLineComment(this.vm, text, true);
+                    comment = new MComment.MMultipleLineComment(vm, text, true);
                     break;
                 case Comment.D:
-                    this.comment = new MComment.MDocumentationComment(this.vm, text);
+                    comment = new MComment.MDocumentationComment(vm, text);
                     break;
             }
             return this;
@@ -121,8 +147,8 @@ public class MVM extends net.sourceforge.jenesis4java.VirtualMachine {
 
         @Override
         public CodeWriter toCode(CodeWriter out) {
-            if (this.comment != null) {
-                out.write(this.comment);
+            if (comment != null) {
+                out.write(comment);
             }
             return out;
         }
@@ -138,12 +164,12 @@ public class MVM extends net.sourceforge.jenesis4java.VirtualMachine {
 
         @Override
         public void visit(IVisitor visitor) {
-            this.comment = VisitorUtils.visit(this.comment, this, visitor);
+            comment = VisitorUtils.visit(comment, this, visitor);
         }
 
         @Override
         public VirtualMachine vm() {
-            return this.vm;
+            return vm;
         }
     }
 
@@ -227,13 +253,13 @@ public class MVM extends net.sourceforge.jenesis4java.VirtualMachine {
 
     @Override
     public VirtualMachine clear() {
-        this.units.clear();
+        units.clear();
         return this;
     }
 
     @Override
     public MVM encode() throws java.io.IOException {
-        for (CompilationUnit c : this.units) {
+        for (CompilationUnit c : units) {
             c.encode();
         }
         return this;
@@ -241,7 +267,7 @@ public class MVM extends net.sourceforge.jenesis4java.VirtualMachine {
 
     @Override
     public CompilationUnitEncoder getEncoder() {
-        return this.encoder;
+        return encoder;
     }
 
     @Override
@@ -401,7 +427,7 @@ public class MVM extends net.sourceforge.jenesis4java.VirtualMachine {
     @Override
     public CompilationUnit newCompilationUnit(String path) {
         CompilationUnit x = new MDeclaration.MCompilationUnit(this, path);
-        this.units.add(x);
+        units.add(x);
         return x;
     }
 
@@ -419,7 +445,7 @@ public class MVM extends net.sourceforge.jenesis4java.VirtualMachine {
 
     @Override
     public False newFalse() {
-        return this.FALSE;
+        return FALSE;
     }
 
     @Override
@@ -464,7 +490,7 @@ public class MVM extends net.sourceforge.jenesis4java.VirtualMachine {
 
     @Override
     public Null newNull() {
-        return this._NULL;
+        return _NULL;
     }
 
     @Override
@@ -499,7 +525,7 @@ public class MVM extends net.sourceforge.jenesis4java.VirtualMachine {
 
     @Override
     public True newTrue() {
-        return this.TRUE;
+        return TRUE;
     }
 
     @Override
@@ -511,25 +537,25 @@ public class MVM extends net.sourceforge.jenesis4java.VirtualMachine {
     public PrimitiveType newType(int type) {
         switch (type) {
             case Type.VOID:
-                return this.VOID;
+                return VOID;
             case Type.NULL:
-                return this.NULL;
+                return NULL;
             case Type.BOOLEAN:
-                return this.BOOLEAN;
+                return BOOLEAN;
             case Type.BYTE:
-                return this.BYTE;
+                return BYTE;
             case Type.SHORT:
-                return this.SHORT;
+                return SHORT;
             case Type.INT:
-                return this.INT;
+                return INT;
             case Type.LONG:
-                return this.LONG;
+                return LONG;
             case Type.FLOAT:
-                return this.FLOAT;
+                return FLOAT;
             case Type.DOUBLE:
-                return this.DOUBLE;
+                return DOUBLE;
             case Type.CHAR:
-                return this.CHAR;
+                return CHAR;
         }
         return null;
     }
@@ -561,77 +587,77 @@ public class MVM extends net.sourceforge.jenesis4java.VirtualMachine {
 
     @Override
     public Type type_boolean() {
-        return this.BOOLEAN;
+        return BOOLEAN;
     }
 
     @Override
     public Type type_byte() {
-        return this.BYTE;
+        return BYTE;
     }
 
     @Override
     public Type type_char() {
-        return this.CHAR;
+        return CHAR;
     }
 
     @Override
     public Type type_double() {
-        return this.DOUBLE;
+        return DOUBLE;
     }
 
     @Override
     public Type type_float() {
-        return this.FLOAT;
+        return FLOAT;
     }
 
     @Override
     public Type type_int() {
-        return this.INT;
+        return INT;
     }
 
     @Override
     public Type type_long() {
-        return this.LONG;
+        return LONG;
     }
 
     @Override
     public Type type_short() {
-        return this.SHORT;
+        return SHORT;
     }
 
     @Override
     public Type type_void() {
-        return this.VOID;
+        return VOID;
     }
 
     @Override
     public ClassType typeBigDecimal() {
-        return this.BIGDECIMAL_TYPE;
+        return BIGDECIMAL_TYPE;
     }
 
     @Override
     public ClassType typeBoolean() {
-        return this.BOOLEAN_TYPE;
+        return BOOLEAN_TYPE;
     }
 
     @Override
     public ClassType typeCalendar() {
-        return this.CALENDAR_TYPE;
+        return CALENDAR_TYPE;
     }
 
     @Override
     public ClassType typeInteger() {
-        return this.INTEGER_TYPE;
+        return INTEGER_TYPE;
     }
 
     @Override
     public ClassType typeLong() {
-        return this.LONG_TYPE;
+        return LONG_TYPE;
     }
 
     @Override
     public ClassType typeString() {
-        return this.STRING_TYPE;
+        return STRING_TYPE;
     }
 
     private String createTypeParameters(String[] genericTypes) {
@@ -652,41 +678,41 @@ public class MVM extends net.sourceforge.jenesis4java.VirtualMachine {
     }
 
     BlockStyle getStyle(String name) {
-        return this.styles.get(name);
+        return styles.get(name);
     }
 
     void init(java.util.Properties styleprops) {
         initTypes();
-        this.styles = new MStyle.MStyleMap(styleprops);
-        this.units = new ArrayList<CompilationUnit>();
+        styles = new MStyle.MStyleMap(styleprops);
+        units = new ArrayList<CompilationUnit>();
         try {
-            this.encoder = (CompilationUnitEncoder) Class.forName(styleprops.getProperty("encoder", BasicCompilationUnitEncoder.class.getName())).newInstance();
+            encoder = (CompilationUnitEncoder) Class.forName(styleprops.getProperty("encoder", BasicCompilationUnitEncoder.class.getName())).newInstance();
         } catch (Exception e) {
             throw new RuntimeException("encoder class not found!", e);
         }
     }
 
     void initTypes() {
-        this.VOID = new MType.MPrimitiveType(this, Type.VOID, "void");
-        this.NULL = new MType.MPrimitiveType(this, Type.NULL, "null");
-        this.BOOLEAN = new MType.MPrimitiveType(this, Type.BOOLEAN, "boolean");
-        this.BYTE = new MType.MPrimitiveType(this, Type.BYTE, "byte");
-        this.SHORT = new MType.MPrimitiveType(this, Type.SHORT, "short");
-        this.INT = new MType.MPrimitiveType(this, Type.INT, "int");
-        this.CHAR = new MType.MPrimitiveType(this, Type.CHAR, "char");
-        this.LONG = new MType.MPrimitiveType(this, Type.LONG, "long");
-        this.FLOAT = new MType.MPrimitiveType(this, Type.FLOAT, "float");
-        this.DOUBLE = new MType.MPrimitiveType(this, Type.DOUBLE, "double");
-        this.STRING = new MType.MClassType(this, "String");
-        this._NULL = new MLiteral.MNull(this);
-        this.TRUE = new MLiteral.MTrue(this);
-        this.FALSE = new MLiteral.MFalse(this);
+        VOID = new MType.MPrimitiveType(this, Type.VOID, "void");
+        NULL = new MType.MPrimitiveType(this, Type.NULL, "null");
+        BOOLEAN = new MType.MPrimitiveType(this, Type.BOOLEAN, "boolean");
+        BYTE = new MType.MPrimitiveType(this, Type.BYTE, "byte");
+        SHORT = new MType.MPrimitiveType(this, Type.SHORT, "short");
+        INT = new MType.MPrimitiveType(this, Type.INT, "int");
+        CHAR = new MType.MPrimitiveType(this, Type.CHAR, "char");
+        LONG = new MType.MPrimitiveType(this, Type.LONG, "long");
+        FLOAT = new MType.MPrimitiveType(this, Type.FLOAT, "float");
+        DOUBLE = new MType.MPrimitiveType(this, Type.DOUBLE, "double");
+        STRING = new MType.MClassType(this, "String");
+        _NULL = new MLiteral.MNull(this);
+        TRUE = new MLiteral.MTrue(this);
+        FALSE = new MLiteral.MFalse(this);
 
-        this.BIGDECIMAL_TYPE = new MType.MClassType(this, java.math.BigDecimal.class.getName());
-        this.BOOLEAN_TYPE = new MType.MClassType(this, Boolean.class.getName());
-        this.CALENDAR_TYPE = new MType.MClassType(this, java.util.Calendar.class.getName());
-        this.INTEGER_TYPE = new MType.MClassType(this, Integer.class.getName());
-        this.LONG_TYPE = new MType.MClassType(this, Long.class.getName());
-        this.STRING_TYPE = new MType.MClassType(this, String.class.getName());
+        BIGDECIMAL_TYPE = new MType.MClassType(this, java.math.BigDecimal.class.getName());
+        BOOLEAN_TYPE = new MType.MClassType(this, Boolean.class.getName());
+        CALENDAR_TYPE = new MType.MClassType(this, java.util.Calendar.class.getName());
+        INTEGER_TYPE = new MType.MClassType(this, Integer.class.getName());
+        LONG_TYPE = new MType.MClassType(this, Long.class.getName());
+        STRING_TYPE = new MType.MClassType(this, String.class.getName());
     }
 }

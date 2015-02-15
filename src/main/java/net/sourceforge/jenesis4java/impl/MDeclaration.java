@@ -1,5 +1,27 @@
 package net.sourceforge.jenesis4java.impl;
 
+/*
+ * #%L
+ * Jenesis 4 Java Code Generator
+ * %%
+ * Copyright (C) 2000 - 2015 jenesis4java
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/lgpl-3.0.html>.
+ * #L%
+ */
+
 /**
  * Copyright (C) 2008, 2010 Richard van Nieuwenhoven - ritchie [at] gmx [dot] at
  * Copyright (C) 2000, 2001 Paul Cody Johnston - pcj@inxar.org <br>
@@ -90,7 +112,7 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         BlockDeclaration(MVM vm) {
             super(vm);
-            this.vs = new ArrayList<Statement>();
+            vs = new ArrayList<Statement>();
         }
 
         @Override
@@ -99,16 +121,16 @@ abstract class MDeclaration extends MVM.MCodeable {
         }
 
         public List<Statement> getStatements() {
-            return ListTypeSelector.select(this.vs, Statement.class);
+            return ListTypeSelector.select(vs, Statement.class);
         }
 
         public void insertStatement(int index, Expression expression) {
             ExpressionStatement expressionStatement = new MStatement.MExpressionStatement((MVM) vm(), expression);
-            this.vs.add(index, expressionStatement);
+            vs.add(index, expressionStatement);
         }
 
         public void insertStatement(int index, Statement statement) {
-            this.vs.add(index, statement);
+            vs.add(index, statement);
 
         }
 
@@ -118,119 +140,119 @@ abstract class MDeclaration extends MVM.MCodeable {
         }
 
         public Break newBreak() {
-            Break x = new MStatement.MBreak(this.vm);
-            this.vs.add(x);
+            Break x = new MStatement.MBreak(vm);
+            vs.add(x);
             return x;
         }
 
         public Continue newContinue() {
-            Continue x = new MStatement.MContinue(this.vm);
-            this.vs.add(x);
+            Continue x = new MStatement.MContinue(vm);
+            vs.add(x);
             return x;
         }
 
         public Let newDeclarationLet(Type type) {
-            Let x = new MStatement.MLet(this.vm, type);
+            Let x = new MStatement.MLet(vm, type);
             int index = 0;
-            for (; index < this.vs.size() && this.vs.get(index) instanceof Let; index++) {
+            for (; index < vs.size() && vs.get(index) instanceof Let; index++) {
                 ;
             }
-            this.vs.add(index, x);
+            vs.add(index, x);
             return x;
         }
 
         public DoWhile newDoWhile(Expression e) {
-            DoWhile x = new MStatement.MDoWhile(this.vm, e);
-            this.vs.add(x);
+            DoWhile x = new MStatement.MDoWhile(vm, e);
+            vs.add(x);
             return x;
         }
 
         public Empty newEmpty() {
-            Empty x = new MStatement.MEmpty(this.vm);
-            this.vs.add(x);
+            Empty x = new MStatement.MEmpty(vm);
+            vs.add(x);
             return x;
         }
 
         public For newFor() {
-            For x = new MStatement.MFor(this.vm);
-            this.vs.add(x);
+            For x = new MStatement.MFor(vm);
+            vs.add(x);
             return x;
         }
 
         public If newIf(Expression e) {
-            If x = new MStatement.MIf(this.vm, e);
-            this.vs.add(x);
+            If x = new MStatement.MIf(vm, e);
+            vs.add(x);
             return x;
         }
 
         public Let newLet(Type type) {
-            Let x = new MStatement.MLet(this.vm, type);
-            this.vs.add(x);
+            Let x = new MStatement.MLet(vm, type);
+            vs.add(x);
             return x;
         }
 
         public LocalBlock newLocalBlock() {
-            LocalBlock x = new MStatement.MLocalBlock(this.vm);
-            this.vs.add(x);
+            LocalBlock x = new MStatement.MLocalBlock(vm);
+            vs.add(x);
             return x;
         }
 
         public LocalClass newLocalClass(String name) {
-            LocalClass x = new MLocalClass(this.vm, name);
-            this.vs.add(x);
+            LocalClass x = new MLocalClass(vm, name);
+            vs.add(x);
             return x;
         }
 
         public Return newReturn() {
-            Return x = new MStatement.MReturn(this.vm);
-            this.vs.add(x);
+            Return x = new MStatement.MReturn(vm);
+            vs.add(x);
             return x;
         }
 
         public ExpressionStatement newStmt(Expression expr) {
-            ExpressionStatement x = new MStatement.MExpressionStatement(this.vm, expr);
-            this.vs.add(x);
+            ExpressionStatement x = new MStatement.MExpressionStatement(vm, expr);
+            vs.add(x);
             return x;
         }
 
         public Switch newSwitch(Expression e) {
-            Switch x = new MStatement.MSwitch(this.vm, e);
-            this.vs.add(x);
+            Switch x = new MStatement.MSwitch(vm, e);
+            vs.add(x);
             return x;
         }
 
         public Synchronized newSynchronized(Expression e) {
-            Synchronized x = new MStatement.MSynchronized(this.vm, e);
-            this.vs.add(x);
+            Synchronized x = new MStatement.MSynchronized(vm, e);
+            vs.add(x);
             return x;
         }
 
         public Throw newThrow(Expression e) {
-            Throw x = new MStatement.MThrow(this.vm, e);
-            this.vs.add(x);
+            Throw x = new MStatement.MThrow(vm, e);
+            vs.add(x);
             return x;
         }
 
         public Try newTry() {
-            Try x = new MTry(this.vm);
-            this.vs.add(x);
+            Try x = new MTry(vm);
+            vs.add(x);
             return x;
         }
 
         public While newWhile(Expression e) {
-            While x = new MStatement.MWhile(this.vm, e);
-            this.vs.add(x);
+            While x = new MStatement.MWhile(vm, e);
+            vs.add(x);
             return x;
         }
 
         public void removeStmt(Statement statement) {
-            this.vs.remove(statement);
+            vs.remove(statement);
         }
 
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            VisitorUtils.visit(this.vs, this, visitor);
+            VisitorUtils.visit(vs, this, visitor);
         }
     }
 
@@ -241,16 +263,16 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         MAbstractMethod(MVM vm, Type type, String name) {
             super(vm, type, name);
-            this.isAbstract = true;
+            isAbstract = true;
         }
 
         @Override
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
 
-            AccessType.toCode(this.access, out);
+            AccessType.toCode(access, out);
 
-            writeTypeParametersAndThrow(this.name, this.type, this.parameters, this.throwz, out);
+            writeTypeParametersAndThrow(name, type, parameters, throwz, out);
 
             out.write(';');
 
@@ -277,12 +299,12 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         MClassDeclaration(MVM vm, MCompilationUnit unit) {
             super(vm, unit);
-            this.implementations = new ArrayList<String>();
+            implementations = new ArrayList<String>();
         }
 
         @Override
         public MClassDeclaration addImplements(String type) {
-            this.implementations.add(type);
+            implementations.add(type);
             return this;
         }
 
@@ -303,41 +325,41 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         @Override
         public List<Constructor> getConstructors() {
-            return ListTypeSelector.select(this.members, Constructor.class);
+            return ListTypeSelector.select(members, Constructor.class);
         }
 
         @Override
         public String getExtends() {
-            return this.ex;
+            return ex;
         }
 
         @Override
         public List<ClassField> getFields() {
-            return ListTypeSelector.select(this.members, ClassField.class);
+            return ListTypeSelector.select(members, ClassField.class);
         }
 
         @Override
         public List<String> getImplements() {
-            return ListTypeSelector.select(this.implementations);
+            return ListTypeSelector.select(implementations);
         }
 
         public List<InitializationDeclaration> getInitializations() {
-            return ListTypeSelector.select(this.members, InitializationDeclaration.class);
+            return ListTypeSelector.select(members, InitializationDeclaration.class);
         }
 
         @Override
         public List<InnerClass> getInnerClasses() {
-            return ListTypeSelector.select(this.members, InnerClass.class);
+            return ListTypeSelector.select(members, InnerClass.class);
         }
 
         @Override
         public List<Member> getMembers() {
-            return ListTypeSelector.select(this.members, Member.class);
+            return ListTypeSelector.select(members, Member.class);
         }
 
         @Override
         public List<ClassMethod> getMethods() {
-            return ListTypeSelector.select(this.members, ClassMethod.class);
+            return ListTypeSelector.select(members, ClassMethod.class);
         }
 
         @Override
@@ -353,17 +375,17 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         @Override
         public List<StaticInitializer> getStaticInitializers() {
-            return ListTypeSelector.select(this.members, StaticInitializer.class);
+            return ListTypeSelector.select(members, StaticInitializer.class);
         }
 
         @Override
         public boolean isAbstract() {
-            return this.isAbstract;
+            return isAbstract;
         }
 
         @Override
         public MClassDeclaration isAbstract(boolean value) {
-            this.isAbstract = value;
+            isAbstract = value;
             return this;
         }
 
@@ -379,8 +401,8 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         @Override
         public Constructor newConstructor() {
-            Constructor x = new MConstructor(this.vm, this.name);
-            this.members.add(x);
+            Constructor x = new MConstructor(vm, name);
+            members.add(x);
             return x;
         }
 
@@ -395,27 +417,27 @@ abstract class MDeclaration extends MVM.MCodeable {
                     addImport(typeToImport);
                 }
             }
-            return newField(this.vm.newType(type.getSimpleName()), name);
+            return newField(vm.newType(type.getSimpleName()), name);
         }
 
         @Override
         public ClassField newField(Type type, String name) {
-            ClassField x = new MClassField(this.vm, type, name);
-            this.members.add(x);
+            ClassField x = new MClassField(vm, type, name);
+            members.add(x);
             return x;
         }
 
         @Override
         public InnerClass newInnerClass(String name) {
-            InnerClass x = new MInnerClass(this.vm, this.unit, this, name);
-            this.members.add(x);
+            InnerClass x = new MInnerClass(vm, unit, this, name);
+            members.add(x);
             return x;
         }
 
         @Override
         public InnerInterface newInnerInterface(String name) {
-            MInnerInterface x = new MInnerInterface(this.vm, this.unit, this, name);
-            this.members.add(x);
+            MInnerInterface x = new MInnerInterface(vm, unit, this, name);
+            members.add(x);
             return x;
         }
 
@@ -426,15 +448,15 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         @Override
         public ClassMethod newMethod(Type type, String name) {
-            ClassMethod x = new MClassMethod(this.vm, type, name);
-            this.members.add(x);
+            ClassMethod x = new MClassMethod(vm, type, name);
+            members.add(x);
             return x;
         }
 
         @Override
         public StaticInitializer newStaticInitializer() {
-            StaticInitializer x = new MStaticInitializer(this.vm);
-            this.members.add(x);
+            StaticInitializer x = new MStaticInitializer(vm);
+            members.add(x);
             return x;
         }
 
@@ -448,43 +470,43 @@ abstract class MDeclaration extends MVM.MCodeable {
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
 
-            AccessType.toCode(this.access, out);
+            AccessType.toCode(access, out);
 
-            if (this.isAbstract) {
+            if (isAbstract) {
                 out.write("abstract ");
             }
-            if (this.isStatic) {
+            if (isStatic) {
                 out.write("static ");
             }
-            if (this.isFinal) {
+            if (isFinal) {
                 out.write("final ");
             }
 
             // write the class and name
-            out.write("class ").write(this.name);
+            out.write("class ").write(name);
 
             // write the exnteds clause if ther is one
-            if (this.ex != null) {
-                out.newLine().write("extends ").write(this.ex);
+            if (ex != null) {
+                out.newLine().write("extends ").write(ex);
             }
 
             // write the implements clause if there are any
-            if (this.implementations.size() > 0) {
+            if (implementations.size() > 0) {
                 out.newLine().write("implements ");
-                for (int i = 0; i < this.implementations.size(); i++) {
+                for (int i = 0; i < implementations.size(); i++) {
                     if (i > 0) {
                         out.write(", ");
                     }
-                    out.write(this.implementations.get(i));
+                    out.write(implementations.get(i));
                 }
             }
-            writeBlock(out, this.vm.getStyle("class"));
+            writeBlock(out, vm.getStyle("class"));
             return out;
         }
 
         @Override
         public boolean removeImplements(String interfaceName) {
-            return this.implementations.remove(interfaceName);
+            return implementations.remove(interfaceName);
         }
 
         @Override
@@ -511,7 +533,7 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         @Override
         public boolean isTransient() {
-            return this.isTransient;
+            return isTransient;
         }
 
         @Override
@@ -522,7 +544,7 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         @Override
         public boolean isVolatile() {
-            return this.isVolatile;
+            return isVolatile;
         }
 
         @Override
@@ -534,26 +556,26 @@ abstract class MDeclaration extends MVM.MCodeable {
         @Override
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
-            AccessType.toCode(this.access, out);
+            AccessType.toCode(access, out);
 
-            if (this.isTransient) {
+            if (isTransient) {
                 out.write("transient ");
             }
-            if (this.isVolatile) {
+            if (isVolatile) {
                 out.write("volatile ");
             }
-            if (this.isStatic) {
+            if (isStatic) {
                 out.write("static ");
             }
-            if (this.isFinal) {
+            if (isFinal) {
                 out.write("final ");
             }
 
             // write the class and name
-            out.write(this.type).space().write(this.name);
+            out.write(type).space().write(name);
 
-            if (this.expr != null) {
-                out.write(" = ").write(this.expr);
+            if (expr != null) {
+                out.write(" = ").write(expr);
             }
 
             out.write(';');
@@ -582,7 +604,7 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         @Override
         public boolean isNative() {
-            return this.isNative;
+            return isNative;
         }
 
         @Override
@@ -593,7 +615,7 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         @Override
         public boolean isSynchronized() {
-            return this.isSynchronized;
+            return isSynchronized;
         }
 
         @Override
@@ -605,29 +627,29 @@ abstract class MDeclaration extends MVM.MCodeable {
         @Override
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
-            AccessType.toCode(this.access, out);
+            AccessType.toCode(access, out);
 
-            if (this.isAbstract) {
+            if (isAbstract) {
                 out.write("abstract ");
             }
-            if (this.isNative) {
+            if (isNative) {
                 out.write("native ");
             }
-            if (this.isSynchronized) {
+            if (isSynchronized) {
                 out.write("synchronized ");
             }
-            if (this.isStatic) {
+            if (isStatic) {
                 out.write("static ");
             }
-            if (this.isFinal) {
+            if (isFinal) {
                 out.write("final ");
             }
 
-            writeTypeParametersAndThrow(this.name, this.type, this.parameters, this.throwz, out);
-            if (this.isAbstract) {
+            writeTypeParametersAndThrow(name, type, parameters, throwz, out);
+            if (isAbstract) {
                 out.write(";");
             } else {
-                writeBlock(out, this.vm.getStyle("method"));
+                writeBlock(out, vm.getStyle("method"));
             }
 
             return out;
@@ -658,8 +680,8 @@ abstract class MDeclaration extends MVM.MCodeable {
         MCompilationUnit(MVM vm, String codebase) {
             super(vm);
             this.codebase = codebase;
-            this.types = new ArrayList<TypeDeclaration>();
-            this.imports = new ArrayList<MImport>();
+            types = new ArrayList<TypeDeclaration>();
+            imports = new ArrayList<MImport>();
         }
 
         @Override
@@ -672,7 +694,7 @@ abstract class MDeclaration extends MVM.MCodeable {
             if (name == null || name.trim().isEmpty()) {
                 return null;
             }
-            for (MImport im : this.imports) {
+            for (MImport im : imports) {
                 if (im.isClassnamePartOfImport(name)) {
                     return im;
                 }
@@ -681,25 +703,25 @@ abstract class MDeclaration extends MVM.MCodeable {
                     return null;
                 }
             }
-            MImport x = new MImport(this.vm, name);
-            this.imports.add(x);
+            MImport x = new MImport(vm, name);
+            imports.add(x);
             return x;
         }
 
         @Override
         public MCompilationUnit encode() throws java.io.IOException {
             // have we already called this method?
-            if (this.isEncoded) {
+            if (isEncoded) {
                 return this;
             }
-            this.vm.getEncoder().encode(this);
-            this.isEncoded = true;
+            vm.getEncoder().encode(this);
+            isEncoded = true;
             return this;
         }
 
         @Override
         public String getCodebase() {
-            return this.codebase;
+            return codebase;
         }
 
         public String getFileName() {
@@ -709,11 +731,11 @@ abstract class MDeclaration extends MVM.MCodeable {
             StringBuffer file = null;
 
             // was a path specified?
-            if (this.codebase != null && this.codebase.length() > 0) {
+            if (codebase != null && codebase.length() > 0) {
                 // make the buffer
-                file = new StringBuffer(this.codebase);
+                file = new StringBuffer(codebase);
                 // does the codebase end with a slash?
-                if (!this.codebase.endsWith(Character.toString(File.separatorChar))) {
+                if (!codebase.endsWith(Character.toString(File.separatorChar))) {
                     // make it so...
                     file.append(File.separatorChar);
                 }
@@ -722,9 +744,9 @@ abstract class MDeclaration extends MVM.MCodeable {
             }
 
             // append to the filepath if exists
-            if (this.namespace != null) {
+            if (namespace != null) {
                 // fetch the package name
-                String pkg = this.namespace.getName();
+                String pkg = namespace.getName();
                 if (pkg != null) {
                     // append the package name
                     file.append(pkg.replace('.', java.io.File.separatorChar));
@@ -745,15 +767,15 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         @Override
         public List<Import> getImports() {
-            return ListTypeSelector.generalize(this.imports, Import.class);
+            return ListTypeSelector.generalize(imports, Import.class);
         }
 
         @Override
         public Namespace getNamespace() {
-            if (this.namespace == null) {
-                this.namespace = new MNamespace(this.vm, null);
+            if (namespace == null) {
+                namespace = new MNamespace(vm, null);
             }
-            return this.namespace;
+            return namespace;
         }
 
         @Override
@@ -771,27 +793,27 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         @Override
         public TypeDeclaration getTopLevelType() {
-            return this.types.isEmpty() ? null : (TypeDeclaration) this.types.get(0);
+            return types.isEmpty() ? null : (TypeDeclaration) types.get(0);
         }
 
         @Override
         public List<TypeDeclaration> getTypes() {
-            return ListTypeSelector.select(this.types, TypeDeclaration.class);
+            return ListTypeSelector.select(types, TypeDeclaration.class);
         }
 
         @Override
         public PackageClass newClass(String name) {
-            PackageClass x = new MPackageClass(this.vm, this);
+            PackageClass x = new MPackageClass(vm, this);
             x.setName(name);
-            this.types.add(x);
+            types.add(x);
             return x;
         }
 
         @Override
         public Interface newInterface(String name) {
-            Interface x = new MInterface(this.vm, this);
+            Interface x = new MInterface(vm, this);
             x.setName(name);
-            this.types.add(x);
+            types.add(x);
             return x;
         }
 
@@ -811,19 +833,19 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         @Override
         public Namespace setNamespace(String name) {
-            this.namespace = new MNamespace(this.vm, name);
-            return this.namespace;
+            namespace = new MNamespace(vm, name);
+            return namespace;
         }
 
         @Override
         public CodeWriter toCode(CodeWriter out) {
             out.setCompilationUnit(this);
-            if (this.comment != null) {
-                out.write(this.comment).newLine();
+            if (comment != null) {
+                out.write(comment).newLine();
             }
 
-            if (this.namespace != null) {
-                out.write(this.namespace).newLine();
+            if (namespace != null) {
+                out.write(namespace).newLine();
             }
 
             if (getImports().size() > 0) {
@@ -838,9 +860,9 @@ abstract class MDeclaration extends MVM.MCodeable {
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            this.namespace = VisitorUtils.visit(this.namespace, this, visitor);
-            VisitorUtils.visit(this.imports, this, visitor);
-            VisitorUtils.visit(this.types, this, visitor);
+            namespace = VisitorUtils.visit(namespace, this, visitor);
+            VisitorUtils.visit(imports, this, visitor);
+            VisitorUtils.visit(types, this, visitor);
         }
 
     }
@@ -852,8 +874,8 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         public MConstant(MVM vm, Type type, String name) {
             super(vm, type, name);
-            this.isStatic = true;
-            this.isFinal = true;
+            isStatic = true;
+            isFinal = true;
         }
 
         @Override
@@ -861,10 +883,10 @@ abstract class MDeclaration extends MVM.MCodeable {
             super.toCode(out);
 
             // write the class and name
-            out.write("static final ").write(this.type).space().write(this.name);
+            out.write("static final ").write(type).space().write(name);
 
-            if (this.expr != null) {
-                out.write(" = ").write(this.expr);
+            if (expr != null) {
+                out.write(" = ").write(expr);
             }
 
             out.write(';');
@@ -900,11 +922,11 @@ abstract class MDeclaration extends MVM.MCodeable {
         @Override
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
-            AccessType.toCode(this.access, out);
+            AccessType.toCode(access, out);
 
-            writeTypeParametersAndThrow(this.name, null, this.parameters, this.throwz, out);
+            writeTypeParametersAndThrow(name, null, parameters, throwz, out);
 
-            writeBlock(out, this.vm.getStyle("constructor"));
+            writeBlock(out, vm.getStyle("constructor"));
 
             return out;
         }
@@ -934,12 +956,12 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         @Override
         public Expression getExpression() {
-            return this.expr;
+            return expr;
         }
 
         @Override
         public Type getType() {
-            return this.type;
+            return type;
         }
 
         @Override
@@ -965,11 +987,11 @@ abstract class MDeclaration extends MVM.MCodeable {
                 out.newLine();
             }
 
-            if (this.comment != null && this.comment.type() == Comment.D) {
-                out.newLine().write(this.comment);
+            if (comment != null && comment.type() == Comment.D) {
+                out.newLine().write(comment);
             }
 
-            if (this.annotations.size() > 0) {
+            if (annotations.size() > 0) {
                 out.newLine();
                 for (Annotation annotation : getAnnotations()) {
                     out.write(annotation);
@@ -987,8 +1009,8 @@ abstract class MDeclaration extends MVM.MCodeable {
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            this.type = VisitorUtils.visit(this.type, this, visitor);
-            this.expr = VisitorUtils.visit(this.expr, this, visitor);
+            type = VisitorUtils.visit(type, this, visitor);
+            expr = VisitorUtils.visit(expr, this, visitor);
         }
 
         // never called
@@ -1017,22 +1039,22 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         @Override
         public String getName() {
-            return this.name;
+            return name;
         }
 
         @Override
         public Type getType() {
-            return this.type;
+            return type;
         }
 
         @Override
         public boolean isFinal() {
-            return this.isFinal;
+            return isFinal;
         }
 
         @Override
         public MFormalParameter isFinal(boolean value) {
-            this.isFinal = value;
+            isFinal = value;
             return this;
         }
 
@@ -1050,18 +1072,18 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         @Override
         public CodeWriter toCode(CodeWriter out) {
-            out.queue(this.comment);
-            if (this.isFinal) {
+            out.queue(comment);
+            if (isFinal) {
                 out.write("final ");
             }
-            out.write(this.type).space().write(this.name);
+            out.write(type).space().write(name);
             return out;
         }
 
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            this.type = VisitorUtils.visit(this.type, this, visitor);
+            type = VisitorUtils.visit(type, this, visitor);
         }
     }
 
@@ -1079,7 +1101,7 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         @Override
         public String getName() {
-            return this.name;
+            return name;
         }
 
         public boolean isClassnamePartOfImport(String fullclassname) {
@@ -1102,7 +1124,7 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         @Override
         public boolean isSingle() {
-            return !this.name.endsWith("*");
+            return !name.endsWith("*");
         }
 
         @Override
@@ -1117,7 +1139,7 @@ abstract class MDeclaration extends MVM.MCodeable {
                 out.newLine();
             }
             super.toCode(out);
-            out.write("import ").write(this.name).write(';').newLine();
+            out.write("import ").write(name).write(';').newLine();
             return out;
         }
 
@@ -1142,7 +1164,7 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         @Override
         public ClassDeclaration getParentClass() {
-            return this.parent;
+            return parent;
         }
 
         @Override
@@ -1167,7 +1189,7 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         @Override
         public ClassDeclaration getParentClass() {
-            return this.parent;
+            return parent;
         }
 
         @Override
@@ -1186,12 +1208,12 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         MInterface(MVM vm, MCompilationUnit unit) {
             super(vm, unit);
-            this.extendz = new ArrayList<String>();
+            extendz = new ArrayList<String>();
         }
 
         @Override
         public Interface addExtends(String ex) {
-            this.extendz.add(ex);
+            extendz.add(ex);
             return this;
         }
 
@@ -1202,28 +1224,28 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         @Override
         public List<String> getExtends() {
-            return ListTypeSelector.select(this.extendz);
+            return ListTypeSelector.select(extendz);
         }
 
         @Override
         public Constant newConstant(String name, int val) {
-            Constant x = new MConstant(this.vm, this.vm.INT, name);
-            x.setExpression(new MLiteral.MIntLiteral(this.vm, val));
-            this.members.add(x);
+            Constant x = new MConstant(vm, vm.INT, name);
+            x.setExpression(new MLiteral.MIntLiteral(vm, val));
+            members.add(x);
             return x;
         }
 
         @Override
         public Constant newConstant(Type type, String name) {
-            Constant x = new MConstant(this.vm, type, name);
-            this.members.add(x);
+            Constant x = new MConstant(vm, type, name);
+            members.add(x);
             return x;
         }
 
         @Override
         public AbstractMethod newMethod(Type type, String name) {
-            AbstractMethod x = new MAbstractMethod(this.vm, type, name);
-            this.members.add(x);
+            AbstractMethod x = new MAbstractMethod(vm, type, name);
+            members.add(x);
             return x;
         }
 
@@ -1231,31 +1253,31 @@ abstract class MDeclaration extends MVM.MCodeable {
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
 
-            AccessType.toCode(this.access, out);
+            AccessType.toCode(access, out);
 
-            if (this.isFinal) {
+            if (isFinal) {
                 out.write("final ");
             }
-            out.write("interface ").write(this.name);
+            out.write("interface ").write(name);
 
-            if (this.extendz.size() > 0) {
+            if (extendz.size() > 0) {
                 out.newLine().write("extends ");
 
-                for (int i = 0; i < this.extendz.size(); i++) {
+                for (int i = 0; i < extendz.size(); i++) {
                     if (i > 0) {
                         out.write(", ");
                     }
-                    out.write(this.extendz.get(i));
+                    out.write(extendz.get(i));
                 }
             }
 
-            writeBlock(out, this.vm.getStyle("interface"));
+            writeBlock(out, vm.getStyle("interface"));
             return out;
         }
 
         @Override
         public boolean removeExtends(String className) {
-            return this.extendz.remove(className);
+            return extendz.remove(className);
         }
 
         @Override
@@ -1281,14 +1303,14 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         @Override
         public Comment comment(String text) {
-            Comment sl = new MComment.MSingleLineComment(this.vm, text);
-            this.comment = sl;
+            Comment sl = new MComment.MSingleLineComment(vm, text);
+            comment = sl;
             return sl;
         }
 
         @Override
         public String getLabel() {
-            return this.label;
+            return label;
         }
 
         @Override
@@ -1335,64 +1357,64 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         MMember(MVM vm) {
             super(vm);
-            this.access = Access.PACKAGE;
-            this.annotations = new ArrayList<Annotation>();
+            access = Access.PACKAGE;
+            annotations = new ArrayList<Annotation>();
         }
 
         @Override
         public MMember addAnnotation(Annotation annotation) {
-            this.annotations.add(annotation);
+            annotations.add(annotation);
             return this;
         }
 
         @Override
         public Annotation addAnnotation(String text) {
-            Annotation x = new MAnnotation(this.vm, text);
-            this.annotations.add(x);
+            Annotation x = new MAnnotation(vm, text);
+            annotations.add(x);
             return x;
         }
 
         @Override
         public Annotation addAnnotation(String name, String text) {
-            Annotation x = new MAnnotation(this.vm, name, text);
-            this.annotations.add(x);
+            Annotation x = new MAnnotation(vm, name, text);
+            annotations.add(x);
             return x;
         }
 
         @Override
         public AccessType getAccess() {
-            return this.access;
+            return access;
         }
 
         @Override
         public List<Annotation> getAnnotations() {
-            return ListTypeSelector.select(this.annotations, Annotation.class);
+            return ListTypeSelector.select(annotations, Annotation.class);
         }
 
         @Override
         public String getName() {
-            return this.name;
+            return name;
         }
 
         @Override
         public boolean isFinal() {
-            return this.isFinal;
+            return isFinal;
         }
 
         @Override
         public MMember isFinal(boolean value) {
-            this.isFinal = value;
+            isFinal = value;
             return this;
         }
 
         @Override
         public boolean isStatic() {
-            return this.isStatic;
+            return isStatic;
         }
 
         @Override
         public MMember isStatic(boolean value) {
-            this.isStatic = value;
+            isStatic = value;
             return this;
         }
 
@@ -1416,10 +1438,10 @@ abstract class MDeclaration extends MVM.MCodeable {
 
             out.newLine();
 
-            if (this.comment != null) {
-                out.write(this.comment);
+            if (comment != null) {
+                out.write(comment);
             }
-            if (this.annotations.size() > 0) {
+            if (annotations.size() > 0) {
                 out.newLine();
                 for (Annotation annotation : getAnnotations()) {
                     out.write(annotation);
@@ -1436,7 +1458,7 @@ abstract class MDeclaration extends MVM.MCodeable {
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            VisitorUtils.visit(this.annotations, this, visitor);
+            VisitorUtils.visit(annotations, this, visitor);
         }
 
         abstract List<? extends Codeable> codeableList();
@@ -1463,46 +1485,46 @@ abstract class MDeclaration extends MVM.MCodeable {
             super(vm);
             this.type = type;
             this.name = name;
-            this.parameters = new ArrayList<FormalParameter>();
-            this.throwz = new ArrayList<String>();
+            parameters = new ArrayList<FormalParameter>();
+            throwz = new ArrayList<String>();
         }
 
         @Override
         public FormalParameter addParameter(Class type, String name) {
-            return addParameter(this.vm.newType(type), name);
+            return addParameter(vm.newType(type), name);
         }
 
         @Override
         public FormalParameter addParameter(Type type, String name) {
-            FormalParameter x = new MFormalParameter(this.vm, type, name);
-            this.parameters.add(x);
+            FormalParameter x = new MFormalParameter(vm, type, name);
+            parameters.add(x);
             return x;
         }
 
         @Override
         public MMethod addThrows(String name) {
-            this.throwz.add(name);
+            throwz.add(name);
             return this;
         }
 
         @Override
         public List<FormalParameter> getParameters() {
-            return ListTypeSelector.select(this.parameters, FormalParameter.class);
+            return ListTypeSelector.select(parameters, FormalParameter.class);
         }
 
         @Override
         public List<String> getThrows() {
-            return ListTypeSelector.select(this.throwz, String.class);
+            return ListTypeSelector.select(throwz, String.class);
         }
 
         @Override
         public Type getType() {
-            return this.type;
+            return type;
         }
 
         @Override
         public boolean isAbstract() {
-            return this.isAbstract;
+            return isAbstract;
         }
 
         @Override
@@ -1520,8 +1542,8 @@ abstract class MDeclaration extends MVM.MCodeable {
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            VisitorUtils.visit(this.parameters, this, visitor);
-            this.type = VisitorUtils.visit(this.type, this, visitor);
+            VisitorUtils.visit(parameters, this, visitor);
+            type = VisitorUtils.visit(type, this, visitor);
         }
     }
 
@@ -1539,7 +1561,7 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         @Override
         public String getName() {
-            return this.name;
+            return name;
         }
 
         @Override
@@ -1554,7 +1576,7 @@ abstract class MDeclaration extends MVM.MCodeable {
                 out.newLine();
             }
             super.toCode(out);
-            out.write("package ").write(this.name).write(';').newLine();
+            out.write("package ").write(name).write(';').newLine();
             return out;
         }
 
@@ -1579,8 +1601,8 @@ abstract class MDeclaration extends MVM.MCodeable {
 
             addImplements(Serializable.class.getSimpleName());
 
-            ClassField serialVersionUID = newField(this.vm.newType(Type.LONG), "serialVersionUID");
-            serialVersionUID.setExpression(this.vm.newLong(1L))//
+            ClassField serialVersionUID = newField(vm.newType(Type.LONG), "serialVersionUID");
+            serialVersionUID.setExpression(vm.newLong(1L))//
                     .isFinal(true)//
                     .isStatic(true)//
                     .setAccess(Access.PRIVATE);
@@ -1609,7 +1631,7 @@ abstract class MDeclaration extends MVM.MCodeable {
 
             // write the class and name
             out.write("static");
-            writeBlock(out, this.vm.getStyle("static-initializer"));
+            writeBlock(out, vm.getStyle("static-initializer"));
             return out;
         }
 
@@ -1633,23 +1655,23 @@ abstract class MDeclaration extends MVM.MCodeable {
         MTypeDeclaration(MVM vm, MCompilationUnit unit) {
             super(vm);
             this.unit = unit;
-            this.members = new ArrayList<Declaration>();
+            members = new ArrayList<Declaration>();
         }
 
         @Override
         public List<Member> getMembers() {
-            return ListTypeSelector.select(this.members, Member.class);
+            return ListTypeSelector.select(members, Member.class);
         }
 
         @Override
         public CompilationUnit getUnit() {
-            return this.unit;
+            return unit;
         }
 
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            VisitorUtils.visit(this.members, this, visitor);
+            VisitorUtils.visit(members, this, visitor);
         }
 
         @SuppressWarnings("unchecked")
@@ -1686,9 +1708,9 @@ abstract class MDeclaration extends MVM.MCodeable {
 
             // append to the filepath if exists (should, but
             // not required).
-            if (this.unit.namespace != null) {
+            if (unit.namespace != null) {
                 // fetch the package name
-                String pkg = this.unit.namespace.getName();
+                String pkg = unit.namespace.getName();
                 // make sure the package name exists
                 if (pkg != null) {
                     // append the package name
@@ -1710,11 +1732,11 @@ abstract class MDeclaration extends MVM.MCodeable {
             StringBuffer file = null;
 
             // was a path specified?
-            if (this.unit.codebase != null && this.unit.codebase.length() > 0) {
+            if (unit.codebase != null && unit.codebase.length() > 0) {
                 // make the buffer
-                file = new StringBuffer(this.unit.codebase);
+                file = new StringBuffer(unit.codebase);
                 // does the codebase end with a slash?
-                if (!this.unit.codebase.endsWith(Character.toString(File.separatorChar))) {
+                if (!unit.codebase.endsWith(Character.toString(File.separatorChar))) {
                     // make it so...
                     file.append(File.separatorChar);
                 }
@@ -1723,9 +1745,9 @@ abstract class MDeclaration extends MVM.MCodeable {
             }
 
             // append to the filepath if exists
-            if (this.unit.namespace != null) {
+            if (unit.namespace != null) {
                 // fetch the package name
-                String pkg = this.unit.namespace.getName();
+                String pkg = unit.namespace.getName();
                 // make sure the package name exists
                 if (pkg != null) {
                     // append the package name
@@ -1784,8 +1806,8 @@ abstract class MDeclaration extends MVM.MCodeable {
     }
 
     public DocumentationComment javadoc(String text) {
-        this.comment = new MComment.MDocumentationComment(this.vm, text);
-        return (DocumentationComment) this.comment;
+        comment = new MComment.MDocumentationComment(vm, text);
+        return (DocumentationComment) comment;
     }
 
     @Override

@@ -1,5 +1,27 @@
 package net.sourceforge.jenesis4java.impl;
 
+/*
+ * #%L
+ * Jenesis 4 Java Code Generator
+ * %%
+ * Copyright (C) 2000 - 2015 jenesis4java
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/lgpl-3.0.html>.
+ * #L%
+ */
+
 /**
  * Copyright (C) 2008, 2010 Richard van Nieuwenhoven - ritchie [at] gmx [dot] at
  * Copyright (C) 2000, 2001 Paul Cody Johnston - pcj@inxar.org <br>
@@ -61,150 +83,150 @@ public abstract class MComment extends MVM.MCodeable implements Comment {
 
         public MDocumentationComment(MVM vm, String text) {
             super(vm, Comment.D, text);
-            this.vtagParameter = new ArrayList<String>();
-            this.vtagSee = new ArrayList<String>();
+            vtagParameter = new ArrayList<String>();
+            vtagSee = new ArrayList<String>();
         }
 
         @Override
         public MDocumentationComment addParam(String s) {
-            this.vtagParameter.add(s);
+            vtagParameter.add(s);
             return this;
         }
 
         @Override
         public MDocumentationComment addSee(String s) {
-            this.vtagSee.add(s);
+            vtagSee.add(s);
             return this;
         }
 
         @Override
         public String getAuthor() {
-            return this.tagAuthor;
+            return tagAuthor;
         }
 
         @Override
         public String getDate() {
-            return this.tagDate;
+            return tagDate;
         }
 
         @Override
         public String getDeprecated() {
-            return this.tagDeprecated;
+            return tagDeprecated;
         }
 
         @Override
         public String getException() {
-            return this.tagException;
+            return tagException;
         }
 
         @Override
         public List<String> getParams() {
-            return ListTypeSelector.select(this.vtagParameter);
+            return ListTypeSelector.select(vtagParameter);
         }
 
         @Override
         public String getReturn() {
-            return this.tagReturn;
+            return tagReturn;
         }
 
         @Override
         public List<String> getSees() {
-            return ListTypeSelector.select(this.vtagSee);
+            return ListTypeSelector.select(vtagSee);
         }
 
         @Override
         public String getSerial() {
-            return this.tagSerial;
+            return tagSerial;
         }
 
         @Override
         public String getSerialData() {
-            return this.tagSerialData;
+            return tagSerialData;
         }
 
         @Override
         public String getSerialField() {
-            return this.tagSerialField;
+            return tagSerialField;
         }
 
         @Override
         public String getSince() {
-            return this.tagSince;
+            return tagSince;
         }
 
         @Override
         public String getThrows() {
-            return this.tagThrows;
+            return tagThrows;
         }
 
         @Override
         public String getVersion() {
-            return this.tagVersion;
+            return tagVersion;
         }
 
         @Override
         public MDocumentationComment setAuthor(String s) {
-            this.tagAuthor = s;
+            tagAuthor = s;
             return this;
         }
 
         @Override
         public MDocumentationComment setDate(String s) {
-            this.tagDate = s;
+            tagDate = s;
             return this;
         }
 
         @Override
         public MDocumentationComment setDeprecated(String s) {
-            this.tagDeprecated = s;
+            tagDeprecated = s;
             return this;
         }
 
         @Override
         public MDocumentationComment setException(String s) {
-            this.tagException = s;
+            tagException = s;
             return this;
         }
 
         @Override
         public MDocumentationComment setReturn(String s) {
-            this.tagReturn = s;
+            tagReturn = s;
             return this;
         }
 
         @Override
         public MDocumentationComment setSerial(String s) {
-            this.tagSerial = s;
+            tagSerial = s;
             return this;
         }
 
         @Override
         public MDocumentationComment setSerialData(String s) {
-            this.tagSerialData = s;
+            tagSerialData = s;
             return this;
         }
 
         @Override
         public MDocumentationComment setSerialField(String s) {
-            this.tagSerialField = s;
+            tagSerialField = s;
             return this;
         }
 
         @Override
         public MDocumentationComment setSince(String s) {
-            this.tagSince = s;
+            tagSince = s;
             return this;
         }
 
         @Override
         public MDocumentationComment setThrows(String s) {
-            this.tagThrows = s;
+            tagThrows = s;
             return this;
         }
 
         @Override
         public MDocumentationComment setVersion(String s) {
-            this.tagVersion = s;
+            tagVersion = s;
             return this;
         }
 
@@ -217,21 +239,21 @@ public abstract class MComment extends MVM.MCodeable implements Comment {
             }
             out.write("/**").newLine(); // */
 
-            MComment.wordWrap(this.text, MComment.D_COMMENT_LENGTH, " *", out);
+            MComment.wordWrap(text, MComment.D_COMMENT_LENGTH, " *", out);
 
-            writeTag(this.tagAuthor, "author", out);
-            writeTag(this.tagDate, "date", out);
-            writeTag(this.tagDeprecated, "deprecated", out);
-            writeTag(this.tagException, "exception", out);
-            writeTag(this.tagReturn, "return", out);
-            writeTag(this.tagSerial, "serial", out);
-            writeTag(this.tagSerialData, "serialData", out);
-            writeTag(this.tagSerialField, "serialField", out);
-            writeTag(this.tagSince, "since", out);
-            writeTag(this.tagThrows, "throws", out);
-            writeTag(this.tagVersion, "version", out);
-            writeTags(this.vtagParameter, "param", out);
-            writeTags(this.vtagSee, "see", out);
+            writeTag(tagAuthor, "author", out);
+            writeTag(tagDate, "date", out);
+            writeTag(tagDeprecated, "deprecated", out);
+            writeTag(tagException, "exception", out);
+            writeTag(tagReturn, "return", out);
+            writeTag(tagSerial, "serial", out);
+            writeTag(tagSerialData, "serialData", out);
+            writeTag(tagSerialField, "serialField", out);
+            writeTag(tagSince, "since", out);
+            writeTag(tagThrows, "throws", out);
+            writeTag(tagVersion, "version", out);
+            writeTags(vtagParameter, "param", out);
+            writeTags(vtagSee, "see", out);
 
             if (!out.isLineNew()) {
                 out.newLine();
@@ -288,10 +310,10 @@ public abstract class MComment extends MVM.MCodeable implements Comment {
                 out.newLine();
             }
             out.write("/* ").newLine(); // */
-            if (this.onlyAtBeginningAndEnd) {
-                MComment.wordWrap(this.text, MComment.COMMENT_LENGTH_UNLIMITED, "\t", out);
+            if (onlyAtBeginningAndEnd) {
+                MComment.wordWrap(text, MComment.COMMENT_LENGTH_UNLIMITED, "\t", out);
             } else {
-                MComment.wordWrap(this.text, MComment.M_COMMENT_LENGTH, " *", out);
+                MComment.wordWrap(text, MComment.M_COMMENT_LENGTH, " *", out);
             }
 
             if (!out.isLineNew()) {
@@ -321,7 +343,7 @@ public abstract class MComment extends MVM.MCodeable implements Comment {
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
 
-            MComment.wordWrap(this.text, MComment.S_COMMENT_LENGTH, "//", out);
+            MComment.wordWrap(text, MComment.S_COMMENT_LENGTH, "//", out);
 
             return out;
         }
@@ -449,7 +471,7 @@ public abstract class MComment extends MVM.MCodeable implements Comment {
 
     @Override
     public String getText() {
-        return this.text;
+        return text;
     }
 
     @Override
@@ -464,7 +486,7 @@ public abstract class MComment extends MVM.MCodeable implements Comment {
 
     @Override
     public int type() {
-        return this.type;
+        return type;
     }
 
     @Override

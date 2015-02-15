@@ -1,5 +1,27 @@
 package net.sourceforge.jenesis4java.impl;
 
+/*
+ * #%L
+ * Jenesis 4 Java Code Generator
+ * %%
+ * Copyright (C) 2000 - 2015 jenesis4java
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/lgpl-3.0.html>.
+ * #L%
+ */
+
 /**
  * Copyright (C) 2008, 2010 Richard van Nieuwenhoven - ritchie [at] gmx [dot] at
  * Copyright (C) 2000, 2001 Paul Cody Johnston - pcj@inxar.org <br>
@@ -54,7 +76,7 @@ public abstract class MLiteral extends MVM.MCodeable implements Literal {
 
         @Override
         public boolean toBoolean() {
-            return ((Boolean) this.val).booleanValue();
+            return ((Boolean) val).booleanValue();
         }
 
         @Override
@@ -74,7 +96,7 @@ public abstract class MLiteral extends MVM.MCodeable implements Literal {
 
         @Override
         public byte toByte() {
-            return ((Byte) this.val).byteValue();
+            return ((Byte) val).byteValue();
         }
 
         @Override
@@ -141,7 +163,7 @@ public abstract class MLiteral extends MVM.MCodeable implements Literal {
 
         @Override
         public char toChar() {
-            return ((Character) this.val).charValue();
+            return ((Character) val).charValue();
         }
 
         @Override
@@ -182,7 +204,7 @@ public abstract class MLiteral extends MVM.MCodeable implements Literal {
 
         @Override
         public double toDouble() {
-            return ((Double) this.val).doubleValue();
+            return ((Double) val).doubleValue();
         }
 
         @Override
@@ -217,7 +239,7 @@ public abstract class MLiteral extends MVM.MCodeable implements Literal {
 
         @Override
         public float toFloat() {
-            return ((Float) this.val).floatValue();
+            return ((Float) val).floatValue();
         }
 
         @Override
@@ -237,7 +259,7 @@ public abstract class MLiteral extends MVM.MCodeable implements Literal {
 
         @Override
         public int toInt() {
-            return ((Integer) this.val).intValue();
+            return ((Integer) val).intValue();
         }
 
         @Override
@@ -257,7 +279,7 @@ public abstract class MLiteral extends MVM.MCodeable implements Literal {
 
         @Override
         public long toLong() {
-            return ((Long) this.val).longValue();
+            return ((Long) val).longValue();
         }
 
         @Override
@@ -288,7 +310,7 @@ public abstract class MLiteral extends MVM.MCodeable implements Literal {
 
         MOctalLiteral(MVM vm, char val) {
             super(vm, val);
-            this.label = "'\\" + Integer.toOctalString(val) + "'";
+            label = "'\\" + Integer.toOctalString(val) + "'";
         }
 
         @Override
@@ -317,17 +339,17 @@ public abstract class MLiteral extends MVM.MCodeable implements Literal {
 
         @Override
         public int getExponent() {
-            return this.exponent;
+            return exponent;
         }
 
         @Override
         public int getPrecision() {
-            return this.precision;
+            return precision;
         }
 
         @Override
         public int getScale() {
-            return this.scale;
+            return scale;
         }
 
         @Override
@@ -347,7 +369,7 @@ public abstract class MLiteral extends MVM.MCodeable implements Literal {
 
         @Override
         public short toShort() {
-            return ((Short) this.val).shortValue();
+            return ((Short) val).shortValue();
         }
 
         @Override
@@ -384,7 +406,7 @@ public abstract class MLiteral extends MVM.MCodeable implements Literal {
 
         @Override
         public String toString() {
-            return (String) this.val;
+            return (String) val;
         }
 
         @Override
@@ -415,7 +437,7 @@ public abstract class MLiteral extends MVM.MCodeable implements Literal {
 
         MUnicodeLiteral(MVM vm, char val) {
             super(vm, val);
-            this.label = "'\\u" + Integer.toHexString(val) + "'";
+            label = "'\\u" + Integer.toHexString(val) + "'";
         }
 
         @Override
@@ -441,12 +463,12 @@ public abstract class MLiteral extends MVM.MCodeable implements Literal {
 
     @Override
     public Comment getComment() {
-        return this.comment;
+        return comment;
     }
 
     @Override
     public Type getType() {
-        return this.type;
+        return type;
     }
 
     public MLiteral setComment(Comment comment) {
@@ -456,20 +478,20 @@ public abstract class MLiteral extends MVM.MCodeable implements Literal {
 
     @Override
     public CodeWriter toCode(CodeWriter out) {
-        out.queue(this.comment);
-        out.write(this.label);
+        out.queue(comment);
+        out.write(label);
         return out;
     }
 
     @Override
     public Object toObject() {
-        return this.val;
+        return val;
     }
 
     @Override
     public void visit(IVisitor visitor) {
         super.visit(visitor);
-        this.type = VisitorUtils.visit(this.type, this, visitor);
-        this.comment = VisitorUtils.visit(this.comment, this, visitor);
+        type = VisitorUtils.visit(type, this, visitor);
+        comment = VisitorUtils.visit(comment, this, visitor);
     }
 }

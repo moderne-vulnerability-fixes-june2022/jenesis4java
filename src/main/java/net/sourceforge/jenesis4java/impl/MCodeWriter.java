@@ -1,5 +1,27 @@
 package net.sourceforge.jenesis4java.impl;
 
+/*
+ * #%L
+ * Jenesis 4 Java Code Generator
+ * %%
+ * Copyright (C) 2000 - 2015 jenesis4java
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/lgpl-3.0.html>.
+ * #L%
+ */
+
 /**
  * Copyright (C) 2008, 2010 Richard van Nieuwenhoven - ritchie [at] gmx [dot] at
  * Copyright (C) 2000, 2001 Paul Cody Johnston - pcj@inxar.org <br>
@@ -47,11 +69,11 @@ public class MCodeWriter implements CodeWriter {
 
     public MCodeWriter(PrintWriter out) {
         this.out = out;
-        this.colNo = 0;
-        this.lineNo = 1; // start at line 1
-        this.indentNo = 0;
-        this.isLineNew = true;
-        this.queue = new ArrayList<Comment>();
+        colNo = 0;
+        lineNo = 1; // start at line 1
+        indentNo = 0;
+        isLineNew = true;
+        queue = new ArrayList<Comment>();
     }
 
     /**
@@ -59,11 +81,11 @@ public class MCodeWriter implements CodeWriter {
      */
     @Override
     public CodeWriter dedentLine() {
-        if (this.hasQueue) {
+        if (hasQueue) {
             flushQueue();
-            this.hasQueue = false;
+            hasQueue = false;
         }
-        this.indentNo--;
+        indentNo--;
         newLine();
         return this;
     }
@@ -75,12 +97,12 @@ public class MCodeWriter implements CodeWriter {
      */
     @Override
     public int getColumnNumber() {
-        return this.colNo;
+        return colNo;
     }
 
     @Override
     public CompilationUnit getCompilationUnit() {
-        return this.compilationUnit;
+        return compilationUnit;
     }
 
     /**
@@ -88,7 +110,7 @@ public class MCodeWriter implements CodeWriter {
      */
     @Override
     public int getIndentNumber() {
-        return this.indentNo;
+        return indentNo;
     }
 
     /**
@@ -96,7 +118,7 @@ public class MCodeWriter implements CodeWriter {
      */
     @Override
     public int getLineNumber() {
-        return this.lineNo;
+        return lineNo;
     }
 
     /**
@@ -104,11 +126,11 @@ public class MCodeWriter implements CodeWriter {
      */
     @Override
     public CodeWriter indentLine() {
-        if (this.hasQueue) {
+        if (hasQueue) {
             flushQueue();
-            this.hasQueue = false;
+            hasQueue = false;
         }
-        this.indentNo++;
+        indentNo++;
         newLine();
         return this;
     }
@@ -119,7 +141,7 @@ public class MCodeWriter implements CodeWriter {
      */
     @Override
     public boolean isLineNew() {
-        return this.isLineNew;
+        return isLineNew;
     }
 
     /**
@@ -130,15 +152,15 @@ public class MCodeWriter implements CodeWriter {
      */
     @Override
     public CodeWriter newLine() {
-        if (this.hasQueue) {
+        if (hasQueue) {
             flushQueue();
-            this.hasQueue = false;
+            hasQueue = false;
         }
-        this.out.println();
+        out.println();
         writeIndent();
-        this.colNo = 0;
-        this.lineNo++;
-        this.isLineNew = true;
+        colNo = 0;
+        lineNo++;
+        isLineNew = true;
         return this;
     }
 
@@ -156,8 +178,8 @@ public class MCodeWriter implements CodeWriter {
     public MCodeWriter queue(Comment comment) {
         if (comment != null) {
             comment.setText(comment.getText());
-            this.queue.add(comment);
-            this.hasQueue = true;
+            queue.add(comment);
+            hasQueue = true;
         }
         return this;
     }
@@ -167,7 +189,7 @@ public class MCodeWriter implements CodeWriter {
      */
     @Override
     public CodeWriter resetLine() {
-        this.indentNo = 0;
+        indentNo = 0;
         newLine();
         return this;
     }
@@ -182,9 +204,9 @@ public class MCodeWriter implements CodeWriter {
      */
     @Override
     public CodeWriter space() {
-        this.out.print(' ');
-        this.colNo++;
-        this.isLineNew = false;
+        out.print(' ');
+        colNo++;
+        isLineNew = false;
         return this;
     }
 
@@ -194,10 +216,10 @@ public class MCodeWriter implements CodeWriter {
     @Override
     public CodeWriter write(boolean b) {
         // print it
-        this.out.print(b);
+        out.print(b);
         // add if 4:'true' or 5:'false'
-        this.colNo += b ? 4 : 5;
-        this.isLineNew = false;
+        colNo += b ? 4 : 5;
+        isLineNew = false;
         return this;
     }
 
@@ -207,10 +229,10 @@ public class MCodeWriter implements CodeWriter {
     @Override
     public CodeWriter write(char c) {
         // print the char
-        this.out.print(c);
+        out.print(c);
         // add one
-        this.colNo++;
-        this.isLineNew = false;
+        colNo++;
+        isLineNew = false;
         return this;
     }
 
@@ -222,10 +244,10 @@ public class MCodeWriter implements CodeWriter {
 
         if (chars != null) {
             // print the chars;
-            this.out.print(chars);
+            out.print(chars);
             // add
-            this.colNo += chars.length;
-            this.isLineNew = false;
+            colNo += chars.length;
+            isLineNew = false;
         }
         return this;
     }
@@ -237,10 +259,10 @@ public class MCodeWriter implements CodeWriter {
     public CodeWriter write(char[] chars, int off, int len) {
         if (chars != null) {
             // print the chars;
-            this.out.write(chars, off, len);
+            out.write(chars, off, len);
             // add
-            this.colNo += chars.length;
-            this.isLineNew = false;
+            colNo += chars.length;
+            isLineNew = false;
         }
         return this;
     }
@@ -277,9 +299,9 @@ public class MCodeWriter implements CodeWriter {
      */
     @Override
     public CodeWriter write(double d) {
-        this.out.print(d);
-        this.colNo += Double.toString(d).length();
-        this.isLineNew = false;
+        out.print(d);
+        colNo += Double.toString(d).length();
+        isLineNew = false;
         return this;
     }
 
@@ -288,9 +310,9 @@ public class MCodeWriter implements CodeWriter {
      */
     @Override
     public CodeWriter write(float f) {
-        this.out.print(f);
-        this.colNo += Float.toString(f).length();
-        this.isLineNew = false;
+        out.print(f);
+        colNo += Float.toString(f).length();
+        isLineNew = false;
         return this;
     }
 
@@ -299,9 +321,9 @@ public class MCodeWriter implements CodeWriter {
      */
     @Override
     public CodeWriter write(int i) {
-        this.out.print(i);
-        this.colNo += Integer.toString(i).length();
-        this.isLineNew = false;
+        out.print(i);
+        colNo += Integer.toString(i).length();
+        isLineNew = false;
         return this;
     }
 
@@ -324,9 +346,9 @@ public class MCodeWriter implements CodeWriter {
             if (o instanceof Codeable) {
                 ((Codeable) o).toCode(this);
             } else {
-                this.out.print(o);
-                this.colNo += o.toString().length();
-                this.isLineNew = false;
+                out.print(o);
+                colNo += o.toString().length();
+                isLineNew = false;
             }
         }
         return this;
@@ -338,25 +360,25 @@ public class MCodeWriter implements CodeWriter {
     @Override
     public CodeWriter write(String s) {
         if (s != null) {
-            this.out.print(s);
-            this.colNo += s.length();
-            this.isLineNew = false;
+            out.print(s);
+            colNo += s.length();
+            isLineNew = false;
         }
 
         return this;
     }
 
     private void flushQueue() {
-        while (!this.queue.isEmpty()) {
-            Codeable c = this.queue.remove(0);
+        while (!queue.isEmpty()) {
+            Codeable c = queue.remove(0);
             write(c);
         }
     }
 
     private void writeIndent() {
-        int n = this.indentNo;
+        int n = indentNo;
         while (n-- > 0) {
-            this.out.print("    ");
+            out.print("    ");
         }
     }
 

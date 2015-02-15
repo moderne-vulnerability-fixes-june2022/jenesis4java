@@ -1,5 +1,27 @@
 package net.sourceforge.jenesis4java.impl;
 
+/*
+ * #%L
+ * Jenesis 4 Java Code Generator
+ * %%
+ * Copyright (C) 2000 - 2015 jenesis4java
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/lgpl-3.0.html>.
+ * #L%
+ */
+
 /**
  * Copyright (C) 2008, 2010 Richard van Nieuwenhoven - ritchie [at] gmx [dot] at
  * Copyright (C) 2000, 2001 Paul Cody Johnston - pcj@inxar.org <br>
@@ -48,24 +70,24 @@ public abstract class MType extends MVM.MCodeable {
 
         @Override
         public Type getComponentType() {
-            return this.type;
+            return type;
         }
 
         @Override
         public int getDims() {
-            return this.dims;
+            return dims;
         }
 
         @Override
         public String getName() {
-            return this.name;
+            return name;
         }
 
         @Override
         public CodeWriter toCode(CodeWriter out) {
-            out.queue(this.comment);
-            this.type.toCode(out);
-            for (int i = 0; i < this.dims; i++) {
+            out.queue(comment);
+            type.toCode(out);
+            for (int i = 0; i < dims; i++) {
                 out.write("[]");
             }
             return out;
@@ -74,7 +96,7 @@ public abstract class MType extends MVM.MCodeable {
         @Override
         public void visit(IVisitor visitor) {
             super.visit(visitor);
-            this.type = VisitorUtils.visit(this.type, this, visitor);
+            type = VisitorUtils.visit(type, this, visitor);
         }
     }
 
@@ -94,7 +116,7 @@ public abstract class MType extends MVM.MCodeable {
 
         @Override
         public String getPattern() {
-            return this.pattern;
+            return pattern;
         }
 
         @Override
@@ -114,7 +136,7 @@ public abstract class MType extends MVM.MCodeable {
 
         @Override
         public String getName() {
-            return this.name;
+            return name;
         }
 
         @Override
@@ -151,32 +173,32 @@ public abstract class MType extends MVM.MCodeable {
     }
 
     public boolean isArray() {
-        return this.type == Type.ARRAY;
+        return type == Type.ARRAY;
     }
 
     public boolean isPrimitive() {
-        return this.type != Type.CLASS && this.type != Type.ARRAY;
+        return type != Type.CLASS && type != Type.ARRAY;
     }
 
     @Override
     public CodeWriter toCode(CodeWriter out) {
-        out.queue(this.comment);
+        out.queue(comment);
         boolean foundInImportedTypes = isImportedType(out);
         if (foundInImportedTypes) {
-            out.write(this.name.substring(this.name.lastIndexOf('.') + 1));
+            out.write(name.substring(name.lastIndexOf('.') + 1));
         } else {
-            out.write(this.name);
+            out.write(name);
         }
         return out;
     }
 
     @Override
     public String toString() {
-        return this.name;
+        return name;
     }
 
     public int type() {
-        return this.type;
+        return type;
     }
 
     @Override
@@ -185,17 +207,17 @@ public abstract class MType extends MVM.MCodeable {
     }
 
     private boolean isImportedType(CodeWriter out) {
-        if (this.name.indexOf('.') > 0) {
-            if (this.name.startsWith(MType.JAVA_LANG_PACKAGE)) {
+        if (name.indexOf('.') > 0) {
+            if (name.startsWith(MType.JAVA_LANG_PACKAGE)) {
                 return true;
             }
             if (out.getCompilationUnit() != null) {
                 for (Import importedType : out.getCompilationUnit().getImports()) {
-                    if (importedType.getName().equals(this.name)) {
+                    if (importedType.getName().equals(name)) {
                         return true;
                     }
                     if (importedType.getName().endsWith(".*")) {
-                        String packageName = this.name.substring(0, this.name.lastIndexOf('.') + 1);
+                        String packageName = name.substring(0, name.lastIndexOf('.') + 1);
                         if ((packageName + "*").equals(importedType.getName())) {
                             return true;
                         }
