@@ -43,45 +43,42 @@ package net.sourceforge.jenesis4java;
 public interface Binary extends Expression {
 
     /**
-     * Binary function type for logical and: <code>(a && b)</code>.
+     * Binary function type for logical and: {@code (a && b)}.
      */
     static final int LAND = 1;
 
     /**
-     * Binary function type for logical or: <code>(a || b)</code>.
+     * Binary function type for logical or: {@code (a || b)}.
      */
     static final int LOR = 2;
 
     /**
-     * Binary function type for bitwise and: <code>(a & b)</code>.
+     * Binary function type for bitwise and: {@code (a & b)}.
      */
     static final int BAND = 3;
 
     /**
-     * Binary function type for bitwise or: <code>(a | b)</code>.
+     * Binary function type for bitwise or: {@code (a | b)}.
      */
     static final int BOR = 4;
 
     /**
-     * Binary function type for bitwise xor: <code>(a ^ b)</code>.
+     * Binary function type for bitwise xor: {@code (a ^ b)}.
      */
     static final int XOR = 5;
 
     /**
-     * Binary function type for bitwise left shift: <code>(a <<
-     * b)</code>.
+     * Binary function type for bitwise left shift: {@code (a << b)}.
      */
     static final int LEFT = 6;
 
     /**
-     * Binary function type for bitwise right shift: <code>(a >>
-     * b)</code>.
+     * Binary function type for bitwise right shift: {@code (a >> b)}.
      */
     static final int RIGHT = 7;
 
     /**
-     * Binary function type for bitwise unsigned right shift: <code>(a
-     * >>> b)</code>.
+     * Binary function type for bitwise unsigned right shift: {@code (a >>> b)}.
      */
     static final int UNSIGNED = 8;
 
@@ -122,32 +119,29 @@ public interface Binary extends Expression {
     static final int EQ = 14;
 
     /**
-     * Binary function type for predicate not equals: <code>(a !=
-     * b)</code>.
+     * Binary function type for predicate not equals: {@code (a != b)}.
      */
     static final int NE = 15;
 
     /**
-     * Binary function type for predicate greater than: <code>(a >
-     * b)</code>.
+     * Binary function type for predicate greater than: {@code (a > b)}.
      */
     static final int GT = 16;
 
     /**
      * Binary function type for compund predicate greater than or equal:
-     * <code>(a => b)</code>.
+     * {@code (a => b)}.
      */
     static final int GTE = 17;
 
     /**
-     * Binary function type for predicate less than: <code>(a <
-     * b)</code>.
+     * Binary function type for predicate less than: {@code (a < b)}.
      */
     static final int LT = 18;
 
     /**
      * Binary function type for compound predicate less than or equal:
-     * <code>(a <= b)</code>.
+     * {@code (a <= b)}.
      */
     static final int LTE = 19;
 
