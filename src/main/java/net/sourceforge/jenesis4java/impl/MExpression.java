@@ -894,6 +894,11 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
         }
 
         @Override
+        public void removeArg(int index) {
+            ve.remove(index);
+        }
+
+        @Override
         public CodeWriter toCode(CodeWriter out) {
             super.toCode(out);
             out.write('(');

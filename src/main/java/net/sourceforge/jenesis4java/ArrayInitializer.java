@@ -44,32 +44,13 @@ package net.sourceforge.jenesis4java;
  * <code>Object[]</code>. If the type is <code>Object[]</code>, then each
  * element of that array will recursively be introspected, checking again to see
  * if the type is <code>Expression</code> or <code>Object[]</code>. In this
- * manner, one can arbitratily nest expressions. This is the only way I know how
+ * manner, one can arbitrarily nest expressions. This is the only way I know how
  * to accomplish this behavior (ie not knowing the dimensionality of an argument
  * at compile-time).
  * <P>
  * For example, say we wanted to make the array:
  * 
  * <PRE>
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
  * 
  * 
  * 

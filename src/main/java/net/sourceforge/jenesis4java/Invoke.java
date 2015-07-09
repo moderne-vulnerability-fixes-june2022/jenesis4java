@@ -89,4 +89,11 @@ public interface Invoke extends Accessor {
      * Gets the list of arguments as an list of <code>Expression</code>.
      */
     List<Expression> getArgs();
+
+    /**
+     * Removes the element with the specified index from the list of arguments.
+     * 
+     * @param index
+     */
+    void removeArg(int index);
 }

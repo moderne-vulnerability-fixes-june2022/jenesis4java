@@ -42,8 +42,7 @@ package net.sourceforge.jenesis4java;
 public interface LongLiteral extends Literal {
 
     /**
-     * Returns the <code>long/code> value of the
-     * <code>Literal</code>.
+     * Returns the <code>long</code> value of the <code>Literal</code>.
      */
     long toLong();
 }

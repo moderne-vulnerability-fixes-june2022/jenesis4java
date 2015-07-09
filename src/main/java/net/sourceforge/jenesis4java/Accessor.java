@@ -40,11 +40,11 @@ package net.sourceforge.jenesis4java;
  * <code>Expression</code> subinterface for expressions which access data
  * including field accesses, array accesses, and method invocations. An
  * <code>Accessor</code> expression has two parts with the general form
- * <qualifier> dot <name>. The qualifier references the handle to object where
- * the resource resides and the name references the name of the resource. For
- * example, in <code>this.id</code>, <code>this</code> is the qualifier and
- * <code>id</code> is the name. The qualifier is optional, in which case the
- * <code>Accessor</code> will render without the dot.
+ * &lt;qualifier&gt; dot &lt;name&gt;. The qualifier references the handle to
+ * object where the resource resides and the name references the name of the
+ * resource. For example, in <code>this.id</code>, <code>this</code> is the
+ * qualifier and <code>id</code> is the name. The qualifier is optional, in
+ * which case the <code>Accessor</code> will render without the dot.
  */
 public interface Accessor extends Variable {
 

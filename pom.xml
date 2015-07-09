@@ -223,6 +223,7 @@
 				</executions>
 				<configuration>
 					<configFile>${project.basedir}/src/main/eclipse/formatter.xml</configFile>
+					<lineEnding>LF</lineEnding>
 				</configuration>
 			</plugin>
 			<plugin>

@@ -66,9 +66,9 @@ import de.hunsicker.jalopy.storage.History;
 /**
  * This encoder will use jalopy to format the java source file. To activate this
  * encoder set the System property "jenesis.encoder" to
- * <Code>net.sourceforge.jenesis4java.jaloppy.JenesisJalopyEncoder<Code>. This will 
- * use the default jalopy settings from META-INF/jalopy.xml. To use an other set the 
- * System property jenesis.encoder.jalopyconfig
+ * <Code>net.sourceforge.jenesis4java.jaloppy.JenesisJalopyEncoder</Code>. This
+ * will use the default jalopy settings from META-INF/jalopy.xml. To use an
+ * other set the System property jenesis.encoder.jalopyconfig
  */
 public class JenesisJalopyEncoder implements CompilationUnitEncoder {
 

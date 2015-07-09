@@ -215,7 +215,9 @@ public class MVM extends net.sourceforge.jenesis4java.VirtualMachine {
 
     MStyle.MStyleMap styles;
 
-    List<CompilationUnit> units;
+    // Note: accesses to units list are synchronized to provide a minimum of
+    // thread safety
+    ArrayList<CompilationUnit> units;
 
     CompilationUnitEncoder encoder;
 
@@ -224,45 +226,31 @@ public class MVM extends net.sourceforge.jenesis4java.VirtualMachine {
     }
 
     public MVM(String styleprops) throws IOException {
-        BufferedInputStream in = null;
-        Properties p = null;
-
-        try {
-
-            // make the stream
-            in = new BufferedInputStream(new FileInputStream(styleprops));
+        Properties p;
+        try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(styleprops))) {
             // fill the props
             p = new Properties();
             p.load(in);
-            // close stream
-            in.close();
-
-        } catch (IOException ioex) {
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-            throw ioex;
         }
-
         init(p);
     }
 
     @Override
-    public VirtualMachine clear() {
+    public synchronized VirtualMachine clear() {
         units.clear();
         return this;
     }
 
     @Override
     public MVM encode() throws java.io.IOException {
-        for (CompilationUnit c : units) {
+        for (CompilationUnit c : cloneUnits()) {
             c.encode();
         }
         return this;
+    }
+
+    private synchronized List<CompilationUnit> cloneUnits() {
+        return (List<CompilationUnit>) units.clone();
     }
 
     @Override
@@ -425,7 +413,7 @@ public class MVM extends net.sourceforge.jenesis4java.VirtualMachine {
     }
 
     @Override
-    public CompilationUnit newCompilationUnit(String path) {
+    public synchronized CompilationUnit newCompilationUnit(String path) {
         CompilationUnit x = new MDeclaration.MCompilationUnit(this, path);
         units.add(x);
         return x;
@@ -684,7 +672,7 @@ public class MVM extends net.sourceforge.jenesis4java.VirtualMachine {
     void init(java.util.Properties styleprops) {
         initTypes();
         styles = new MStyle.MStyleMap(styleprops);
-        units = new ArrayList<CompilationUnit>();
+        units = new ArrayList<>();
         try {
             encoder = (CompilationUnitEncoder) Class.forName(styleprops.getProperty("encoder", BasicCompilationUnitEncoder.class.getName())).newInstance();
         } catch (Exception e) {
