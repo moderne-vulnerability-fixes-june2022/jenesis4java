@@ -49,24 +49,7 @@ package net.sourceforge.jenesis4java;
  * at compile-time).
  * <P>
  * For example, say we wanted to make the array:
- * 
- * <PRE>
- * 
- * 
- * 
- * int[][] aai = {
- *     {
- *         1,
- *         2
- *     },
- *     {
- *         3,
- *         4
- *     }
- * };
- * </PRE>
- * 
- * One could do this by:
+ * <code> int[][] aai = {{1, 2}, { 3, 4 }}; </code> One could do this by:
  * 
  * <PRE>
  * Expression[] a1 = new Expression[2];
