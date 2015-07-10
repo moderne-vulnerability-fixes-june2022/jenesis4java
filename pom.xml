@@ -58,7 +58,7 @@
 	</developers>
 	<scm>
 		<connection>scm:git:git@git.code.sf.net/p/jenesis4java/gitCode.git</connection>
-		<developerConnection>scm:git:git@git.code.sf.net/p/jenesis4java/gitCode.git</developerConnection>
+		<developerConnection>git:https://git@git.code.sf.net/p/jenesis4java/gitCode.git</developerConnection>
 		<url>http://sourceforge.net/p/jenesis4java/gitCode/ci/master/tree/</url>
 		<tag>HEAD</tag>
 	</scm>
