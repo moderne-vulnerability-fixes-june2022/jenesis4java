@@ -1093,6 +1093,11 @@ abstract class MDeclaration extends MVM.MCodeable {
     static class MImport extends MDeclaration implements Import {
 
         String name;
+        
+        private static String baseClassName(String fullclassname) {
+            int indexOfDot = fullclassname.lastIndexOf(".");
+            return (indexOfDot < 0) ? fullclassname : fullclassname.substring(indexOfDot);
+        }
 
         MImport(MVM vm, String name) {
             super(vm);
@@ -1115,8 +1120,7 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         public boolean isClassNameAlreadyUsed(String fullclassname) {
             if (isSingle()) {
-                String baseClassName = getName().substring(getName().lastIndexOf("."));
-                return baseClassName.equals(fullclassname.substring(fullclassname.lastIndexOf(".")));
+                return baseClassName(getName()).equals(baseClassName(fullclassname));
             } else {
                 return false;
             }

@@ -22,7 +22,6 @@ package net.sourceforge.jenesis4java.impl;
  * #L%
  */
 
-import junit.framework.TestCase;
 import net.sourceforge.jenesis4java.CompilationUnit;
 import net.sourceforge.jenesis4java.Import;
 import org.junit.Before;
@@ -47,6 +46,12 @@ public class MCompilationUnitTest {
         Import imp1 = cu.addImport(List.class);
         Import imp2 = cu.addImport(List.class);
         assertEquals(imp1, imp2);
+    }
+
+    @Test
+    public void testAddImportFromDefaultPackage() throws Exception {
+        Import imp1 = cu.addImport("Test");
+        Import imp12 = cu.addImport("Test2");
     }
 
     @Test
