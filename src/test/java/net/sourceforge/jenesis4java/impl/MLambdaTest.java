@@ -25,6 +25,7 @@ package net.sourceforge.jenesis4java.impl;
 import net.sourceforge.jenesis4java.Block;
 import net.sourceforge.jenesis4java.Codeable;
 import net.sourceforge.jenesis4java.IVisitor;
+import net.sourceforge.jenesis4java.PrimitiveType;
 import net.sourceforge.jenesis4java.Type;
 import net.sourceforge.jenesis4java.impl.test.CollectingVisitor;
 import org.junit.Before;
@@ -34,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static net.sourceforge.jenesis4java.impl.test.TestHelper.*;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class MLambdaTest {
 
@@ -103,7 +104,7 @@ public class MLambdaTest {
 
     @Test
     public void testEmptyBodyBlock() throws Exception {
-        Block block = lambda.newBodyBlock();
+        lambda.newBodyBlock();
         assertEquals("() -> {" + LS + //
                 "};", toCodeAsString(lambda));
     }
@@ -118,10 +119,59 @@ public class MLambdaTest {
     }
 
     @Test
-    public void testVisit() throws Exception {
+    public void testVisitEmptyLambda() throws Exception {
         final List<Codeable> visited = new ArrayList<Codeable>();
         IVisitor visitor = new CollectingVisitor(visited);
 
         lambda.visit(visitor);
+
+        assertEquals(1, visited.size());
+        assertSame("expected null comment", null, visited.get(0));
+    }
+
+    @Test
+    public void testVisitEmptyLambdaWithTypelessParameter() throws Exception {
+        final List<Codeable> visited = new ArrayList<Codeable>();
+        IVisitor visitor = new CollectingVisitor(visited);
+
+        lambda.addParameter("a");
+        lambda.visit(visitor);
+
+        assertEquals(1, visited.size());
+        assertSame("expected null comment", null, visited.get(0));
+    }
+
+    @Test
+    public void testVisitEmptyLambdaWithTypedParameter() throws Exception {
+        final List<Codeable> visited = new ArrayList<>();
+        IVisitor visitor = new CollectingVisitor(visited);
+
+        PrimitiveType intType = vm().newType(Type.INT);
+        lambda.addParameter(intType, "a");
+        lambda.visit(visitor);
+
+        assertEquals(3, visited.size());
+        assertSame("expected null lambda comment", null, visited.get(0));
+        assertSame("expected null type comment", null, visited.get(1));
+        assertSame(intType, visited.get(2));
+    }
+
+    @Test
+    public void testVisitSimpleLambda() throws Exception {
+        final List<Codeable> visited = new ArrayList<Codeable>();
+        IVisitor visitor = new CollectingVisitor(visited);
+
+        PrimitiveType intType = vm().newType(Type.INT);
+        lambda.addParameter(intType, "a");
+        Block block = lambda.newBodyBlock();
+        block.newReturn().setExpression(vm().newInt(10));
+
+        lambda.visit(visitor);
+
+        // TODO: this is wrong
+        assertEquals(3, visited.size());
+        assertSame("expected null lambda comment", null, visited.get(0));
+        assertSame("expected null type comment", null, visited.get(1));
+        assertSame(intType, visited.get(2));
     }
 }

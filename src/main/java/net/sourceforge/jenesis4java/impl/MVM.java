@@ -249,6 +249,7 @@ public class MVM extends net.sourceforge.jenesis4java.VirtualMachine {
         return this;
     }
 
+    @SuppressWarnings("unchecked")
     private synchronized List<CompilationUnit> cloneUnits() {
         return (List<CompilationUnit>) units.clone();
     }

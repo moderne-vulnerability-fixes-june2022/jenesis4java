@@ -1093,7 +1093,7 @@ abstract class MDeclaration extends MVM.MCodeable {
     static class MImport extends MDeclaration implements Import {
 
         String name;
-        
+
         private static String baseClassName(String fullclassname) {
             int indexOfDot = fullclassname.lastIndexOf(".");
             return (indexOfDot < 0) ? fullclassname : fullclassname.substring(indexOfDot);

@@ -67,7 +67,7 @@ public interface Codeable {
     CodeWriter toCode(CodeWriter out);
 
     /**
-     * walk through the code tree and alow every element to be excanged.
+     * walk through the code tree and allow every element to be exchanged.
      * 
      * @param visitor
      */

@@ -52,14 +52,16 @@ public interface Lambda extends Codeable {
     /**
      * Adds a new formal parameter with the given type and name to this
      * {@code Lambda} and returns this {@code Lambda}.
+     * 
+     * @return the {@code Lambda}
      */
     Lambda addParameter(Type type, String name);
 
     /**
-     * TODO
+     * Adds a new formal parameter with the specified name.
      * 
      * @param name
-     * @return
+     * @return the {@code Lambda}
      */
     Lambda addParameter(String name);
 
@@ -73,9 +75,10 @@ public interface Lambda extends Codeable {
     Lambda setBody(Expression body);
 
     /**
-     * Create a new Block as body of the {@code Lambda}.
+     * Creates a new Block as body of the {@code Lambda}.
      * 
-     * @return the {@code Lambda}
+     * @return the {@code Block} containing the (initially empty) body of the
+     *         {@code Lambda}.
      */
     Block newBodyBlock();
 }

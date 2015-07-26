@@ -52,6 +52,11 @@ public class MLambda extends MVM.MCodeable implements Lambda {
             public CodeWriter toCode(CodeWriter out) {
                 return parameter.toCode(out);
             }
+
+			@Override
+			public void visit(IVisitor visitor) {
+				parameter.visit(visitor);
+			}
         }
 
         private static class ParameterName extends Parameter {
@@ -66,6 +71,11 @@ public class MLambda extends MVM.MCodeable implements Lambda {
             public CodeWriter toCode(CodeWriter out) {
                 return out.write(parameterName);
             }
+
+			@Override
+			public void visit(IVisitor visitor) {
+				// nothing to visit
+			}
         }
 
         public static Parameter createParameter(String parameterName) {
@@ -77,6 +87,8 @@ public class MLambda extends MVM.MCodeable implements Lambda {
         }
 
         public abstract CodeWriter toCode(CodeWriter out);
+
+		public abstract void visit(IVisitor visitor);
     }
 
     private class ParameterHolder {
@@ -84,7 +96,7 @@ public class MLambda extends MVM.MCodeable implements Lambda {
         // NOTE: initially null (i.e. undefined)
         private Boolean typelessParameters;
 
-        private List<Parameter> parameterList = new ArrayList<Parameter>();
+        private List<Parameter> parameterList = new ArrayList<>();
 
         public void add(Type type, String name) {
             if (typelessParameters != null && typelessParameters) {
@@ -126,6 +138,9 @@ public class MLambda extends MVM.MCodeable implements Lambda {
         }
 
         public void visit(IVisitor visitor) {
+        	for (Parameter parameter : parameterList) {
+				parameter.visit(visitor);
+			}
         }
     }
 
@@ -190,6 +205,6 @@ public class MLambda extends MVM.MCodeable implements Lambda {
     public void visit(IVisitor visitor) {
         super.visit(visitor);
         parameters.visit(visitor);
-        // TODO
+        // TODO: body etc.
     }
 }
