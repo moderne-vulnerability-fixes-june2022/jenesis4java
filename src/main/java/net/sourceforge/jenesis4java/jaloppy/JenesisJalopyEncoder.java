@@ -320,7 +320,7 @@ public class JenesisJalopyEncoder implements CompilationUnitEncoder {
         }
     }
 
-    protected void logMessage(Jalopy jalopy, String message) {
+    private void logMessage(Jalopy jalopy, String message) {
         State state = jalopy.getState();
         if (state == Jalopy.State.OK) {
             logMessage("DEBUG", message + " formatted correctly.");
@@ -333,7 +333,7 @@ public class JenesisJalopyEncoder implements CompilationUnitEncoder {
         }
     }
 
-    protected void logMessage(String level, String message) {
+    private void logMessage(String level, String message) {
         System.out.println(level + " " + message);
     }
 }

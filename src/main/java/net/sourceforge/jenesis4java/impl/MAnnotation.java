@@ -48,7 +48,7 @@ import net.sourceforge.jenesis4java.IVisitor;
 import net.sourceforge.jenesis4java.impl.MVM.MCodeable;
 import net.sourceforge.jenesis4java.impl.util.VisitorUtils;
 
-public class MAnnotation extends MCodeable implements Annotation {
+class MAnnotation extends MCodeable implements Annotation {
 
     static class MAnnotationAttribute extends MCodeable implements AnnotationAttribute {
 
@@ -212,11 +212,11 @@ public class MAnnotation extends MCodeable implements Annotation {
         }
     }
 
-    String name;
+    private String name;
 
-    String text;
+    private String text;
 
-    List<AnnotationAttribute> annotationAttributes = new ArrayList<AnnotationAttribute>();
+    private List<AnnotationAttribute> annotationAttributes = new ArrayList<AnnotationAttribute>();
 
     MAnnotation(MVM vm, String text) {
         super(vm);

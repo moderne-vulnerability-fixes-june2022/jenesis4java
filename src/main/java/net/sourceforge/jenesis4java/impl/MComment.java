@@ -48,7 +48,7 @@ import net.sourceforge.jenesis4java.impl.util.ListTypeSelector;
 /**
  * Standard <code>Comment</code> implementations.
  */
-public abstract class MComment extends MVM.MCodeable implements Comment {
+abstract class MComment extends MVM.MCodeable implements Comment {
 
     /* =============================================================== */
     /* DOCUMENTATION COMMENT */
@@ -354,15 +354,15 @@ public abstract class MComment extends MVM.MCodeable implements Comment {
         }
     }
 
-    public static final int S_COMMENT_LENGTH = 30;
+    private static final int S_COMMENT_LENGTH = 30;
 
-    public static final int M_COMMENT_LENGTH = 180;
+    private static final int M_COMMENT_LENGTH = 180;
 
-    public static final int D_COMMENT_LENGTH = 180;
+    private static final int D_COMMENT_LENGTH = 180;
 
-    public static final int COMMENT_LENGTH_UNLIMITED = 500;
+    private static final int COMMENT_LENGTH_UNLIMITED = 500;
 
-    static void wordWrap(char[] s, int maxlen, String head, CodeWriter out) {
+    private static void wordWrap(char[] s, int maxlen, String head, CodeWriter out) {
         int strlen = s.length, trailer = 0, leader = 0, anchor = 0;
 
         // loop while we look for newline characters.
@@ -455,11 +455,11 @@ public abstract class MComment extends MVM.MCodeable implements Comment {
      * brown<BR>
      * cow<BR>
      */
-    static void wordWrap(String s, int maxlen, String head, CodeWriter out) {
+    private static void wordWrap(String s, int maxlen, String head, CodeWriter out) {
         wordWrap(s.toCharArray(), maxlen, head, out);
     }
 
-    int type;
+    private int type;
 
     String text;
 

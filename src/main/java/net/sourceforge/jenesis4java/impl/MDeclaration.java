@@ -1679,7 +1679,7 @@ abstract class MDeclaration extends MVM.MCodeable {
         }
 
         @SuppressWarnings("unchecked")
-        protected Comparator<Member> getComparator() {
+        Comparator<Member> getComparator() {
             if (MTypeDeclaration.comparator == null) {
                 String className = System.getProperty("jenesis.member-comparator-classname");
                 if (className != null) {

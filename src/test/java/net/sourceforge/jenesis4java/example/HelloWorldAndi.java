@@ -50,7 +50,7 @@ import net.sourceforge.jenesis4java.VirtualMachine;
  * Example which generates a class which prints "Hello World!" to standard
  * output.
  */
-public class HelloWorldAndi {
+class HelloWorldAndi {
 
     public static void main(String[] argv) throws Exception {
         // Get the VirtualMachine implementation.

@@ -53,7 +53,7 @@ import net.sourceforge.jenesis4java.VirtualMachine;
  * Example which generates a class which prints "Hello World!" to standard
  * output.
  */
-public class HelloWorldExample {
+class HelloWorldExample {
 
     public static void main(String[] argv) throws Exception {
         long start = System.currentTimeMillis(), time;
@@ -151,7 +151,6 @@ public class HelloWorldExample {
         while ((count = error.read(buffer)) >= 0) {
             errorBytes.write(buffer, 0, count);
         }
-        String streambuffer = new String(buffer);
-        return streambuffer;
+        return new String(buffer);
     }
 }

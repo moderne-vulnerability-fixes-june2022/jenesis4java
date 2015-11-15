@@ -162,11 +162,11 @@ public abstract class MType extends MVM.MCodeable {
 
     private static final String JAVA_LANG_PACKAGE = "java.lang.";
 
-    int type;
+    private int type;
 
     String name;
 
-    public MType(MVM vm, int type, String name) {
+    MType(MVM vm, int type, String name) {
         super(vm);
         this.type = type;
         this.name = name;

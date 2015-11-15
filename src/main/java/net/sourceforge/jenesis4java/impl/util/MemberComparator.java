@@ -54,27 +54,27 @@ public class MemberComparator implements java.util.Comparator<Member>, Serializa
 
     private static final long serialVersionUID = 2419912166943712377L;
 
-    protected static final int CONSTANT = 3;
+    private static final int CONSTANT = 3;
 
-    protected static final int INTERFACE = 4;
+    private static final int INTERFACE = 4;
 
-    protected static final int CONSTRUCTOR = 5;
+    private static final int CONSTRUCTOR = 5;
 
-    protected static final int METHOD = 6;
+    private static final int METHOD = 6;
 
-    protected static final int FIELD = 7;
+    private static final int FIELD = 7;
 
-    protected static final int CLASS = 8;
+    private static final int CLASS = 8;
 
-    protected static final int STATIC_INIT = 9;
+    private static final int STATIC_INIT = 9;
 
-    protected static final int OTHER = 10;
+    private static final int OTHER = 10;
 
-    protected static final int EQUAL = 0;
+    private static final int EQUAL = 0;
 
-    protected static final int LESS = -1;
+    private static final int LESS = -1;
 
-    protected static final int GREATER = 1;
+    private static final int GREATER = 1;
 
     public MemberComparator() {
     }
@@ -112,7 +112,7 @@ public class MemberComparator implements java.util.Comparator<Member>, Serializa
         }
     }
 
-    protected int assignInt(Object o) {
+    private int assignInt(Object o) {
         if (o instanceof Interface) {
             return MemberComparator.INTERFACE;
         } else if (o instanceof Constructor) {
@@ -137,7 +137,7 @@ public class MemberComparator implements java.util.Comparator<Member>, Serializa
      * utility method to compare boolean state. If they are different, the first
      * boolean arg (o1) is deemed GREATER if it is the true one.
      */
-    protected int compareBooleans(boolean b1, boolean b2) {
+    private int compareBooleans(boolean b1, boolean b2) {
         // if they are different, return the comparison, otw equal
         if (b1 ^ b2) {
             return b1 ? MemberComparator.GREATER : MemberComparator.LESS;
@@ -146,7 +146,7 @@ public class MemberComparator implements java.util.Comparator<Member>, Serializa
         }
     }
 
-    protected int compareClasses(ClassDeclaration o1, ClassDeclaration o2) {
+    private int compareClasses(ClassDeclaration o1, ClassDeclaration o2) {
         int x = MemberComparator.EQUAL;
 
         // compare abstract state
@@ -158,7 +158,7 @@ public class MemberComparator implements java.util.Comparator<Member>, Serializa
         return compareMembers(o1, o2);
     }
 
-    protected int compareConstructors(Constructor o1, Constructor o2) {
+    private int compareConstructors(Constructor o1, Constructor o2) {
         int x = MemberComparator.EQUAL;
 
         // compare access levels
@@ -172,11 +172,11 @@ public class MemberComparator implements java.util.Comparator<Member>, Serializa
         return x;
     }
 
-    protected int compareFields(Field o1, Field o2) {
+    private int compareFields(Field o1, Field o2) {
         return compareMembers(o1, o2);
     }
 
-    protected int compareInterfaces(Interface o1, Interface o2) {
+    private int compareInterfaces(Interface o1, Interface o2) {
         int x = MemberComparator.EQUAL;
 
         // compare name state
@@ -193,7 +193,7 @@ public class MemberComparator implements java.util.Comparator<Member>, Serializa
      * utility method to compare integer state. If they are different, the they
      * are compared with GREATER deemed to the larger number.
      */
-    protected int compareInts(int i1, int i2) {
+    private int compareInts(int i1, int i2) {
         if (i1 == i2) {
             return MemberComparator.EQUAL;
         } else {
@@ -201,7 +201,7 @@ public class MemberComparator implements java.util.Comparator<Member>, Serializa
         }
     }
 
-    protected int compareMembers(Member o1, Member o2) {
+    private int compareMembers(Member o1, Member o2) {
         int x = MemberComparator.EQUAL;
 
         // compare access levels
@@ -232,7 +232,7 @@ public class MemberComparator implements java.util.Comparator<Member>, Serializa
         return x;
     }
 
-    protected int compareMethods(Method o1, Method o2) {
+    private int compareMethods(Method o1, Method o2) {
         return compareMembers(o1, o2);
     }
 
@@ -240,7 +240,7 @@ public class MemberComparator implements java.util.Comparator<Member>, Serializa
      * utility method to compare strings. uses jdk1.2's compareTo method. 'does
      * s1 compared to s2', not the other way around.
      */
-    protected int compareStrings(String s1, String s2) {
+    private int compareStrings(String s1, String s2) {
         // compare strings
         return s1.compareTo(s2);
     }

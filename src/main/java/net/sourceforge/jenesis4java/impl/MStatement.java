@@ -78,7 +78,7 @@ import net.sourceforge.jenesis4java.impl.util.VisitorUtils;
 /**
  * Standard <code>Statement</code> implementations.
  */
-public abstract class MStatement extends MVM.MCodeable implements Statement {
+abstract class MStatement extends MVM.MCodeable implements Statement {
 
     // ===============================================================
     // BLOCK STATEMENT
@@ -1098,9 +1098,9 @@ public abstract class MStatement extends MVM.MCodeable implements Statement {
         }
     }
 
-    String label;
+    private String label;
 
-    public MStatement(MVM vm) {
+    MStatement(MVM vm) {
         super(vm);
     }
 

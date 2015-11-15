@@ -118,7 +118,7 @@ public abstract class MLiteral extends MVM.MCodeable implements Literal {
             return b.toString();
         }
 
-        protected static StringBuffer escape(char c, StringBuffer b) {
+        static StringBuffer escape(char c, StringBuffer b) {
             // Check if the char is in the ACSII range.
             if (c >= 0x20 && c < 0x7f) {
                 // The char is ASCII, but we still may need to
@@ -446,9 +446,9 @@ public abstract class MLiteral extends MVM.MCodeable implements Literal {
         }
     }
 
-    Comment comment;
+    private Comment comment;
 
-    Type type;
+    private Type type;
 
     Object val;
 
