@@ -76,22 +76,22 @@ public interface Access extends Codeable {
     /**
      * Constant to indicate public access.
      */
-    static final AccessType PUBLIC = AccessType.PUBLIC;
+     AccessType PUBLIC = AccessType.PUBLIC;
 
     /**
      * Constant to indicate package access.
      */
-    static final AccessType PACKAGE = AccessType.PACKAGE;
+     AccessType PACKAGE = AccessType.PACKAGE;
 
     /**
      * Constant to indicate protected access.
      */
-    static final AccessType PROTECTED = AccessType.PROTECTED;
+     AccessType PROTECTED = AccessType.PROTECTED;
 
     /**
      * Constant to indicate private access.
      */
-    static final AccessType PRIVATE = AccessType.PRIVATE;
+     AccessType PRIVATE = AccessType.PRIVATE;
 
     /**
      * Gets the access level as one of the constants in this interface.

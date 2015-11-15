@@ -44,62 +44,62 @@ public interface Type extends Codeable {
     /**
      * Constant for the <code>void</code> type.
      */
-    static final int VOID = -1;
+     int VOID = -1;
 
     /**
      * Constant for the <code>null</code> type.
      */
-    static final int NULL = 0;
+     int NULL = 0;
 
     /**
      * Constant for the <code>boolean</code> type.
      */
-    static final int BOOLEAN = 1;
+     int BOOLEAN = 1;
 
     /**
      * Constant for the <code>byte</code> type.
      */
-    static final int BYTE = 2;
+     int BYTE = 2;
 
     /**
      * Constant for the <code>short</code> type.
      */
-    static final int SHORT = 3;
+     int SHORT = 3;
 
     /**
      * Constant for the <code>int</code> type.
      */
-    static final int INT = 4;
+     int INT = 4;
 
     /**
      * Constant for the <code>long</code> type.
      */
-    static final int LONG = 5;
+     int LONG = 5;
 
     /**
      * Constant for the <code>float</code> type.
      */
-    static final int FLOAT = 6;
+     int FLOAT = 6;
 
     /**
      * Constant for the <code>double</code> type.
      */
-    static final int DOUBLE = 7;
+     int DOUBLE = 7;
 
     /**
      * Constant for the <code>char</code> type.
      */
-    static final int CHAR = 8;
+     int CHAR = 8;
 
     /**
      * Constant for the <code>class</code> type.
      */
-    static final int CLASS = 9;
+     int CLASS = 9;
 
     /**
      * Constant for the <code>array</code> type.
      */
-    static final int ARRAY = 10;
+     int ARRAY = 10;
 
     /**
      * Returns <code>true</code> if this is an array, <code>false</code>

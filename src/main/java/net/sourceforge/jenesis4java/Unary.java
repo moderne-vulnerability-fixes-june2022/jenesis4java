@@ -45,47 +45,47 @@ public interface Unary extends Expression {
     /**
      * Unary function type for a group of parentheses: <code>(expr)</code>.
      */
-    static final int GROUP = 0;
+     int GROUP = 0;
 
     /**
      * Unary function type for a logical complement: <code>(!true)</code>.
      */
-    static final int NOT = 1;
+     int NOT = 1;
 
     /**
      * Unary function type for bitwise complement: <code>(~1)</code>.
      */
-    static final int BITWISE_NOT = 2;
+     int BITWISE_NOT = 2;
 
     /**
      * Unary function type for arithmetic sign complement: <code>(-1)</code>.
      */
-    static final int NEG = 3;
+     int NEG = 3;
 
     /**
      * Unary function type for arithmetic sign identity: <code>(+1)</code>.
      */
-    static final int POS = 4;
+     int POS = 4;
 
     /**
      * Unary function type for arithmetic ante-increment: <code>(++i)</code>.
      */
-    static final int AI = 5;
+     int AI = 5;
 
     /**
      * Unary function type for arithmetic post-increment: <code>(i++)</code>.
      */
-    static final int PI = 6;
+     int PI = 6;
 
     /**
      * Unary function type for arithmetic ante-decrement: <code>(--i)</code>.
      */
-    static final int AD = 7;
+     int AD = 7;
 
     /**
      * Unary function type for arithmetic post-decrement: <code>(i--)</code>.
      */
-    static final int PD = 8;
+     int PD = 8;
 
     /**
      * Getter method for the operand.

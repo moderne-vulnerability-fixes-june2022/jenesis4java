@@ -44,23 +44,23 @@ public interface Comment extends Codeable {
     /**
      * Type constant for a single line comment.
      */
-    static final int S = 1;
+     int S = 1;
 
     /**
      * Type constant for a multiple line comment.
      */
-    static final int M = 2;
+     int M = 2;
 
     /**
      * Type constant for a multiple line comment, but only at the beginning and
      * at the end.
      */
-    static final int Mbe = 3;
+     int Mbe = 3;
 
     /**
      * Type constant for a documentation comment.
      */
-    static final int D = 4;
+     int D = 4;
 
     /**
      * Gets the text for this comment.

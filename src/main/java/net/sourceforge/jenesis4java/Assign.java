@@ -44,7 +44,7 @@ public interface Assign extends Binary {
     /**
      * Assignment type for simple: <code>(a = b)</code>.
      */
-    static final int S = 1;
+     int S = 1;
 
     /**
      * Gets the lvalue.

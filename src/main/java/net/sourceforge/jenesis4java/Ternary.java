@@ -45,7 +45,7 @@ public interface Ternary extends Expression {
     /**
      * Ternary function type for if-else: <code>(a ? b : c)</code>.
      */
-    static final int IF = 1;
+     int IF = 1;
 
     /**
      * Accessor method for the first operand.

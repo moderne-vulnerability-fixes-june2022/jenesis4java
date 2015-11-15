@@ -45,123 +45,123 @@ public interface Binary extends Expression {
     /**
      * Binary function type for logical and: {@code (a && b)}.
      */
-    static final int LAND = 1;
+     int LAND = 1;
 
     /**
      * Binary function type for logical or: {@code (a || b)}.
      */
-    static final int LOR = 2;
+     int LOR = 2;
 
     /**
      * Binary function type for bitwise and: {@code (a & b)}.
      */
-    static final int BAND = 3;
+     int BAND = 3;
 
     /**
      * Binary function type for bitwise or: {@code (a | b)}.
      */
-    static final int BOR = 4;
+     int BOR = 4;
 
     /**
      * Binary function type for bitwise xor: {@code (a ^ b)}.
      */
-    static final int XOR = 5;
+     int XOR = 5;
 
     /**
      * Binary function type for bitwise left shift: {@code (a << b)}.
      */
-    static final int LEFT = 6;
+     int LEFT = 6;
 
     /**
      * Binary function type for bitwise right shift: {@code (a >> b)}.
      */
-    static final int RIGHT = 7;
+     int RIGHT = 7;
 
     /**
      * Binary function type for bitwise unsigned right shift: {@code (a >>> b)}.
      */
-    static final int UNSIGNED = 8;
+     int UNSIGNED = 8;
 
     /**
      * Binary function type for arithmetic addition: <code>(a +
      * b)</code>.
      */
-    static final int ADD = 9;
+     int ADD = 9;
 
     /**
      * Binary function type for arithmetix subtraction: <code>(a -
      * b)</code>.
      */
-    static final int SUB = 10;
+     int SUB = 10;
 
     /**
      * Binary function type for arithmetic multiplication: <code>(a *
      * b)</code>.
      */
-    static final int MUL = 11;
+     int MUL = 11;
 
     /**
      * Binary function type for arithmetic division: <code>(a /
      * b)</code>.
      */
-    static final int DIV = 12;
+     int DIV = 12;
 
     /**
      * Binary function type for arithmetic modulus: <code>(a %
      * b)</code>.
      */
-    static final int MOD = 13;
+     int MOD = 13;
 
     /**
      * Binary function type for predicate equals: <code>(a ==
      * b)</code>.
      */
-    static final int EQ = 14;
+     int EQ = 14;
 
     /**
      * Binary function type for predicate not equals: {@code (a != b)}.
      */
-    static final int NE = 15;
+     int NE = 15;
 
     /**
      * Binary function type for predicate greater than: {@code (a > b)}.
      */
-    static final int GT = 16;
+     int GT = 16;
 
     /**
      * Binary function type for compund predicate greater than or equal:
      * {@code (a => b)}.
      */
-    static final int GTE = 17;
+     int GTE = 17;
 
     /**
      * Binary function type for predicate less than: {@code (a < b)}.
      */
-    static final int LT = 18;
+     int LT = 18;
 
     /**
      * Binary function type for compound predicate less than or equal:
      * {@code (a <= b)}.
      */
-    static final int LTE = 19;
+     int LTE = 19;
 
     /**
      * Binary function type for class equality: <code>(a instanceof
      * b)</code>.
      */
-    static final int IOF = 20;
+     int IOF = 20;
 
     /**
      * Binary function type for string concatenation: <code>(a +
      * b)</code>.
      */
-    static final int CAT = 21;
+     int CAT = 21;
 
     /**
      * Binary function type for arithmetic addition: <code>(a =
      * b)</code>.
      */
-    static final int ASSIGN = 22;
+     int ASSIGN = 22;
 
     /**
      * Getter method for the left side.
