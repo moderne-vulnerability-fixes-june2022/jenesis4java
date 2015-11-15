@@ -65,7 +65,7 @@ public interface CompilationUnit extends Codeable {
     /**
      * Generates the source code file.
      */
-    CompilationUnit encode() throws java.io.IOException;
+    CompilationUnit encode();
 
     /**
      * Returns the filesystem location where the compilation unit should be

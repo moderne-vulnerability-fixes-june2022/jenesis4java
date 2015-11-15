@@ -413,7 +413,7 @@ public class Test {
     }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         VirtualMachine.setVirtualMachine(null);
     }
 

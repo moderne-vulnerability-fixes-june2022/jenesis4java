@@ -110,7 +110,7 @@ class SimpleGenerator {
      * @param className
      *            - the name of the generated class.
      */
-    private void initialize(String codebase, String packageName, String className) throws Exception {
+    private void initialize(String codebase, String packageName, String className) {
         this.unit = this.vm.newCompilationUnit(codebase);
         this.unit.setNamespace(packageName);
 

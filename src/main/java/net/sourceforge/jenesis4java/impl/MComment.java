@@ -263,11 +263,6 @@ abstract class MComment extends MVM.MCodeable implements Comment {
             return out;
         }
 
-        @Override
-        public void visit(IVisitor visitor) {
-            super.visit(visitor);
-        }
-
         private void writeTag(String tag, String tagLabel, CodeWriter out) {
             if (tag == null) {
                 return;
@@ -323,11 +318,6 @@ abstract class MComment extends MVM.MCodeable implements Comment {
 
             return out;
         }
-
-        @Override
-        public void visit(IVisitor visitor) {
-            super.visit(visitor);
-        }
     }
 
     /* =============================================================== */
@@ -346,11 +336,6 @@ abstract class MComment extends MVM.MCodeable implements Comment {
             MComment.wordWrap(text, MComment.S_COMMENT_LENGTH, "//", out);
 
             return out;
-        }
-
-        @Override
-        public void visit(IVisitor visitor) {
-            super.visit(visitor);
         }
     }
 

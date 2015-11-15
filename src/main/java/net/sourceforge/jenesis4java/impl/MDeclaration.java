@@ -569,12 +569,6 @@ abstract class MDeclaration extends MVM.MCodeable {
             out.write(';');
             return out;
         }
-
-        @Override
-        public void visit(IVisitor visitor) {
-            super.visit(visitor);
-        }
-
     }
 
     // ===============================================================
@@ -642,12 +636,6 @@ abstract class MDeclaration extends MVM.MCodeable {
 
             return out;
         }
-
-        @Override
-        public void visit(IVisitor visitor) {
-            super.visit(visitor);
-        }
-
     }
 
     // ===============================================================
@@ -697,7 +685,7 @@ abstract class MDeclaration extends MVM.MCodeable {
         }
 
         @Override
-        public MCompilationUnit encode() throws java.io.IOException {
+        public MCompilationUnit encode() {
             // have we already called this method?
             if (isEncoded) {
                 return this;
@@ -880,11 +868,6 @@ abstract class MDeclaration extends MVM.MCodeable {
             out.write(';');
             return out;
         }
-
-        @Override
-        public void visit(IVisitor visitor) {
-            super.visit(visitor);
-        }
     }
 
     // ===============================================================
@@ -917,11 +900,6 @@ abstract class MDeclaration extends MVM.MCodeable {
             writeBlock(out, vm.getStyle("constructor"));
 
             return out;
-        }
-
-        @Override
-        public void visit(IVisitor visitor) {
-            super.visit(visitor);
         }
     }
 
@@ -1267,11 +1245,6 @@ abstract class MDeclaration extends MVM.MCodeable {
         public boolean removeExtends(String className) {
             return extendz.remove(className);
         }
-
-        @Override
-        public void visit(IVisitor visitor) {
-            super.visit(visitor);
-        }
     }
 
     // ===============================================================
@@ -1597,11 +1570,6 @@ abstract class MDeclaration extends MVM.MCodeable {
             return this;
 
         }
-
-        @Override
-        public void visit(IVisitor visitor) {
-            super.visit(visitor);
-        }
     }
 
     // ===============================================================
@@ -1621,11 +1589,6 @@ abstract class MDeclaration extends MVM.MCodeable {
             out.write("static");
             writeBlock(out, vm.getStyle("static-initializer"));
             return out;
-        }
-
-        @Override
-        public void visit(IVisitor visitor) {
-            super.visit(visitor);
         }
     }
 
@@ -1759,10 +1722,5 @@ abstract class MDeclaration extends MVM.MCodeable {
     public DocumentationComment javadoc(String text) {
         comment = new MComment.MDocumentationComment(vm, text);
         return (DocumentationComment) comment;
-    }
-
-    @Override
-    public void visit(IVisitor visitor) {
-        super.visit(visitor);
     }
 }
