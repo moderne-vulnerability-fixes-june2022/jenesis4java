@@ -361,7 +361,7 @@ abstract class MComment extends MVM.MCodeable implements Comment {
                 // we don't want words to be broken up.
                 // check to make sure the leader hits a space OR a comma (added
                 // comma 9/5/00)
-                word_search: while (s[leader] == ',' || s[leader] != ' ') {
+                while (s[leader] == ',' || s[leader] != ' ') {
                     // word_search: while (s[leader] != ' ') {
                     // move back one character
                     --leader;

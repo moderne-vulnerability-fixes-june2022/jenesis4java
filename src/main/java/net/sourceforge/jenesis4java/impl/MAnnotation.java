@@ -40,12 +40,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.jenesis4java.Annotation;
-import net.sourceforge.jenesis4java.AnnotationAttribute;
-import net.sourceforge.jenesis4java.CodeWriter;
-import net.sourceforge.jenesis4java.Expression;
-import net.sourceforge.jenesis4java.IVisitor;
+import net.sourceforge.jenesis4java.*;
 import net.sourceforge.jenesis4java.impl.MVM.MCodeable;
+import net.sourceforge.jenesis4java.impl.util.ListTypeSelector;
 import net.sourceforge.jenesis4java.impl.util.VisitorUtils;
 
 class MAnnotation extends MCodeable implements Annotation {
@@ -263,7 +260,7 @@ class MAnnotation extends MCodeable implements Annotation {
 
     @Override
     public List<AnnotationAttribute> getAnnotationAttributes() {
-        return annotationAttributes;
+        return ListTypeSelector.select(annotationAttributes, AnnotationAttribute.class);
     }
 
     @Override
