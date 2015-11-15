@@ -42,6 +42,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The <code>VirtualMachine</code> acts as a factory method for
@@ -51,6 +53,8 @@ import java.util.Properties;
  * methods are located on the objects that contain them.
  */
 public abstract class VirtualMachine {
+
+    private static final Logger LOGGER = Logger.getLogger(VirtualMachine.class.getName());
 
     private static final String JENESIS_PROPERTY_PREFIX = "jenesis.";
 
@@ -119,23 +123,23 @@ public abstract class VirtualMachine {
                 ioex.printStackTrace();
                 throw rex;
             } finally {
-                Exception exeption = null;
+                Exception exception = null;
                 if (bufferedStream != null) {
                     try {
                         bufferedStream.close();
                     } catch (Exception ex) {
-                        exeption = ex;
+                        exception = ex;
                     }
                 }
                 if (in != null) {
                     try {
                         in.close();
                     } catch (Exception ex) {
-                        exeption = ex;
+                        exception = ex;
                     }
                 }
-                if (exeption != null) {
-                    throw new RuntimeException(exeption);
+                if (exception != null) {
+                    LOGGER.log(Level.SEVERE, "Exception during InputStreamReader.close(). ", exception);
                 }
             }
         }

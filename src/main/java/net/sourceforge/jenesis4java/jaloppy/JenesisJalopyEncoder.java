@@ -51,6 +51,8 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import net.sourceforge.jenesis4java.CodeWriter;
 import net.sourceforge.jenesis4java.CompilationUnit;
@@ -71,6 +73,8 @@ import de.hunsicker.jalopy.storage.History;
  * other set the System property jenesis.encoder.jalopyconfig
  */
 public class JenesisJalopyEncoder implements CompilationUnitEncoder {
+
+    private static final Logger LOGGER = Logger.getLogger(JenesisJalopyEncoder.class.getName());
 
     final private String jalopyConfigAsResourceOrFile;
 
@@ -246,6 +250,7 @@ public class JenesisJalopyEncoder implements CompilationUnitEncoder {
                 try {
                     fr.close();
                 } catch (IOException ioe) {
+                    LOGGER.log(Level.WARNING, "Exception during InputStreamReader.close(). ", ioe);
                 }
             }
         }
