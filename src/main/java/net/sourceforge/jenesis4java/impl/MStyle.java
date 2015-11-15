@@ -76,7 +76,7 @@ abstract class MStyle implements BlockStyle {
             // get all the keys
             Enumeration<?> e = p.propertyNames();
 
-            String key = null;
+            String key;
             while (e.hasMoreElements()) {
                 key = (String) e.nextElement();
                 if (key.startsWith("style.")) {

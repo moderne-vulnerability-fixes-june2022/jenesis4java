@@ -154,8 +154,8 @@ abstract class MDeclaration extends MVM.MCodeable {
         public Let newDeclarationLet(Type type) {
             Let x = new MStatement.MLet(vm, type);
             int index = 0;
-            for (; index < vs.size() && vs.get(index) instanceof Let; index++) {
-                ;
+            while (index < vs.size() && vs.get(index) instanceof Let) {
+                index++;
             }
             vs.add(index, x);
             return x;
@@ -728,7 +728,7 @@ abstract class MDeclaration extends MVM.MCodeable {
             // make the fileName of the target file as the concatenation
             // of the sourcepath, the package name, and the className,
             // and the ending dot java
-            StringBuffer file = null;
+            StringBuffer file;
 
             // was a path specified?
             if (codebase != null && codebase.length() > 0) {
@@ -1727,43 +1727,6 @@ abstract class MDeclaration extends MVM.MCodeable {
 
             // done
             return className.toString();
-        }
-
-        String getClassfileName() {
-            // make the fileName of the target file as the concatenation
-            // of the sourcepath, the package name, and the className,
-            // and the ending dot class
-            StringBuffer file = null;
-
-            // was a path specified?
-            if (unit.codebase != null && unit.codebase.length() > 0) {
-                // make the buffer
-                file = new StringBuffer(unit.codebase);
-                // does the codebase end with a slash?
-                if (!unit.codebase.endsWith(Character.toString(File.separatorChar))) {
-                    // make it so...
-                    file.append(File.separatorChar);
-                }
-            } else {
-                file = new StringBuffer();
-            }
-
-            // append to the filepath if exists
-            if (unit.namespace != null) {
-                // fetch the package name
-                String pkg = unit.namespace.getName();
-                // make sure the package name exists
-                if (pkg != null) {
-                    // append the package name
-                    file.append(pkg.replace('.', java.io.File.separatorChar));
-                }
-            }
-
-            // add a separator, the name, and the extention
-            file.append(java.io.File.separatorChar).append(getName()).append(".class");
-
-            // done
-            return file.toString();
         }
 
         List<Member> sort(List<Member> list) {

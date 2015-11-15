@@ -132,8 +132,8 @@ abstract class MStatement extends MVM.MCodeable implements Statement {
         public Let newDeclarationLet(Type type) {
             Let x = new MStatement.MLet(vm, type);
             int index = 0;
-            for (; index < vs.size() && vs.get(index) instanceof Let; index++) {
-                ;
+            while (index < vs.size() && vs.get(index) instanceof Let) {
+                index++;
             }
             vs.add(index, x);
             return x;

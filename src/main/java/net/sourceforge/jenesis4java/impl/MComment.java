@@ -363,7 +363,7 @@ abstract class MComment extends MVM.MCodeable implements Comment {
     private static final int COMMENT_LENGTH_UNLIMITED = 500;
 
     private static void wordWrap(char[] s, int maxlen, String head, CodeWriter out) {
-        int strlen = s.length, trailer = 0, leader = 0, anchor = 0;
+        int strlen = s.length, trailer = 0, leader = 0, anchor;
 
         // loop while we look for newline characters.
         while (leader < strlen) {

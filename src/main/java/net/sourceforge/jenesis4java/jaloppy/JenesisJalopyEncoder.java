@@ -110,7 +110,7 @@ public class JenesisJalopyEncoder implements CompilationUnitEncoder {
                     throw new RuntimeException("could not create directory: " + dir.getCanonicalPath());
                 }
             }
-            StringWriter stringWriter = null;
+            StringWriter stringWriter;
             BufferedWriter bufferedWriter;
             // if (changed || !file.exists()) {
             // bufferedWriter = new BufferedWriter(new FileWriter(file));
@@ -246,12 +246,10 @@ public class JenesisJalopyEncoder implements CompilationUnitEncoder {
             return sr.toString();
 
         } finally {
-            if (fr != null) {
-                try {
-                    fr.close();
-                } catch (IOException ioe) {
-                    LOGGER.log(Level.WARNING, "Exception during InputStreamReader.close(). ", ioe);
-                }
+            try {
+                fr.close();
+            } catch (IOException ioe) {
+                LOGGER.log(Level.WARNING, "Exception during InputStreamReader.close(). ", ioe);
             }
         }
     }
@@ -260,7 +258,7 @@ public class JenesisJalopyEncoder implements CompilationUnitEncoder {
         // make the fileName of the target file as the concatenation
         // of the sourcepath, the package name, and the className,
         // and the ending dot java
-        StringBuffer file = null;
+        StringBuffer file;
 
         // was a path specified?
         if (unit.getCodebase() != null && unit.getCodebase().length() > 0) {

@@ -50,13 +50,13 @@ public class MCompilationUnitTest {
 
     @Test
     public void testAddImportFromDefaultPackage() throws Exception {
-        Import imp1 = cu.addImport("Test");
-        Import imp12 = cu.addImport("Test2");
+        cu.addImport("Test");
+        cu.addImport("Test2");
     }
 
     @Test
     public void testAddImportClassConflict() throws Exception {
-        Import imp1 = cu.addImport(List.class);
+        cu.addImport(List.class);
         Import imp2 = cu.addImport(java.awt.List.class);
         assertNull("Expected import to be ignored as", imp2);
     }

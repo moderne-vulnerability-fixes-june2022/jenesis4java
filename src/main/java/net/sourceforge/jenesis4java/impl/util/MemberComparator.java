@@ -147,10 +147,8 @@ public class MemberComparator implements java.util.Comparator<Member>, Serializa
     }
 
     private int compareClasses(ClassDeclaration o1, ClassDeclaration o2) {
-        int x = MemberComparator.EQUAL;
-
         // compare abstract state
-        x = compareBooleans(o1.isAbstract(), o2.isAbstract());
+        int x = compareBooleans(o1.isAbstract(), o2.isAbstract());
         if (x != MemberComparator.EQUAL) {
             return x;
         }
@@ -159,10 +157,8 @@ public class MemberComparator implements java.util.Comparator<Member>, Serializa
     }
 
     private int compareConstructors(Constructor o1, Constructor o2) {
-        int x = MemberComparator.EQUAL;
-
         // compare access levels
-        x = compareInts(o1.getAccess().ordinal(), o2.getAccess().ordinal());
+        int x = compareInts(o1.getAccess().ordinal(), o2.getAccess().ordinal());
         if (x != MemberComparator.EQUAL) {
             return x;
         }
@@ -177,10 +173,8 @@ public class MemberComparator implements java.util.Comparator<Member>, Serializa
     }
 
     private int compareInterfaces(Interface o1, Interface o2) {
-        int x = MemberComparator.EQUAL;
-
         // compare name state
-        x = compareStrings(o1.getName(), o2.getName());
+        int x = compareStrings(o1.getName(), o2.getName());
         if (x != MemberComparator.EQUAL) {
             return x;
         }
@@ -202,10 +196,8 @@ public class MemberComparator implements java.util.Comparator<Member>, Serializa
     }
 
     private int compareMembers(Member o1, Member o2) {
-        int x = MemberComparator.EQUAL;
-
         // compare access levels
-        x = compareInts(o1.getAccess().ordinal(), o2.getAccess().ordinal());
+        int x = compareInts(o1.getAccess().ordinal(), o2.getAccess().ordinal());
         if (x != MemberComparator.EQUAL) {
             return x;
         }

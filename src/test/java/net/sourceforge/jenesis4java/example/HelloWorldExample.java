@@ -59,7 +59,12 @@ class HelloWorldExample {
         long start = System.currentTimeMillis(), time;
 
         File temp = new File("target/testgenerate");
-        temp.mkdirs();
+        boolean resMkdirs = temp.mkdirs();
+
+        if (resMkdirs == false) {
+            System.out.println("Error creating temp directories!");
+            return;
+        }
 
         // Get the VirtualMachine implementation.
         VirtualMachine vm = VirtualMachine.getVirtualMachine();
