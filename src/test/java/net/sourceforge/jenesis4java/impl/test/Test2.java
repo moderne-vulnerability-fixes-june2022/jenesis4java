@@ -123,7 +123,7 @@ public class Test2 {
         }
     }
 
-    VirtualMachine vm = VirtualMachine.getVirtualMachine();
+    private VirtualMachine vm = VirtualMachine.getVirtualMachine();
 
     @Test
     public void test2() throws IOException {

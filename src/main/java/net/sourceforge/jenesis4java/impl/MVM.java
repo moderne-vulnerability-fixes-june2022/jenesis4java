@@ -141,6 +141,7 @@ public class MVM extends net.sourceforge.jenesis4java.VirtualMachine {
                 case Comment.D:
                     comment = new MComment.MDocumentationComment(vm, text);
                     break;
+                default:
             }
             return this;
         }

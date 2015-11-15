@@ -250,7 +250,7 @@ abstract class MStatement extends MVM.MCodeable implements Statement {
             VisitorUtils.visit(vs, this, visitor);
         }
 
-        protected void writeBlock(CodeWriter out, BlockStyle style) {
+        void writeBlock(CodeWriter out, BlockStyle style) {
             // write it
             style.toCode(out, getStatements());
         }

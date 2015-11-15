@@ -22,11 +22,7 @@ package net.sourceforge.jenesis4java.impl;
  * #L%
  */
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 
 import net.sourceforge.jenesis4java.CodeWriter;
 import net.sourceforge.jenesis4java.CompilationUnit;
@@ -60,7 +56,8 @@ public class BasicCompilationUnitEncoder implements CompilationUnitEncoder {
             }
 
             // now we want to make the stream...
-            fout = new PrintWriter(new BufferedWriter(new FileWriter(file)));
+            Writer fileWriter = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
+            fout = new PrintWriter(new BufferedWriter(fileWriter));
 
             // ...wrap it with a code writer...
             CodeWriter out = new MCodeWriter(fout);

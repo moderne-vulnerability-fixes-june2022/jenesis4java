@@ -36,7 +36,7 @@ import net.sourceforge.jenesis4java.VirtualMachine;
  * <code>setXXX()</code>, and member fields using the <code>addMember()</code>
  * method.
  */
-public class SimpleGenerator {
+class SimpleGenerator {
 
     private final VirtualMachine vm;
 
@@ -47,7 +47,7 @@ public class SimpleGenerator {
     /**
      * Create a new <code>SimpleGenerator</code>.
      */
-    public SimpleGenerator() {
+    private SimpleGenerator() {
         this.vm = VirtualMachine.getVirtualMachine();
     }
 
@@ -66,7 +66,7 @@ public class SimpleGenerator {
      * getter method, and setter method are defined for the member having the
      * given name and type.
      */
-    public void addMember(Type type, String name) {
+    private void addMember(Type type, String name) {
         // This "Variable" is defined for later use in statements.
         Variable thisvar = this.vm.newVar("this." + name);
         Variable var = this.vm.newVar(name);
@@ -91,7 +91,7 @@ public class SimpleGenerator {
      * Final step: Generate the class. This calls
      * <code>CompilationUnit.encode()</code>
      */
-    public void generate() throws Exception {
+    private void generate() throws Exception {
         this.unit.encode();
     }
 
@@ -110,7 +110,7 @@ public class SimpleGenerator {
      * @param className
      *            - the name of the generated class.
      */
-    public void initialize(String codebase, String packageName, String className) throws Exception {
+    private void initialize(String codebase, String packageName, String className) throws Exception {
         this.unit = this.vm.newCompilationUnit(codebase);
         this.unit.setNamespace(packageName);
 

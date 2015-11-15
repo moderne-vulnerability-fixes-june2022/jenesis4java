@@ -1119,11 +1119,7 @@ abstract class MDeclaration extends MVM.MCodeable {
         }
 
         public boolean isClassNameAlreadyUsed(String fullclassname) {
-            if (isSingle()) {
-                return baseClassName(getName()).equals(baseClassName(fullclassname));
-            } else {
-                return false;
-            }
+            return isSingle() && baseClassName(getName()).equals(baseClassName(fullclassname));
         }
 
         @Override
