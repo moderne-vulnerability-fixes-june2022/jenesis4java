@@ -384,7 +384,7 @@ abstract class MComment extends MVM.MCodeable implements Comment {
                     // it...
                     if (leader == trailer) {
                         leader = anchor;
-                        break word_search;
+                        break;
                     }
                 }
                 // ok, we've discovered a place to break the line. Now we write
@@ -459,7 +459,7 @@ abstract class MComment extends MVM.MCodeable implements Comment {
         wordWrap(s.toCharArray(), maxlen, head, out);
     }
 
-    private int type;
+    private final int type;
 
     String text;
 
@@ -487,10 +487,5 @@ abstract class MComment extends MVM.MCodeable implements Comment {
     @Override
     public int type() {
         return type;
-    }
-
-    @Override
-    public void visit(IVisitor visitor) {
-        super.visit(visitor);
     }
 }

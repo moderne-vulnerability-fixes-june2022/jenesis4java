@@ -387,7 +387,7 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
     // ===============================================================
     static class MBinary extends MExpression implements Binary {
 
-        int type;
+        final int type;
 
         Expression l;
 
@@ -1159,7 +1159,7 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
     // ===============================================================
     static class MTernary extends MExpression implements Ternary {
 
-        int type;
+        final int type;
 
         Expression one;
 
@@ -1295,7 +1295,7 @@ public abstract class MExpression extends MVM.MCodeable implements Expression {
     // ===============================================================
     static class MUnary extends MExpression implements Unary {
 
-        int type;
+        final int type;
 
         Expression val;
 

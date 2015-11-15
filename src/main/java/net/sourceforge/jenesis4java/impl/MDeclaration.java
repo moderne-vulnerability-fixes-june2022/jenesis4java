@@ -278,12 +278,6 @@ abstract class MDeclaration extends MVM.MCodeable {
 
             return out;
         }
-
-        @Override
-        public void visit(IVisitor visitor) {
-            super.visit(visitor);
-        }
-
     }
 
     // ===============================================================
@@ -508,12 +502,6 @@ abstract class MDeclaration extends MVM.MCodeable {
         public boolean removeImplements(String interfaceName) {
             return implementations.remove(interfaceName);
         }
-
-        @Override
-        public void visit(IVisitor visitor) {
-            super.visit(visitor);
-        }
-
     }
 
     // ===============================================================
@@ -673,7 +661,7 @@ abstract class MDeclaration extends MVM.MCodeable {
 
         List<MImport> imports;
 
-        String codebase;
+        final String codebase;
 
         Namespace namespace;
 
@@ -1154,7 +1142,7 @@ abstract class MDeclaration extends MVM.MCodeable {
     // ===============================================================
     static class MInnerClass extends MClassDeclaration implements InnerClass {
 
-        MClassDeclaration parent;
+        final MClassDeclaration parent;
 
         MInnerClass(MVM vm, MCompilationUnit unit, MClassDeclaration parent, String name) {
             super(vm, unit);
@@ -1179,7 +1167,7 @@ abstract class MDeclaration extends MVM.MCodeable {
     // ===============================================================
     static class MInnerInterface extends MInterface implements InnerInterface {
 
-        MClassDeclaration parent;
+        final MClassDeclaration parent;
 
         MInnerInterface(MVM vm, MCompilationUnit unit, MClassDeclaration parent, String name) {
             super(vm, unit);
@@ -1646,7 +1634,7 @@ abstract class MDeclaration extends MVM.MCodeable {
     // ===============================================================
     abstract static class MTypeDeclaration extends MMember implements TypeDeclaration {
 
-        MCompilationUnit unit;
+        final MCompilationUnit unit;
 
         List<Declaration> members;
 

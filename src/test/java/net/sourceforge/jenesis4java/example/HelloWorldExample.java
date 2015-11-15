@@ -61,7 +61,7 @@ class HelloWorldExample {
         File temp = new File("target/testgenerate");
         boolean resMkdirs = temp.mkdirs();
 
-        if (resMkdirs == false) {
+        if (!resMkdirs) {
             System.out.println("Error creating temp directories!");
             return;
         }

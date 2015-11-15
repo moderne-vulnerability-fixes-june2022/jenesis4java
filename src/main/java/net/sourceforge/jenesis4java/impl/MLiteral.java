@@ -324,11 +324,11 @@ public abstract class MLiteral extends MVM.MCodeable implements Literal {
     // ===============================================================
     static class MScientificLiteral extends MLiteral implements ScientificLiteral {
 
-        int precision;
+        final int precision;
 
-        int scale;
+        final int scale;
 
-        int exponent;
+        final int exponent;
 
         MScientificLiteral(MVM vm, int precision, int scale, int exponent) {
             super(vm, vm.DOUBLE, null, "" + precision + "." + scale + "e" + exponent);
@@ -450,7 +450,7 @@ public abstract class MLiteral extends MVM.MCodeable implements Literal {
 
     private Type type;
 
-    Object val;
+    final Object val;
 
     String label;
 

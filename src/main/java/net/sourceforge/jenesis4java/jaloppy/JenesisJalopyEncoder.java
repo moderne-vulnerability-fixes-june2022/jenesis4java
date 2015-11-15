@@ -221,7 +221,7 @@ public class JenesisJalopyEncoder implements CompilationUnitEncoder {
     /**
      * Method to read a file and return it as String
      */
-    private String getFileContents(File file) throws IOException, FileNotFoundException {
+    private String getFileContents(File file) throws IOException {
 
         InputStreamReader fr = new InputStreamReader(new FileInputStream(file), "UTF-8");
         StringWriter sr = new StringWriter();
@@ -311,7 +311,7 @@ public class JenesisJalopyEncoder implements CompilationUnitEncoder {
         jalopy = null;
     }
 
-    private void writeIfChanged(String newFileContents, File file) throws FileNotFoundException, IOException {
+    private void writeIfChanged(String newFileContents, File file) throws IOException {
         String oldFileContents = getFileContents(file);
         if (!oldFileContents.equals(newFileContents)) {
             FileOutputStream outStream = new FileOutputStream(file);

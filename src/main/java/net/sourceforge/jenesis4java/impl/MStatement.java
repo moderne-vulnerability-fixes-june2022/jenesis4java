@@ -261,7 +261,7 @@ abstract class MStatement extends MVM.MCodeable implements Statement {
     // ===============================================================
     abstract static class GotoStatement extends MStatement {
 
-        String kwd;
+        final String kwd;
 
         String target;
 
