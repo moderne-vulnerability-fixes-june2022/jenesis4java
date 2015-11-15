@@ -164,7 +164,7 @@ public abstract class VirtualMachine {
      * Writes out the source code to all enclosed <code>CompilationUnit</code>
      * instances.
      */
-    public abstract VirtualMachine encode() throws java.io.IOException;
+    public abstract VirtualMachine encode();
 
     /**
      * @return the current active encoder.

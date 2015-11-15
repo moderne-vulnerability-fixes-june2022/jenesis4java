@@ -91,7 +91,7 @@ class SimpleGenerator {
      * Final step: Generate the class. This calls
      * <code>CompilationUnit.encode()</code>
      */
-    private void generate() throws Exception {
+    private void generate() {
         this.unit.encode();
     }
 

@@ -243,7 +243,7 @@ public class MVM extends net.sourceforge.jenesis4java.VirtualMachine {
     }
 
     @Override
-    public MVM encode() throws java.io.IOException {
+    public MVM encode() {
         for (CompilationUnit c : cloneUnits()) {
             c.encode();
         }
