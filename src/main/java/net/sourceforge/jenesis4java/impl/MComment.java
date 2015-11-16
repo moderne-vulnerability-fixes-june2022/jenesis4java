@@ -263,6 +263,11 @@ abstract class MComment extends MVM.MCodeable implements Comment {
             return out;
         }
 
+        @Override
+        public void visit(IVisitor visitor) {
+            super.visit(visitor);
+        }
+
         private void writeTag(String tag, String tagLabel, CodeWriter out) {
             if (tag == null) {
                 return;
@@ -318,6 +323,11 @@ abstract class MComment extends MVM.MCodeable implements Comment {
 
             return out;
         }
+
+        @Override
+        public void visit(IVisitor visitor) {
+            super.visit(visitor);
+        }
     }
 
     /* =============================================================== */
@@ -336,6 +346,11 @@ abstract class MComment extends MVM.MCodeable implements Comment {
             MComment.wordWrap(text, MComment.S_COMMENT_LENGTH, "//", out);
 
             return out;
+        }
+
+        @Override
+        public void visit(IVisitor visitor) {
+            super.visit(visitor);
         }
     }
 
@@ -361,7 +376,7 @@ abstract class MComment extends MVM.MCodeable implements Comment {
                 // we don't want words to be broken up.
                 // check to make sure the leader hits a space OR a comma (added
                 // comma 9/5/00)
-                while (s[leader] == ',' || s[leader] != ' ') {
+                word_search: while (s[leader] == ',' || s[leader] != ' ') {
                     // word_search: while (s[leader] != ' ') {
                     // move back one character
                     --leader;
