@@ -37,6 +37,7 @@ package net.sourceforge.jenesis4java.impl.test;
  */
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 import net.sourceforge.jenesis4java.AbstractMethod;
 import net.sourceforge.jenesis4java.Access;
@@ -96,9 +97,7 @@ public class Test {
     @org.junit.Test
     public void test1() throws IOException {
         this.vm = VirtualMachine.getVirtualMachine();
-        File tempDirectory = File.createTempFile("jenesisTmp", "tmp");
-        tempDirectory.delete();
-        tempDirectory.mkdirs();
+        File tempDirectory = Files.createTempDirectory("jenesisTmp" + "tmp").toFile();
         // make a new compilation unit
         CompilationUnit unit = this.vm.newCompilationUnit(tempDirectory.getCanonicalPath());
 

@@ -41,6 +41,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 import net.sourceforge.jenesis4java.Access;
 import net.sourceforge.jenesis4java.Annotation;
@@ -59,9 +60,7 @@ public class TestAnnotation {
     public void test3() throws IOException {
 
         VirtualMachine vm = VirtualMachine.getVirtualMachine();
-        File tempDirectory = File.createTempFile("jenesisTmp", "tmp");
-        tempDirectory.delete();
-        tempDirectory.mkdirs();
+        File tempDirectory = Files.createTempDirectory("jenesisTmp" + "tmp").toFile();
         // make a new compilation unit
         CompilationUnit unit = vm.newCompilationUnit(tempDirectory.getCanonicalPath());
         PackageClass cls = unit.newClass("HelloWorld");

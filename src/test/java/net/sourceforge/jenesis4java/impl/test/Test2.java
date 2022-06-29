@@ -37,6 +37,7 @@ package net.sourceforge.jenesis4java.impl.test;
  */
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -127,9 +128,7 @@ public class Test2 {
 
     @Test
     public void test2() throws IOException {
-        File tempDirectory = File.createTempFile("jenesisTmp", "tmp");
-        tempDirectory.delete();
-        tempDirectory.mkdirs();
+        File tempDirectory = Files.createTempDirectory("jenesisTmp" + "tmp").toFile();
         // make a new compilation unit
         CompilationUnit unit = this.vm.newCompilationUnit(tempDirectory.getCanonicalPath());
 
